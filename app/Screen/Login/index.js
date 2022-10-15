@@ -12,6 +12,8 @@ export default function Login({ navigation }) {
     const [pwfocus, setPwFocus] = useState(false);
     const [autoLogin, setAutoLogin] = useState(false);
 
+    const [pressLogin , setPressLogin] = useState(false);
+
 
     return (
         <View style={styles.container}>
@@ -107,9 +109,18 @@ export default function Login({ navigation }) {
 
                 </View>
                 <View style={{marginTop:24}}>
-                    <TouchableOpacity>
-                        <View>
-                            <Text>
+                    <TouchableOpacity
+                        onPressIn={()=>{
+                            setPressLogin(true);
+                        }}
+                        onPressOut={()=>{
+                            setPressLogin(false);
+                        }}
+                    >
+                        <View 
+                            style={[pressLogin ? styles.btnStyleChange : styles.btnStyle, styles.btnLineColor]}
+                        >
+                            <Text style={[styles.btnTextStyle, styles.btnTextColor2]}>
                                 로그인
                             </Text>
                         </View>
@@ -185,5 +196,39 @@ const styles = StyleSheet.create({
         color:'#7b7b7b',
         textAlign:'center'
     },
+    btnStyle: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: 50,
+        borderWidth: 1,
+        borderColor: '#f4933a',
+        borderRadius: 8,
+        backgroundColor: '#f4933a',
+        textAlign: 'center',
+    },
+    btnStyleChange: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: 50,
+        borderWidth: 1,
+        borderColor: '#d87419',
+        borderRadius: 8,
+        backgroundColor: '#d87419',
+        textAlign: 'center',
+    },
+    btnLine: {
+        backgroundColor: 'transparent',
+    },
+    btnTextStyle: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        letterSpacing: -0.28,
+        color: '#ffffff',
+    },
+    
 
 });
