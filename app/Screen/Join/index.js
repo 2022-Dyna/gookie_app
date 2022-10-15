@@ -24,23 +24,27 @@ export default function Join() {
           <Text>이름</Text>
           <TextInput value={'text'} />
         </View>
-        <View>
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            onPress={() => setStep(prev => prev + 1)}>
-            <Text style={styles.buttonTextStyle}>다음</Text>
+        <View style={styles.btnPos}>
+          <TouchableOpacity onPress={() => setStep(1)}>
+            <View style={[styles.btnStyle, styles.btnLineColor]}>
+              <Text style={[styles.btnTextStyle, styles.btnTextColor2]}>
+                다음
+              </Text>
+            </View>
           </TouchableOpacity>
         </View>
 
         <View>
           <Text>이메일</Text>
-          <View>
-            <TextInput />
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              onPress={() => setStep(prev => prev + 1)}>
-              <Text style={styles.buttonTextStyle}>다음</Text>
-            </TouchableOpacity>
+          <View style={styles.inputBtn}>
+            <TextInput style={[styles.input, styles.inputSize, styles.mr8]} />
+            <View style={styles.btnSize}>
+              <TouchableOpacity>
+                <View style={[styles.btnStyle, styles.btnBgColor]}>
+                  <Text style={[styles.btnTextStyle]}>인증번호</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
@@ -50,6 +54,8 @@ export default function Join() {
 
 const styles = StyleSheet.create({
   basic: {
+    position: 'relative',
+    minHeight: '100%',
     paddingVertical: 24,
     paddingHorizontal: 24,
   },
@@ -78,20 +84,66 @@ const styles = StyleSheet.create({
   percentFillFull: {
     width: '100%',
   },
-  btnCommonStyle: {
+  btnPos: {
+    position: 'absolute',
+    left: 24,
+    bottom: 20,
+    width: '100%',
+  },
+  btnStyle: {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
     height: 50,
+    borderWidth: 1,
+    borderColor: '#d0d0d0',
     borderRadius: 8,
-    backgroundColor: '#f4933a',
+    backgroundColor: '#d0d0d0',
     textAlign: 'center',
+  },
+  btnLine: {
+    backgroundColor: 'transparent',
+  },
+  btnLineColor: {
+    backgroundColor: 'transparent',
+    borderColor: '#f4933a',
+  },
+  btnBgColor: {
+    backgroundColor: '#f4933a',
+    borderColor: '#f4933a',
   },
   btnTextStyle: {
     fontSize: 14,
     fontWeight: 'bold',
     letterSpacing: -0.28,
     color: '#ffffff',
+  },
+  btnTextColor1: {
+    color: '#b1b1b1',
+  },
+  btnTextColor2: {
+    color: '#f4933a',
+  },
+  inputBtn: {
+    flexDirection: 'row',
+  },
+  inputSize: {
+    flex: 2.5,
+  },
+  btnSize: {
+    flex: 1,
+  },
+
+  mr8: {
+    marginRight: 8,
+  },
+  input: {
+    width: '100%',
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#d0d0d0',
+    borderRadius: 8,
+    paddingHorizontal: 20,
   },
 });
