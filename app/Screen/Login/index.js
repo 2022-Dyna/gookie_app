@@ -3,6 +3,7 @@ import {View, Text, Button, TouchableOpacity, StyleSheet, TextInput} from 'react
 import FWIcon from "react-native-vector-icons/FontAwesome";
 import { useSelector, useDispatch } from 'react-redux';
 import * as loginAction from '../../Reducer/action/index';
+import {commonStyles} from '../../common/index'
 
 export default function Login({ navigation }) {
     const dispatch = useDispatch();
@@ -16,12 +17,12 @@ export default function Login({ navigation }) {
         <View style={styles.container}>
             <View style={styles.inner}>
                 <View>
-                    <Text style={[styles.maintit, styles.mb10]}>
+                    <Text style={[styles.maintit, styles.mb8]}>
                         로그인
                     </Text>
                 </View>
-                <View style={styles.mt20}>
-                    <Text style={[styles.labeltext, styles.mb10]}>
+                <View style={styles.mt16}>
+                    <Text style={[styles.labeltext, commonStyles.mb8]}>
                         이메일
                     </Text>
                     <TextInput 
@@ -39,8 +40,8 @@ export default function Login({ navigation }) {
                         
                     </TextInput>
                 </View>
-                <View style={styles.mt20}>
-                    <Text style={[styles.labeltext, styles.mb10]}>
+                <View style={styles.mt16}>
+                    <Text style={[styles.labeltext, styles.mb8]}>
                         비밀번호
                     </Text>
                     <TextInput 
@@ -53,7 +54,7 @@ export default function Login({ navigation }) {
                             setPwFocus(false);
                             }
                         }
-                        secureTextEntry
+                        secureTextEntry={true}
                     >
 
                     </TextInput>
@@ -64,22 +65,62 @@ export default function Login({ navigation }) {
                             onPress={()=>{
                                 setAutoLogin(!autoLogin)
                             }}
-                            style={{flexDirection:'row'}}
+                            activeOpacity={1}
+                            
                         >
-                            <FWIcon
-                                color={autoLogin?"#f4933a":"#d0d0d0"} 
-                                name="check-square" 
-                                size={25}
+                            <View
+                                style={{flexDirection:'row', alignItems:'center',marginTop:16 }}
                             >
+                                <FWIcon
+                                    color={autoLogin?"#f4933a":"#d0d0d0"} 
+                                    name="check-square" 
+                                    size={25}
+                                >
 
-                            </FWIcon>
-                            <Text
-                            >
-                                자동 로그인
-                            </Text>
+                                </FWIcon>
+                                <Text
+                                style={{marginLeft:8}}
+                                >
+                                    자동 로그인
+                                </Text>
+                            </View>
                         </TouchableOpacity>
                         
                     </View>
+                </View>
+                <View
+                    style={{flexDirection:'row', justifyContent:'center', marginTop:32}}
+                >
+                    <TouchableOpacity>
+                        <Text style={styles.jointext}>
+                            회원가입
+                        </Text>
+                    </TouchableOpacity>
+                    <Text style={{paddingHorizontal:16, fontSize:12, fontWeight:'300', color:'#7b7b7b'}}>
+                        |
+                    </Text>
+                    <TouchableOpacity>
+                        <Text style={styles.jointext}>
+                            비밀번호 찾기
+                        </Text>
+                    </TouchableOpacity>
+
+                </View>
+                <View style={{marginTop:24}}>
+                    <TouchableOpacity>
+                        <View>
+                            <Text>
+                                로그인
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <View style={{marginTop:24}}>
+                    <TouchableOpacity>
+                        <Text style={styles.jointext02}>
+                            국회의원 ID / PW 발급받기
+                        </Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>
@@ -88,11 +129,11 @@ export default function Login({ navigation }) {
     
 }
 const styles = StyleSheet.create({
-    mb10:{
-        marginBottom:10
+    mb8:{
+        marginBottom:8
     },
-    mt20:{
-        marginTop:20
+    mt16:{
+        marginTop:16
     },
     container: {
         height:"100%",
@@ -132,6 +173,17 @@ const styles = StyleSheet.create({
         borderLeftColor:'#f4933a',
         borderRightColor:'#f4933a',
         paddingHorizontal:20,
+    },
+    jointext:{
+        fontSize:12,
+        fontWeight:'300',
+        color:'#7b7b7b'
+    },
+    jointext02:{
+        fontSize:12,
+        fontWeight:'300',
+        color:'#7b7b7b',
+        textAlign:'center'
     },
 
 });
