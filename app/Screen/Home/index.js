@@ -13,6 +13,10 @@ export default function Home({navigation}) {
           title="Go to Join"
           onPress={() => navigation.navigate('Join')}
         />
+        <Button
+          title="Go to Detail"
+          onPress={() => navigation.navigate('Detail')}
+        />
       </View>
     </View>
   );

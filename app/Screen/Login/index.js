@@ -19,16 +19,16 @@ export default function Login({ navigation }) {
         <View style={styles.container}>
             <View style={styles.inner}>
                 <View>
-                    <Text style={[styles.maintit, styles.mb8]}>
+                    <Text style={[commonStyles.maintit, commonStyles.mb8]}>
                         로그인
                     </Text>
                 </View>
                 <View style={styles.mt16}>
-                    <Text style={[styles.labeltext, commonStyles.mb8]}>
+                    <Text style={[commonStyles.labeltext, commonStyles.mb8]}>
                         이메일
                     </Text>
                     <TextInput 
-                        style = {!emailfocus ? styles.input : styles.inputfocus}
+                        style = {!emailfocus ? commonStyles.input : commonStyles.inputfocus}
                         onFocus = {() => {
                             setEmailFocus(true);
                             }
@@ -42,12 +42,12 @@ export default function Login({ navigation }) {
                         
                     </TextInput>
                 </View>
-                <View style={styles.mt16}>
-                    <Text style={[styles.labeltext, styles.mb8]}>
+                <View style={commonStyles.mt16}>
+                    <Text style={[commonStyles.labeltext, commonStyles.mb8]}>
                         비밀번호
                     </Text>
                     <TextInput 
-                        style = {!pwfocus ? styles.input : styles.inputfocus}
+                        style = {!pwfocus ? commonStyles.input : commonStyles.inputfocus}
                         onFocus = {() => {
                             setPwFocus(true);
                             }
