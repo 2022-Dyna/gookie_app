@@ -71,6 +71,49 @@ export const commonStyles = StyleSheet.create({
   btnTextColor2: {
     color: '#f4933a',
   },
+  // modal
+  modalWrap: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalView: {
+    width: '85%',
+    margin: 24,
+    borderRadius: 8,
+    backgroundColor: '#ffffff',
+    overflow: 'hidden',
+  },
+  modalTextWrap: {
+    paddingHorizontal: 12,
+    paddingVertical: 40,
+  },
+  modalTitle: {
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#313131',
+  },
+  modalDesc: {
+    textAlign: 'center',
+    fontSize: 12,
+    lineHeight: 18,
+    color: '#313131',
+  },
+  modalBtn: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: 50,
+    backgroundColor: '#f4933a',
+  },
+  modalBtnText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#ffffff',
+  },
   // margin
   mb8: {
     marginBottom: 8,
