@@ -1,3 +1,4 @@
+import {View, Text, TouchableOpacity} from 'react-native';
 import {commonStyles} from '../../common/index';
 
 export default function Btn() {
@@ -10,8 +11,8 @@ export default function Btn() {
 
   return (
     <TouchableOpacity>
-      <View>
-        <Text>다음</Text>
+      <View style={commonStyles.btnDefault}>
+        <Text style={commonStyles.btnTextDefault}>버튼 예시</Text>
       </View>
     </TouchableOpacity>
   );
