@@ -1,12 +1,9 @@
 import { useState } from 'react';
 import {View, Text, Button, TouchableOpacity, StyleSheet, TextInput, ScrollView, ImageBackground} from 'react-native';
 import FWIcon from "react-native-vector-icons/FontAwesome";
-import { useSelector, useDispatch } from 'react-redux';
-import * as loginAction from '../../Reducer/action/index';
 import {commonStyles} from '../../common/index'
 
-export default function Login({ navigation }) {
-    const dispatch = useDispatch();
+export default function Detail({ navigation }) {
 
 
     return (
