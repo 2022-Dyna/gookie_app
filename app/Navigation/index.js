@@ -9,6 +9,7 @@ import Home from '../Screen/Home';
 import Alarm from '../Screen/Alarm';
 import MyPage from '../Screen/MyPage';
 import Join from '../Screen/Join';
+import JoinCongress from '../Screen/JoinCongress';
 import Detail from '../Screen/Detail';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
@@ -40,6 +41,7 @@ function MainStackNavigator() {
       <MainStack.Screen name="ScreenB" component={ScreenB} />
       <MainStack.Screen name="Login" component={Login} />
       <MainStack.Screen name="Join" component={Join} />
+      <MainStack.Screen name="JoinCongress" component={JoinCongress} />
       <MainStack.Screen name="Detail" component={Detail} />
     </MainStack.Navigator>
   );

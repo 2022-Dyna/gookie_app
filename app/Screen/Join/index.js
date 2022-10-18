@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {
   View,
   Text,
@@ -8,42 +8,42 @@ import {
   StyleSheet,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import * as Icons from 'react-native-heroicons/outline';
 import {commonStyles} from '../../common';
 
-export default function Join() {
+export default function Join({navigation}) {
   const [step, setStep] = useState(0);
-  const [nameFocus, setNameFocus] = useState(false);
-  const [emailFocus, setEmailFocus] = useState(false);
-  const [VertifyFocus, setVertifyFocus] = useState(false);
-  const [pwFocus, setPwFocus] = useState(false);
+
   const [nameValue, setNameValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
-  const [vertifyValue, setVertifyValue] = useState('');
+  const [numberValue, setNumberValue] = useState('');
   const [pwValue, setPwValue] = useState('');
-  const [disabledNext, setDisabledNext] = useState([commonStyles.btnDefault]);
-  const [disabledComplete, setDisabledComplete] = useState([
-    commonStyles.btnDefault,
-  ]);
-  const [pwSecret, setPwSecret] = useState(true);
-  const [modalVertify, setModalVertify] = useState(false);
-  const [emailSend, setEmailSend] = useState(false);
 
-  let disabled = false;
-  let disabled2 = false;
-  nameValue.length !== 0 ? (disabled = false) : (disabled = true);
-  emailValue.length !== 0 && vertifyValue.length !== 0 && pwValue.length !== 0
-    ? (disabled2 = false)
-    : (disabled2 = true);
-  useEffect(() => {
-    disabled
-      ? setDisabledNext([commonStyles.btnDefault])
-      : setDisabledNext([commonStyles.btnDefault, commonStyles.btnBgColor]);
-  }, [disabled]);
-  useEffect(() => {
-    disabled2
-      ? setDisabledComplete([commonStyles.btnDefault])
-      : setDisabledComplete([commonStyles.btnDefault, commonStyles.btnBgColor]);
-  }, [disabled2]);
+  const [nameFocus, setNameFocus] = useState(false);
+  const [emailFocus, setEmailFocus] = useState(false);
+  const [numberFocus, setNumberFocus] = useState(false);
+  const [pwFocus, setPwFocus] = useState(false);
+  const [nextPress, setNextPress] = useState(false);
+  const [completePress, setCompletePress] = useState(false);
+  const [emailPress, setEmailPress] = useState(false);
+  const [numberPress, setNumberPress] = useState(false);
+  const [mdVertifyPress, setMdVertifyPress] = useState(false);
+  const [mdCompletePress, setMdCompletePress] = useState(false);
+  const [pwSecret, setPwSecret] = useState(true);
+  const [emailSend, setEmailSend] = useState(false);
+  const [modalVertify, setModalVertify] = useState(false);
+  const [modalComplete, setModalComplete] = useState(false);
+
+  let disabledNext = false;
+  let disabledComplete = false;
+  let disabledEmail = false;
+  let disabledNumber = false;
+  nameValue.length !== 0 ? (disabledNext = false) : (disabledNext = true);
+  emailValue.length !== 0 && numberValue.length !== 0 && pwValue.length !== 0
+    ? (disabledComplete = false)
+    : (disabledComplete = true);
+  emailValue.length !== 0 ? (disabledEmail = false) : (disabledEmail = true);
+  numberValue.length !== 0 ? (disabledNumber = false) : (disabledNumber = true);
 
   return (
     <View>
@@ -106,13 +106,23 @@ export default function Join() {
                   <View style={{flex: 1}}>
                     <TouchableOpacity
                       activeOpacity={1}
-                      onPress={() => setModalVertify(true)}>
+                      disabled={disabledEmail}
+                      onPress={() => setModalVertify(true)}
+                      onPressIn={() => setEmailPress(true)}
+                      onPressOut={() => setEmailPress(false)}>
                       {!emailSend ? (
                         <View
-                          style={[
-                            commonStyles.btnDefault,
-                            commonStyles.btnBgColor,
-                          ]}>
+                          style={
+                            !emailPress
+                              ? [
+                                  commonStyles.btnDefault,
+                                  commonStyles.btnBgColor,
+                                ]
+                              : [
+                                  commonStyles.btnDefault,
+                                  commonStyles.btnPressColor,
+                                ]
+                          }>
                           <Text style={[commonStyles.btnTextDefault]}>
                             인증번호
                           </Text>
@@ -145,7 +155,7 @@ export default function Join() {
                 <View style={{flexDirection: 'row'}}>
                   <TextInput
                     style={
-                      !VertifyFocus
+                      !numberFocus
                         ? [commonStyles.input, commonStyles.mr8, {flex: 2.5}]
                         : [
                             commonStyles.inputfocus,
@@ -153,32 +163,50 @@ export default function Join() {
                             {flex: 2.5},
                           ]
                     }
-                    name="vertifyNum"
-                    value={vertifyValue}
-                    onFocus={() => setVertifyFocus(true)}
-                    onBlur={() => setVertifyFocus(false)}
-                    onChange={e => setVertifyValue(e.nativeEvent.text)}
+                    name="number"
+                    value={numberValue}
+                    onFocus={() => setNumberFocus(true)}
+                    onBlur={() => setNumberFocus(false)}
+                    onChange={e => setNumberValue(e.nativeEvent.text)}
                   />
                   <View style={{flex: 1}}>
-                    <TouchableOpacity activeOpacity={1}>
-                      <View
-                        style={
-                          !emailSend
-                            ? [commonStyles.btnDefault, commonStyles.btnLine]
-                            : [commonStyles.btnDefault, commonStyles.btnBgColor]
-                        }>
-                        <Text
+                    <TouchableOpacity
+                      activeOpacity={1}
+                      disabled={disabledNumber}
+                      onPressIn={() => setNumberPress(true)}
+                      onPressOut={() => setNumberPress(false)}>
+                      {!emailSend ? (
+                        <View
+                          style={[
+                            commonStyles.btnDefault,
+                            commonStyles.btnLine,
+                          ]}>
+                          <Text
+                            style={[
+                              commonStyles.btnTextDefault,
+                              commonStyles.btnTextColor1,
+                            ]}>
+                            인증확인
+                          </Text>
+                        </View>
+                      ) : (
+                        <View
                           style={
-                            !emailSend
+                            !numberPress
                               ? [
-                                  commonStyles.btnTextDefault,
-                                  commonStyles.btnTextColor1,
+                                  commonStyles.btnDefault,
+                                  commonStyles.btnBgColor,
                                 ]
-                              : [commonStyles.btnTextDefault]
+                              : [
+                                  commonStyles.btnDefault,
+                                  commonStyles.btnPressColor,
+                                ]
                           }>
-                          인증확인
-                        </Text>
-                      </View>
+                          <Text style={[commonStyles.btnTextDefault]}>
+                            인증확인
+                          </Text>
+                        </View>
+                      )}
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -212,13 +240,17 @@ export default function Join() {
                       activeOpacity={1}
                       onPress={() => setPwSecret(prev => !prev)}>
                       {pwSecret === true ? (
-                        <Icon
-                          color={'#d0d0d0'}
-                          name="eye-off-outline"
+                        <Icons.EyeSlashIcon
+                          color="#d0d0d0"
+                          fill="transparent"
                           size={24}
                         />
                       ) : (
-                        <Icon color={'#d0d0d0'} name="eye-outline" size={24} />
+                        <Icons.EyeIcon
+                          color="#d0d0d0"
+                          fill="transparent"
+                          size={24}
+                        />
                       )}
                     </TouchableOpacity>
                   </View>
@@ -232,28 +264,50 @@ export default function Join() {
           <View style={styles.btnPos}>
             <TouchableOpacity
               activeOpacity={1}
-              disabled={disabled}
-              onPress={() => setStep(1)}>
-              <View style={disabledNext}>
+              disabled={disabledNext}
+              onPress={() => setStep(1)}
+              onPressIn={() => setNextPress(true)}
+              onPressOut={() => setNextPress(false)}>
+              <View
+                style={
+                  disabledNext
+                    ? [commonStyles.btnDefault]
+                    : !nextPress
+                    ? [commonStyles.btnDefault, commonStyles.btnBgColor]
+                    : [commonStyles.btnDefault, commonStyles.btnPressColor]
+                }>
                 <Text style={[commonStyles.btnTextDefault]}>다음</Text>
               </View>
             </TouchableOpacity>
           </View>
         ) : (
           <View style={styles.btnPos}>
-            <TouchableOpacity activeOpacity={1} disabled={disabled2}>
-              <View style={disabledComplete}>
+            <TouchableOpacity
+              activeOpacity={1}
+              disabled={disabledComplete}
+              onPress={() => setModalComplete(true)}
+              onPressIn={() => setCompletePress(true)}
+              onPressOut={() => setCompletePress(false)}>
+              <View
+                style={
+                  disabledComplete
+                    ? [commonStyles.btnDefault]
+                    : !completePress
+                    ? [commonStyles.btnDefault, commonStyles.btnBgColor]
+                    : [commonStyles.btnDefault, commonStyles.btnPressColor]
+                }>
                 <Text style={[commonStyles.btnTextDefault]}>완료</Text>
               </View>
             </TouchableOpacity>
           </View>
         )}
 
+        {/* modal - 인증번호 발송 */}
         <Modal
           transparent={true}
           visible={modalVertify}
           onRequestClose={() => {
-            setModalVertify(!modalVertify);
+            setModalVertify(false);
           }}>
           <View style={commonStyles.modalWrap}>
             <View style={commonStyles.modalView}>
@@ -268,11 +322,54 @@ export default function Join() {
                 </Text>
               </View>
               <TouchableOpacity
+                activeOpacity={1}
                 onPress={() => {
-                  setModalVertify(!modalVertify);
-                  setEmailSend(!emailSend);
-                }}>
-                <View style={commonStyles.modalBtn}>
+                  setModalVertify(false);
+                  setEmailSend(true);
+                }}
+                onPressIn={() => setMdVertifyPress(true)}
+                onPressOut={() => setMdVertifyPress(false)}>
+                <View
+                  style={
+                    !mdVertifyPress
+                      ? [commonStyles.modalBtn]
+                      : [commonStyles.modalBtn, commonStyles.modalBtnPressColor]
+                  }>
+                  <Text style={commonStyles.modalBtnText}>확인</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+
+        {/* modal - 회원가입 완료 */}
+        <Modal
+          transparent={true}
+          visible={modalComplete}
+          onRequestClose={() => {
+            setModalComplete(false);
+          }}>
+          <View style={commonStyles.modalWrap}>
+            <View style={commonStyles.modalView}>
+              <View style={commonStyles.modalTextWrap}>
+                <Text style={commonStyles.modalDesc}>
+                  회원가입이 완료되었습니다.
+                </Text>
+              </View>
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => {
+                  setModalComplete(false);
+                  navigation.navigate('Login');
+                }}
+                onPressIn={() => setMdCompletePress(true)}
+                onPressOut={() => setMdCompletePress(false)}>
+                <View
+                  style={
+                    !mdCompletePress
+                      ? [commonStyles.modalBtn]
+                      : [commonStyles.modalBtn, commonStyles.modalBtnPressColor]
+                  }>
                   <Text style={commonStyles.modalBtnText}>확인</Text>
                 </View>
               </TouchableOpacity>

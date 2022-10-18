@@ -57,7 +57,9 @@ export const commonStyles = StyleSheet.create({
   },
   btnBgColor: {
     backgroundColor: '#f4933a',
-    borderColor: '#f4933a',
+  },
+  btnPressColor: {
+    backgroundColor: '#d87419',
   },
   btnTextDefault: {
     fontSize: 14,
@@ -108,6 +110,9 @@ export const commonStyles = StyleSheet.create({
     width: '100%',
     height: 50,
     backgroundColor: '#f4933a',
+  },
+  modalBtnPressColor: {
+    backgroundColor: '#d87419',
   },
   modalBtnText: {
     fontSize: 14,
