@@ -1,23 +1,32 @@
 import {View, Text, TouchableOpacity, Modal} from 'react-native';
 import {commonStyles} from '../../common/index';
 
-export default function ModalPop() {
+export default function ConfirmModal(props) {
+
+  const {
+    btnBoolean,
+    onPress,
+    titleText,
+    bodyText,
+    btnText,
+    transparent,
+  } = props;
+
   return (
-    <Modal transparent={true} visible={false} onRequestClose={() => {}}>
+    <Modal transparent={transparent} visible={btnBoolean} onRequestClose={() => {}}>
       <View style={commonStyles.modalWrap}>
         <View style={commonStyles.modalView}>
           <View style={commonStyles.modalTextWrap}>
             <Text style={[commonStyles.modalTitle, commonStyles.mb24]}>
-              모달 타이틀
+              {titleText}
             </Text>
             <Text style={commonStyles.modalDesc}>
-              모달 내용{'\n'}
-              모달 내용
+              {bodyText}
             </Text>
           </View>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={onPress}>
             <View style={commonStyles.modalBtn}>
-              <Text style={commonStyles.modalBtnText}>모달 버튼</Text>
+              <Text style={commonStyles.modalBtnText}>{btnText}</Text>
             </View>
           </TouchableOpacity>
         </View>

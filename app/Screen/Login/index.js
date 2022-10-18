@@ -83,7 +83,11 @@ export default function Login({navigation}) {
             justifyContent: 'center',
             marginTop: 32,
           }}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={()=>{
+              navigation.navigate('Join');
+            }}
+          >
             <Text style={styles.jointext}>회원가입</Text>
           </TouchableOpacity>
           <Text

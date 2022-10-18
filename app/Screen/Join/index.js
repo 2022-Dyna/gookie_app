@@ -10,6 +10,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as Icons from 'react-native-heroicons/outline';
 import {commonStyles} from '../../common';
+import ConfirmModal from '../../Component/ConfirmModal'
 
 export default function Join({navigation}) {
   const [step, setStep] = useState(0);
@@ -303,44 +304,57 @@ export default function Join({navigation}) {
         )}
 
         {/* modal - 인증번호 발송 */}
-        <Modal
-          transparent={true}
-          visible={modalVertify}
-          onRequestClose={() => {
-            setModalVertify(false);
-          }}>
-          <View style={commonStyles.modalWrap}>
-            <View style={commonStyles.modalView}>
-              <View style={commonStyles.modalTextWrap}>
-                <Text style={[commonStyles.modalTitle, commonStyles.mb24]}>
-                  인증번호 발송 완료
-                </Text>
-                <Text style={commonStyles.modalDesc}>
-                  입력한 이메일로 인증번호를 발송했어요.{'\n'}
-                  인증번호 입력창에 인증번호를 입력하고,{'\n'}
-                  인증확인 버튼을 눌려주세요.
-                </Text>
-              </View>
-              <TouchableOpacity
-                activeOpacity={1}
-                onPress={() => {
-                  setModalVertify(false);
-                  setEmailSend(true);
-                }}
-                onPressIn={() => setMdVertifyPress(true)}
-                onPressOut={() => setMdVertifyPress(false)}>
-                <View
-                  style={
-                    !mdVertifyPress
-                      ? [commonStyles.modalBtn]
-                      : [commonStyles.modalBtn, commonStyles.modalBtnPressColor]
-                  }>
-                  <Text style={commonStyles.modalBtnText}>확인</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
+        <ConfirmModal
+            transparent={true}
+            btnBoolean={modalVertify}
+            onPress={()=>{
+              setModalVertify(false);
+              setEmailSend(true);
+            }}
+            titleText={'인증번호 발송 완료'}
+            bodyText={'입력한 이메일로 인증번호를 발송했어요.\n' +
+            '인증번호 입력창에 인증번호를 입력하고\n' +
+            '인증확인 버튼을 눌려주세요.'}
+            btnText={'확인'}
+        />
+        {/*<Modal*/}
+        {/*  transparent={true}*/}
+        {/*  visible={modalVertify}*/}
+        {/*  onRequestClose={() => {*/}
+        {/*    setModalVertify(false);*/}
+        {/*  }}>*/}
+        {/*  <View style={commonStyles.modalWrap}>*/}
+        {/*    <View style={commonStyles.modalView}>*/}
+        {/*      <View style={commonStyles.modalTextWrap}>*/}
+        {/*        <Text style={[commonStyles.modalTitle, commonStyles.mb24]}>*/}
+        {/*          인증번호 발송 완료*/}
+        {/*        </Text>*/}
+        {/*        <Text style={commonStyles.modalDesc}>*/}
+        {/*          입력한 이메일로 인증번호를 발송했어요.{'\n'}*/}
+        {/*          인증번호 입력창에 인증번호를 입력하고,{'\n'}*/}
+        {/*          인증확인 버튼을 눌려주세요.*/}
+        {/*        </Text>*/}
+        {/*      </View>*/}
+        {/*      <TouchableOpacity*/}
+        {/*        activeOpacity={1}*/}
+        {/*        onPress={() => {*/}
+        {/*          setModalVertify(false);*/}
+        {/*          setEmailSend(true);*/}
+        {/*        }}*/}
+        {/*        onPressIn={() => setMdVertifyPress(true)}*/}
+        {/*        onPressOut={() => setMdVertifyPress(false)}>*/}
+        {/*        <View*/}
+        {/*          style={*/}
+        {/*            !mdVertifyPress*/}
+        {/*              ? [commonStyles.modalBtn]*/}
+        {/*              : [commonStyles.modalBtn, commonStyles.modalBtnPressColor]*/}
+        {/*          }>*/}
+        {/*          <Text style={commonStyles.modalBtnText}>확인</Text>*/}
+        {/*        </View>*/}
+        {/*      </TouchableOpacity>*/}
+        {/*    </View>*/}
+        {/*  </View>*/}
+        {/*</Modal>*/}
 
         {/* modal - 회원가입 완료 */}
         <Modal
