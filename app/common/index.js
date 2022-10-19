@@ -82,6 +82,7 @@ export const commonStyles = StyleSheet.create({
   },
   modalView: {
     width: '85%',
+    maxWidth: 360,
     margin: 24,
     borderRadius: 8,
     backgroundColor: '#ffffff',
