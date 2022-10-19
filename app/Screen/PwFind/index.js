@@ -11,7 +11,7 @@ import ConfirmModal from '../../Component/ConfirmModal';
 
 export default function PwFind({navigation}) {
   const [emailValue, setEmailValue] = useState('');
-  const [emailMeg, setEmailMsg] = useState('');
+  const [emailMsg, setEmailMsg] = useState('');
 
   const [emailFocus, setEmailFocus] = useState(false);
   const [completePress, setCompletePress] = useState(false);
@@ -25,7 +25,6 @@ export default function PwFind({navigation}) {
   const onValid = () => {
     const regex =
       /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-
     if (!regex.test(emailValue)) {
       setEmailMsg('올바른 이메일 주소를 입력해주세요.');
     } else {
@@ -55,7 +54,11 @@ export default function PwFind({navigation}) {
             <Text style={[commonStyles.mt8, styles.desc]}>
               입력하신 이메일로 임시비밀번호가 발급됩니다.
             </Text>
-            <Text style={[commonStyles.mt8, styles.validText]}>{emailMeg}</Text>
+            {emailMsg.length !== 0 && (
+              <Text style={[commonStyles.mt8, styles.validText]}>
+                {emailMsg}
+              </Text>
+            )}
           </View>
         </View>
 

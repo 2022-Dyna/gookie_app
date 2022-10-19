@@ -19,6 +19,9 @@ export default function Join({navigation}) {
   const [numberValue, setNumberValue] = useState('');
   const [pwValue, setPwValue] = useState('');
 
+  const [emailMsg, setEmailMsg] = useState('');
+  const [pwMsg, setPwMsg] = useState('');
+
   const [nameFocus, setNameFocus] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
   const [numberFocus, setNumberFocus] = useState(false);
@@ -42,6 +45,29 @@ export default function Join({navigation}) {
     : (disabledComplete = true);
   emailValue.length !== 0 ? (disabledEmail = false) : (disabledEmail = true);
   numberValue.length !== 0 ? (disabledNumber = false) : (disabledNumber = true);
+
+  const onValidEmail = () => {
+    const regex =
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    if (!regex.test(emailValue)) {
+      setEmailMsg('올바른 이메일 주소를 입력해주세요.');
+    } else {
+      setModalVertify(true);
+      setEmailMsg('');
+    }
+  };
+  const onValid = () => {
+    if (pwValue.length < 6 || pwValue.length > 20) {
+      setPwMsg('비밀번호가 너무 짧습니다.');
+    } else if (pwValue.search(/\s/) !== -1) {
+      setPwMsg('공백없이 입력해주세요.');
+    } else if (pwValue.search(/[0-9]/g) < 0 || pwValue.search(/[a-z]/g) < 0) {
+      setPwMsg('영문, 숫자를 혼합하여 입력해주세요.');
+    } else {
+      setModalComplete(true);
+      setPwMsg('');
+    }
+  };
 
   return (
     <View>
@@ -106,7 +132,7 @@ export default function Join({navigation}) {
                       <TouchableOpacity
                         activeOpacity={1}
                         disabled={disabledEmail}
-                        onPress={() => setModalVertify(true)}
+                        onPress={onValidEmail}
                         onPressIn={() => setEmailPress(true)}
                         onPressOut={() => setEmailPress(false)}>
                         {!emailSend ? (
@@ -145,6 +171,11 @@ export default function Join({navigation}) {
                       </TouchableOpacity>
                     </View>
                   </View>
+                  {emailMsg.length !== 0 && (
+                    <Text style={[commonStyles.mt8, styles.validText]}>
+                      {emailMsg}
+                    </Text>
+                  )}
                 </View>
 
                 <View style={commonStyles.mt8}>
@@ -254,6 +285,11 @@ export default function Join({navigation}) {
                       </TouchableOpacity>
                     </View>
                   </View>
+                  {pwMsg.length !== 0 && (
+                    <Text style={[commonStyles.mt8, styles.validText]}>
+                      {pwMsg}
+                    </Text>
+                  )}
                 </View>
               </View>
             )}
@@ -285,7 +321,7 @@ export default function Join({navigation}) {
             <TouchableOpacity
               activeOpacity={1}
               disabled={disabledComplete}
-              onPress={() => setModalComplete(true)}
+              onPress={onValid}
               onPressIn={() => setCompletePress(true)}
               onPressOut={() => setCompletePress(false)}>
               <View
@@ -373,5 +409,10 @@ const styles = StyleSheet.create({
     left: 24,
     bottom: 20,
     width: '100%',
+  },
+  validText: {
+    fontSize: 12,
+    letterSpacing: -0.24,
+    color: '#ff0000',
   },
 });

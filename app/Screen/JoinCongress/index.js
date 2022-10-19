@@ -28,7 +28,6 @@ export default function JoinCongress({navigation}) {
   const onValid = () => {
     const regex =
       /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-
     if (!regex.test(emailValue) && codeValue.length !== 0) {
       setModalCheck(true);
     } else {

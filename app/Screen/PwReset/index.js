@@ -13,7 +13,7 @@ import ConfirmModal from '../../Component/ConfirmModal';
 export default function PwReset({navigation}) {
   const [pwValue, setPwValue] = useState('');
   const [pwConfirmValue, setPwConfirmValue] = useState('');
-  const [pwMeg, setPwMsg] = useState('');
+  const [pwMsg, setPwMsg] = useState('');
 
   const [pwFocus, setPwFocus] = useState(false);
   const [pwConfirmFocus, setPwConfirmFocus] = useState(false);
@@ -79,7 +79,11 @@ export default function PwReset({navigation}) {
                 onChange={e => setPwConfirmValue(e.nativeEvent.text)}
                 secureTextEntry={true}
               />
-              <Text style={[commonStyles.mt8, styles.validText]}>{pwMeg}</Text>
+              {pwMsg.length !== 0 && (
+                <Text style={[commonStyles.mt8, styles.validText]}>
+                  {pwMsg}
+                </Text>
+              )}
             </View>
           </ScrollView>
         </View>
