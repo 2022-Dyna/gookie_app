@@ -10,6 +10,7 @@ export default function Detail({ navigation }) {
         {id: 1, name:"더불어민주당", src: require('../../img/detail_img.png')},
         {id: 2, name:"정의당", src: require('../../img/detail_profile.png')},
     ];
+    const [mark, setMark] = useState(false);
 
     return (
         <ScrollView>
@@ -22,7 +23,7 @@ export default function Detail({ navigation }) {
                             </Text>
                         </View>
                         <View>
-                            <Icons.StarIcon color="#fff" size={25}/>
+                            <Icons.StarIcon color={mark ? "#f4933a" : "#fff"} fill={mark ? "#f4933a" : "transparent"} size={25}/>
                         </View>
                     </View>
                 </ImageBackground>

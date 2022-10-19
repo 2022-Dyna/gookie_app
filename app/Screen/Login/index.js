@@ -145,7 +145,7 @@ export default function Login({navigation}) {
                 setModalVertify(false);
               }}
               titleText={'로그인 실패'}
-              bodyText={'아이디 및 비밀번호를 확인해주세요.'}
+              bodyText={'아이디 혹은 비밀번호를 확인해주세요.'}
               btnText={'확인'}
           />
         </View>
