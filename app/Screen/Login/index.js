@@ -13,6 +13,8 @@ import {useSelector, useDispatch} from 'react-redux';
 import * as loginAction from '../../Reducer/action/index';
 import {commonStyles} from '../../common/index';
 import ConfirmModal from '../../Component/ConfirmModal';
+import axios from "axios";
+import {LOGIN} from "../../Reducer/action/ActionTypes";
 
 export default function Login({navigation}) {
   const dispatch = useDispatch();
@@ -21,7 +23,32 @@ export default function Login({navigation}) {
   const [pwfocus, setPwFocus] = useState(false);
   const [autoLogin, setAutoLogin] = useState(false);
   const [pressLogin, setPressLogin] = useState(false);
-  const [modalVertify, setModalVertify] = useState(false);
+  const [loginFail, setLoginFail] = useState(false);
+  const [loginSuccess, setLoginSuccess] = useState(false);
+  const [id , setId] = useState(null);
+  const [pw , setPw] = useState(null);
+
+
+
+  const userLogin = () =>{
+    console.log(id);
+    console.log(pw);
+    axios.post('http://192.168.241.1:8075/api/v1/login',
+        {
+          memberLoginId:id,
+          memberLoginPw:pw,
+        }).then(res=>{
+      console.log(res.data);
+      if(res.data.data===0){
+        setLoginSuccess(true);
+
+      }else {
+        setLoginFail(true);
+      }
+    }).catch(err=>{
+      console.log(err);
+    })
+  }
 
   return (
     <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
@@ -42,6 +69,7 @@ export default function Login({navigation}) {
               onBlur={() => {
                 setEmailFocus(false);
               }}
+              onChangeText={text=>setId(text)}
             />
           </View>
           <View style={commonStyles.mt16}>
@@ -57,6 +85,7 @@ export default function Login({navigation}) {
                 setPwFocus(false);
               }}
               secureTextEntry={true}
+              onChangeText={text=>setPw(text)}
             />
           </View>
           <View>
@@ -120,7 +149,7 @@ export default function Login({navigation}) {
               onPressOut={() => {
                 setPressLogin(false);
               }}
-              onPress={() => setModalVertify(true)}>
+              onPress={() => userLogin()}>
               <View
                 style={[
                   pressLogin ? styles.btnStyleChange : styles.btnStyle,
@@ -141,13 +170,25 @@ export default function Login({navigation}) {
           </View>
           <ConfirmModal
             transparent={true}
-            btnBoolean={modalVertify}
+            btnBoolean={loginFail}
             onPress={() => {
-              setModalVertify(false);
+              setLoginFail(false);
             }}
             titleText={'로그인 실패'}
             bodyText={'아이디 혹은 비밀번호를 확인해주세요.'}
             btnText={'확인'}
+          />
+          <ConfirmModal
+              transparent={true}
+              btnBoolean={loginSuccess}
+              onPress={() => {
+                setLoginSuccess(false);
+                navigation.navigate('Home');
+                dispatch(loginAction.makeLogin());
+              }}
+              titleText={'로그인 성공'}
+              bodyText={'구키에 오신걸 환영합니다!.'}
+              btnText={'확인'}
           />
         </View>
       </View>

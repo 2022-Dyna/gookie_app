@@ -1,5 +1,5 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer,DefaultTheme } from '@react-navigation/native';
 
 import ScreenB from '../Screen/ScreenB';
 import ScreenA from '../Screen/ScreenA';
@@ -20,10 +20,17 @@ import {useDispatch, useSelector} from 'react-redux';
 
 export default function Navigation() {
   const loginState = useSelector(state => state.login);
-  console.log(loginState);
+  console.log(loginState,'로그인 여부');
+    const MyTheme = {
+        ...DefaultTheme,
+        colors: {
+            ...DefaultTheme.colors,
+            background: 'white'
+        },
+    };
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <MainStackNavigator />
     </NavigationContainer>
   );
