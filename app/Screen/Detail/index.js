@@ -248,7 +248,7 @@ export default function Detail({ navigation }) {
                                         </Text>
                                     </View>
                                 </View>
-                                <View>
+                                <View style={{paddingBottom:48}}>
                                     <View>
                                         <Text style={[styles.historyTextSubText03, {marginTop:24}]}>
                                             미래통합당 경남도당 민생특위 위원장{"\n"}
