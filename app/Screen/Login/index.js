@@ -12,7 +12,7 @@ import FWIcon from 'react-native-vector-icons/FontAwesome';
 import {useSelector, useDispatch} from 'react-redux';
 import * as loginAction from '../../Reducer/action/index';
 import {commonStyles} from '../../common/index';
-import ConfirmModal from '../../Component/ConfirmModal'
+import ConfirmModal from '../../Component/ConfirmModal';
 
 export default function Login({navigation}) {
   const dispatch = useDispatch();
@@ -31,7 +31,9 @@ export default function Login({navigation}) {
             <Text style={[commonStyles.maintit, commonStyles.mb8]}>로그인</Text>
           </View>
           <View style={styles.mt16}>
-            <Text style={[commonStyles.labeltext, commonStyles.mb8]}>이메일</Text>
+            <Text style={[commonStyles.labeltext, commonStyles.mb8]}>
+              이메일
+            </Text>
             <TextInput
               style={!emailfocus ? commonStyles.input : commonStyles.inputfocus}
               onFocus={() => {
@@ -87,11 +89,10 @@ export default function Login({navigation}) {
               marginTop: 32,
             }}>
             <TouchableOpacity
-              onPress={()=>{
+              onPress={() => {
                 navigation.navigate('Join');
               }}
-              activeOpacity={1}
-            >
+              activeOpacity={1}>
               <Text style={styles.jointext}>회원가입</Text>
             </TouchableOpacity>
             <Text
@@ -104,8 +105,10 @@ export default function Login({navigation}) {
               |
             </Text>
             <TouchableOpacity
-              activeOpacity={1}
-            >
+              onPress={() => {
+                navigation.navigate('PwFind');
+              }}
+              activeOpacity={1}>
               <Text style={styles.jointext}>비밀번호 찾기</Text>
             </TouchableOpacity>
           </View>
@@ -117,9 +120,7 @@ export default function Login({navigation}) {
               onPressOut={() => {
                 setPressLogin(false);
               }}
-              onPress={ () => setModalVertify(true)}
-              >
-                
+              onPress={() => setModalVertify(true)}>
               <View
                 style={[
                   pressLogin ? styles.btnStyleChange : styles.btnStyle,
@@ -139,14 +140,14 @@ export default function Login({navigation}) {
             </TouchableOpacity>
           </View>
           <ConfirmModal
-              transparent={true}
-              btnBoolean={modalVertify}
-              onPress={()=>{
-                setModalVertify(false);
-              }}
-              titleText={'로그인 실패'}
-              bodyText={'아이디 및 비밀번호를 확인해주세요.'}
-              btnText={'확인'}
+            transparent={true}
+            btnBoolean={modalVertify}
+            onPress={() => {
+              setModalVertify(false);
+            }}
+            titleText={'로그인 실패'}
+            bodyText={'아이디 및 비밀번호를 확인해주세요.'}
+            btnText={'확인'}
           />
         </View>
       </View>
