@@ -4,11 +4,11 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Modal,
   StyleSheet,
+  ScrollView,
 } from 'react-native';
-import * as Icons from 'react-native-heroicons/outline';
 import {commonStyles} from '../../common';
+import ConfirmModal from '../../Component/ConfirmModal';
 
 export default function JoinCongress({navigation}) {
   const [emailValue, setEmailValue] = useState('');
@@ -17,23 +17,22 @@ export default function JoinCongress({navigation}) {
   const [emailFocus, setEmailFocus] = useState(false);
   const [codeFocus, setCodeFocus] = useState(false);
   const [completePress, setCompletePress] = useState(false);
-  const [mdCheckPress, setMdCheckPress] = useState(false);
-  const [mdCompletePress, setMdCompletePress] = useState(false);
   const [modalComplete, setModalComplete] = useState(false);
   const [modalCheck, setModalCheck] = useState(false);
 
   let disabledComplete = false;
-  emailValue.length !== 0 && emailValue.length !== 0 && codeValue.length !== 0
+  emailValue.length !== 0 && codeValue.length !== 0
     ? (disabledComplete = false)
     : (disabledComplete = true);
 
   const onValid = () => {
-    if (true) {
-      // success
-      setModalComplete(true);
-    } else {
-      // error
+    const regex =
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+    if (!regex.test(emailValue) && codeValue.length !== 0) {
       setModalCheck(true);
+    } else {
+      setModalComplete(true);
     }
   };
 
@@ -44,32 +43,42 @@ export default function JoinCongress({navigation}) {
           <Text style={[commonStyles.maintit, commonStyles.mb24]}>
             국회의원 ID/PW 발급받기
           </Text>
-          <View>
-            <Text style={[commonStyles.labeltext, commonStyles.mb8]}>
-              이메일
-            </Text>
-            <TextInput
-              style={!emailFocus ? commonStyles.input : commonStyles.inputfocus}
-              name="email"
-              value={emailValue}
-              onFocus={() => setEmailFocus(true)}
-              onBlur={() => setEmailFocus(false)}
-              onChange={e => setEmailValue(e.nativeEvent.text)}
-            />
-          </View>
-          <View style={commonStyles.mt8}>
-            <Text style={[commonStyles.labeltext, commonStyles.mb8]}>
-              국회코드
-            </Text>
-            <TextInput
-              style={!codeFocus ? commonStyles.input : commonStyles.inputfocus}
-              name="code"
-              value={codeValue}
-              onFocus={() => setCodeFocus(true)}
-              onBlur={() => setCodeFocus(false)}
-              onChange={e => setCodeValue(e.nativeEvent.text)}
-            />
-          </View>
+
+          <ScrollView contentContainerStyle={{paddingBottom: 74}}>
+            <View>
+              <Text style={[commonStyles.labeltext, commonStyles.mb8]}>
+                이메일
+              </Text>
+              <TextInput
+                style={
+                  !emailFocus ? commonStyles.input : commonStyles.inputfocus
+                }
+                name="email"
+                value={emailValue}
+                onFocus={() => setEmailFocus(true)}
+                onBlur={() => setEmailFocus(false)}
+                onChange={e => setEmailValue(e.nativeEvent.text)}
+              />
+            </View>
+            <View style={commonStyles.mt8}>
+              <Text style={[commonStyles.labeltext, commonStyles.mb8]}>
+                국회코드
+              </Text>
+              <TextInput
+                style={
+                  !codeFocus ? commonStyles.input : commonStyles.inputfocus
+                }
+                name="code"
+                value={codeValue}
+                onFocus={() => setCodeFocus(true)}
+                onBlur={() => setCodeFocus(false)}
+                onChange={e => setCodeValue(e.nativeEvent.text)}
+              />
+              <Text style={[commonStyles.mt8, styles.desc]}>
+                본인의 고유 MONA코드를 입력하세요.
+              </Text>
+            </View>
+          </ScrollView>
         </View>
 
         <View style={styles.btnPos}>
@@ -93,76 +102,33 @@ export default function JoinCongress({navigation}) {
         </View>
 
         {/* modal - 이메일/국회코드 재확인 */}
-        <Modal
+        <ConfirmModal
           transparent={true}
-          visible={modalCheck}
-          onRequestClose={() => {
+          btnBoolean={modalCheck}
+          onPress={() => {
             setModalCheck(false);
-          }}>
-          <View style={commonStyles.modalWrap}>
-            <View style={commonStyles.modalView}>
-              <View style={commonStyles.modalTextWrap}>
-                <Text style={commonStyles.modalDesc}>
-                  이메일 혹은 국회코드를 다시 확인해주세요.
-                </Text>
-              </View>
-              <TouchableOpacity
-                activeOpacity={1}
-                onPress={() => setModalCheck(false)}
-                onPressIn={() => setMdCheckPress(true)}
-                onPressOut={() => setMdCheckPress(false)}>
-                <View
-                  style={
-                    !mdCheckPress
-                      ? [commonStyles.modalBtn]
-                      : [commonStyles.modalBtn, commonStyles.modalBtnPressColor]
-                  }>
-                  <Text style={commonStyles.modalBtnText}>확인</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
+          }}
+          titleText={'메일 발송 실패'}
+          bodyText={'이메일 혹은 국회코드를 다시 확인해주세요.'}
+          btnText={'확인'}
+        />
 
-        {/* modal - 아이디/비밀번호 발송 */}
-        <Modal
+        {/* modal - 메일 발송 */}
+        <ConfirmModal
           transparent={true}
-          visible={modalComplete}
-          onRequestClose={() => {
+          btnBoolean={modalComplete}
+          onPress={() => {
             setModalComplete(false);
-          }}>
-          <View style={commonStyles.modalWrap}>
-            <View style={commonStyles.modalView}>
-              <View style={commonStyles.modalTextWrap}>
-                <Text style={[commonStyles.modalTitle, commonStyles.mb24]}>
-                  아이디/비밀번호 발송 완료
-                </Text>
-                <Text style={commonStyles.modalDesc}>
-                  입력한 이메일로 아이디와 비밀번호를 발송했어요.{'\n'}
-                  로그인 페이지에서{'\n'}
-                  발급받은 정보로 로그인해주세요.
-                </Text>
-              </View>
-              <TouchableOpacity
-                activeOpacity={1}
-                onPress={() => {
-                  setModalComplete(false);
-                  navigation.navigate('Login');
-                }}
-                onPressIn={() => setMdCompletePress(true)}
-                onPressOut={() => setMdCompletePress(false)}>
-                <View
-                  style={
-                    !mdCompletePress
-                      ? [commonStyles.modalBtn]
-                      : [commonStyles.modalBtn, commonStyles.modalBtnPressColor]
-                  }>
-                  <Text style={commonStyles.modalBtnText}>확인</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
+            navigation.navigate('Login');
+          }}
+          titleText={'메일 발송 완료'}
+          bodyText={
+            '입력한 이메일로 아이디와 비밀번호를 발송했어요.\n' +
+            '로그인 페이지에서\n' +
+            '발급받은 정보로 로그인해주세요.'
+          }
+          btnText={'확인'}
+        />
       </View>
     </View>
   );
@@ -171,13 +137,19 @@ export default function JoinCongress({navigation}) {
 const styles = StyleSheet.create({
   basic: {
     position: 'relative',
-    minHeight: '100%',
-    paddingVertical: 24,
+    height: '100%',
+    paddingVertical: 48,
+    paddingBottom: 74,
   },
   btnPos: {
     position: 'absolute',
     left: 24,
     bottom: 20,
     width: '100%',
+  },
+  desc: {
+    fontSize: 12,
+    letterSpacing: -0.24,
+    color: '#7b7b7b',
   },
 });
