@@ -10,6 +10,8 @@ import Alarm from '../Screen/Alarm';
 import MyPage from '../Screen/MyPage';
 import Join from '../Screen/Join';
 import JoinCongress from '../Screen/JoinCongress';
+import PwFind from '../Screen/PwFind';
+import PwReset from '../Screen/PwReset';
 import Detail from '../Screen/Detail';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
@@ -42,6 +44,8 @@ function MainStackNavigator() {
       <MainStack.Screen name="Login" component={Login} />
       <MainStack.Screen name="Join" component={Join} />
       <MainStack.Screen name="JoinCongress" component={JoinCongress} />
+      <MainStack.Screen name="PwFind" component={PwFind} />
+      <MainStack.Screen name="PwReset" component={PwReset} />
       <MainStack.Screen name="Detail" component={Detail} />
     </MainStack.Navigator>
   );

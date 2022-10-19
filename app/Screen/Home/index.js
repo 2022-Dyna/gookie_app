@@ -14,6 +14,10 @@ export default function Home({navigation}) {
           onPress={() => navigation.navigate('Join')}
         />
         <Button
+          title="Go to PwReset"
+          onPress={() => navigation.navigate('PwReset')}
+        />
+        <Button
           title="Go to Detail"
           onPress={() => navigation.navigate('Detail')}
         />
