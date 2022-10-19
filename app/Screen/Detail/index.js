@@ -1,17 +1,20 @@
 import { useState } from 'react';
 import {View, Text, Button, TouchableOpacity, StyleSheet, TextInput, ScrollView, ImageBackground, Image} from 'react-native';
-import FWIcon from "react-native-vector-icons/FontAwesome";
 import * as Icons from 'react-native-heroicons/outline';
 import {commonStyles} from '../../common/index'
 
 export default function Detail({ navigation }) {
 
     const [tab , setTab] = useState(0);
+    const party = [
+        {id: 1, name:"더불어민주당", src: require('../../img/detail_img.png')},
+        {id: 2, name:"정의당", src: require('../../img/detail_profile.png')},
+    ];
 
     return (
         <ScrollView>
             <View style={{height:180}}>
-                <ImageBackground source={require("../../img/detail_img.png")} resizeMode="cover">
+                <ImageBackground source={party[0].src} resizeMode="cover">
                     <View style={{flexDirection:"row", justifyContent:"flex-end", height:'100%', marginTop:16, marginRight:16}}>
                         <View>
                             <Text style={styles.markText}>
@@ -41,7 +44,7 @@ export default function Detail({ navigation }) {
                         김대윤
                     </Text>
                     <Text style={styles.profileSubName}>
-                        더불어민주당
+                        {party[0].name}
                     </Text>
                 </View>
                 <View style={{flexDirection:"row", marginTop:32, borderWidth:1, borderRadius:8, borderColor:"#f4933a"}}>
@@ -210,6 +213,52 @@ export default function Detail({ navigation }) {
                                 </View>
                             </View>
                         </View>
+                        <View style={{marginTop:40}}>
+                            <View style={{flex:1, marginRight:24}}>
+                                <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
+                                    <View>
+                                        <Icons.IdentificationIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
+                                    </View>
+                                    <View>
+                                        <Text style={styles.historyText}>학력 및 경력</Text>
+                                    </View>
+                                </View>
+                                <View>
+                                    <View>
+                                        <Text style={[styles.historyTextSubText02, {marginTop:24}]}>
+                                            [학력]
+                                        </Text>
+                                        <Text style={styles.historyTextSubText03}>
+                                            마산공고(26회){"\n"}
+                                            창원대학교 행정학과{"\n"}
+                                            중앙대학교 행정대학원 지방의회과 석사{"\n"}
+                                            창원대학교 대학원 행정학 박사
+                                        </Text>
+                                    </View>
+                                </View>
+                                <View>
+                                    <View>
+                                        <Text style={[styles.historyTextSubText02, {marginTop:24}]}>
+                                            [경력]
+                                        </Text>
+                                        <Text style={styles.historyTextSubText03}>
+                                            현) 국회 보건복지위원회 국민의힘 간사{"\n"}
+                                            현) 국민의힘 소상공인살리기 특별위원회 부위원장{"\n"}
+                                            현) 국민의힘 코로나19 대책 특별위원회 위원
+                                        </Text>
+                                    </View>
+                                </View>
+                                <View>
+                                    <View>
+                                        <Text style={[styles.historyTextSubText03, {marginTop:24}]}>
+                                            미래통합당 경남도당 민생특위 위원장{"\n"}
+                                            제19대 국회의원 (새누리당/경남 창원시 성산구){"\n"}
+                                            새누리당 원내부대표
+                                        </Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
                     </View>
                 ) :
                 (
@@ -296,6 +345,13 @@ const styles = StyleSheet.create({
         color:"#7b7b7b",
         fontWeight:"normal",
         letterSpacing:-0.28,
+    },
+    historyTextSubText03:{
+        fontSize:14,
+        color:"#7b7b7b",
+        fontWeight:"normal",
+        letterSpacing:-0.28,
+        lineHeight:22,
     },
 
 });
