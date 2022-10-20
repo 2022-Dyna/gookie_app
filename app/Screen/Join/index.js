@@ -10,7 +10,7 @@ import {
 import * as Icons from 'react-native-heroicons/outline';
 import {commonStyles} from '../../common';
 import ConfirmModal from '../../Component/ConfirmModal';
-import axios from "axios";
+import axios from 'axios';
 
 export default function Join({navigation}) {
   const [step, setStep] = useState(0);
@@ -40,7 +40,7 @@ export default function Join({navigation}) {
   const [codeSuccess, setCodeSuccess] = useState(false);
 
   //이메일 인증 state
-  const [emailCode , setEmailCode] = useState(null);
+  const [emailCode, setEmailCode] = useState(null);
 
   let disabledNext = false;
   let disabledComplete = false;
@@ -54,50 +54,54 @@ export default function Join({navigation}) {
   numberValue.length !== 0 ? (disabledNumber = false) : (disabledNumber = true);
   axios.defaults.withCredentials = true;
   /**
-  * 통신 메소드*/
+   * 통신 메소드*/
 
   //1. 이메일 인증번호 발급
-  const getEmailVaild = () =>{
-    axios.get('http://192.168.241.1:8075/api/v1/join',
-        {
-          params:{
-            memberLoginId:emailValue
-          },
-          headers:{
-            withCredentials:true
-          }
-        }).then(res=>{
-          console.log(res.data);
-          if(res.data.data.check===0){
-            setEmailCode(res.data.data.code);
-            setModalVertify(true);
-          }else {
-            setEmailFail(true);
-          }
-    }).catch(err=>{
-      console.log(err);
-    })
-  }
+  const getEmailVaild = () => {
+    axios
+      .get('http://192.168.241.1:8075/api/v1/join', {
+        params: {
+          memberLoginId: emailValue,
+        },
+        headers: {
+          withCredentials: true,
+        },
+      })
+      .then(res => {
+        console.log(res.data);
+        if (res.data.data.check === 0) {
+          setEmailCode(res.data.data.code);
+          setModalVertify(true);
+        } else {
+          setEmailFail(true);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   //2. 회원가입 통신
-  const userJoin = () =>{
-    axios.post('http://192.168.241.1:8075/api/v1/join',
-        {
-            memberLoginId:emailValue,
-            memberLoginPw:pwValue,
-            memberName:nameValue
-        }).then(res=>{
-      console.log(res.data);
-      if(res.data.data>0){
-        setModalComplete(true);
-        setPwMsg('');
-      }else {
-        console.log('회원가입 실패')
-      }
-    }).catch(err=>{
-      console.log(err);
-    })
-  }
+  const userJoin = () => {
+    axios
+      .post('http://192.168.241.1:8075/api/v1/join', {
+        memberLoginId: emailValue,
+        memberLoginPw: pwValue,
+        memberName: nameValue,
+      })
+      .then(res => {
+        console.log(res.data);
+        if (res.data.data > 0) {
+          setModalComplete(true);
+          setPwMsg('');
+        } else {
+          console.log('회원가입 실패');
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   const onValidEmail = () => {
     const regex =
@@ -117,7 +121,7 @@ export default function Join({navigation}) {
     } else if (pwValue.search(/[0-9]/g) < 0 || pwValue.search(/[a-z]/g) < 0) {
       setPwMsg('영문, 숫자를 혼합하여 입력해주세요.');
     } else {
-      if(emailCode){
+      if (emailCode) {
         userJoin();
       }
     }
@@ -228,7 +232,7 @@ export default function Join({navigation}) {
                     </View>
                   </View>
                   {emailMsg.length !== 0 && (
-                    <Text style={[commonStyles.mt8, styles.validText]}>
+                    <Text style={[commonStyles.mt8, commonStyles.validText]}>
                       {emailMsg}
                     </Text>
                   )}
@@ -261,19 +265,17 @@ export default function Join({navigation}) {
                         disabled={disabledNumber}
                         onPressIn={() => setNumberPress(true)}
                         onPressOut={() => setNumberPress(false)}
-                        onPress={()=>{
+                        onPress={() => {
+                          console.log(numberValue, 'nv');
+                          console.log(emailCode, 'em');
 
-                          console.log(numberValue,'nv');
-                          console.log(emailCode,'em');
-
-                          if(numberValue==emailCode){
+                          if (numberValue == emailCode) {
                             setCodeSuccess(true);
                             setEmailCode(true);
-                          }else {
+                          } else {
                             setCodeFail(true);
                           }
-                        }}
-                      >
+                        }}>
                         {!emailSend ? (
                           <View
                             style={[
@@ -355,7 +357,7 @@ export default function Join({navigation}) {
                     </View>
                   </View>
                   {pwMsg.length !== 0 && (
-                    <Text style={[commonStyles.mt8, styles.validText]}>
+                    <Text style={[commonStyles.mt8, commonStyles.validText]}>
                       {pwMsg}
                     </Text>
                   )}
@@ -439,45 +441,40 @@ export default function Join({navigation}) {
 
         {/* modal - 이메일 중복/오류 */}
         <ConfirmModal
-            transparent={true}
-            btnBoolean={emailFail}
-            onPress={() => {
-              setEmailFail(false);
-            }}
-            titleText={'이메일 오류'}
-            bodyText={
-              '이메일이 중복이거나 잘못되엇습니다.\n' +
-              '다시 시도해주세요'
-              }
-            btnText={'확인'}
+          transparent={true}
+          btnBoolean={emailFail}
+          onPress={() => {
+            setEmailFail(false);
+          }}
+          titleText={'이메일 오류'}
+          bodyText={
+            '이메일이 중복이거나 잘못되엇습니다.\n' + '다시 시도해주세요'
+          }
+          btnText={'확인'}
         />
 
         {/* modal - 인증번호 성공 */}
         <ConfirmModal
-            transparent={true}
-            btnBoolean={codeSuccess}
-            onPress={() => {
-              setCodeSuccess(false);
-            }}
-            titleText={'인증 성공'}
-            bodyText={
-              '이메일 인증 성공!'
-            }
-            btnText={'확인'}
+          transparent={true}
+          btnBoolean={codeSuccess}
+          onPress={() => {
+            setCodeSuccess(false);
+          }}
+          titleText={'인증 성공'}
+          bodyText={'이메일 인증 성공!'}
+          btnText={'확인'}
         />
 
         {/* modal - 인증번호 오류 */}
         <ConfirmModal
-            transparent={true}
-            btnBoolean={codeFail}
-            onPress={() => {
-              setCodeFail(false);
-            }}
-            titleText={'인증 실패'}
-            bodyText={
-              '이메일 인증 실패입니다. 다시 시도해주세요'
-            }
-            btnText={'확인'}
+          transparent={true}
+          btnBoolean={codeFail}
+          onPress={() => {
+            setCodeFail(false);
+          }}
+          titleText={'인증 실패'}
+          bodyText={'이메일 인증 실패입니다. 다시 시도해주세요'}
+          btnText={'확인'}
         />
       </View>
     </View>
@@ -521,10 +518,5 @@ const styles = StyleSheet.create({
     left: 24,
     bottom: 20,
     width: '100%',
-  },
-  validText: {
-    fontSize: 12,
-    letterSpacing: -0.24,
-    color: '#ff0000',
   },
 });

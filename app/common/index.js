@@ -36,6 +36,12 @@ export const commonStyles = StyleSheet.create({
     borderRightColor: '#f4933a',
     paddingHorizontal: 20,
   },
+  // validText
+  validText: {
+    fontSize: 12,
+    letterSpacing: -0.24,
+    color: '#ff0000',
+  },
   // btn
   btnDefault: {
     flexDirection: 'column',

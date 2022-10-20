@@ -55,7 +55,7 @@ export default function PwFind({navigation}) {
               입력하신 이메일로 임시비밀번호가 발급됩니다.
             </Text>
             {emailMsg.length !== 0 && (
-              <Text style={[commonStyles.mt8, styles.validText]}>
+              <Text style={[commonStyles.mt8, commonStyles.validText]}>
                 {emailMsg}
               </Text>
             )}
@@ -116,10 +116,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
     letterSpacing: -0.24,
     color: '#7b7b7b',
-  },
-  validText: {
-    fontSize: 12,
-    letterSpacing: -0.24,
-    color: '#ff0000',
   },
 });

@@ -80,7 +80,7 @@ export default function PwReset({navigation}) {
                 secureTextEntry={true}
               />
               {pwMsg.length !== 0 && (
-                <Text style={[commonStyles.mt8, styles.validText]}>
+                <Text style={[commonStyles.mt8, commonStyles.validText]}>
                   {pwMsg}
                 </Text>
               )}
@@ -137,10 +137,5 @@ const styles = StyleSheet.create({
     left: 24,
     bottom: 20,
     width: '100%',
-  },
-  validText: {
-    fontSize: 12,
-    letterSpacing: -0.24,
-    color: '#ff0000',
   },
 });
