@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {View, Text, Button, TouchableOpacity, StyleSheet, TextInput, ScrollView, ImageBackground, Image} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, TextInput, ScrollView, ImageBackground, Modal, Pressable} from 'react-native';
 import * as Icons from 'react-native-heroicons/outline';
 import {commonStyles} from '../../common/index'
 
@@ -11,265 +11,424 @@ export default function Detail({ navigation }) {
         {id: 2, name:"정의당", src: require('../../img/detail_profile.png')},
     ];
 
+    const [userCheck , setUserCheck] = useState(true); //true일때 국회의원 false일때 국민
+    const [myComment, setMyComment] = useState(false); //true일때 내댓글임 false일때 내댓글이 아님
+    const [modalUp, setModalUp] = useState(false);
+    const [inputValue, setInputValue] = useState("");
+
+    let disabled = false;
+
+    inputValue.length !==0 ? disabled = false : disabled = true;
+
     return (
-        <ScrollView>
-            <View style={{height:180}}>
-                <ImageBackground source={party[0].src} resizeMode="cover">
-                    <View style={{flexDirection:"row", justifyContent:"flex-end", height:'100%', marginTop:16, marginRight:16}}>
-                        <View>
-                            <Text style={styles.markText}>
-                                2039
-                            </Text>
+        <View style={{position:"relative", height:"100%"}}>
+            <ScrollView>
+                <View style={{height:180}}>
+                    <ImageBackground source={party[0].src} resizeMode="cover">
+                        <View style={{flexDirection:"row", justifyContent:"flex-end", height:'100%', marginTop:16, marginRight:16}}>
+                            <View>
+                                <Text style={styles.markText}>
+                                    2039
+                                </Text>
+                            </View>
+                            <View>
+                                <Icons.StarIcon color="#fff" size={25}/>
+                            </View>
                         </View>
-                        <View>
-                            <Icons.StarIcon color="#fff" size={25}/>
-                        </View>
-                    </View>
-                </ImageBackground>
-            </View>
-            <View style={commonStyles.inner}>
-                <View style={{justifyContent:"center", alignItems:"center", marginTop:-100,}}>
-                    <View style={{width:160, height:160, borderWidth:5, borderRadius:85, borderColor:"#fff"}}>
-                        <ImageBackground
-                            source={require("../../img/detail_profile.png")}
-                            resizeMode="cover"
-                            style={{width:"100%", height:"100%",}}
-                        >
+                    </ImageBackground>
+                </View>
+                <View>
+                    <View style={commonStyles.inner}>
+                        <View style={{justifyContent:"center", alignItems:"center", marginTop:-100,}}>
+                            <View style={{width:160, height:160, borderWidth:5, borderRadius:85, borderColor:"#fff"}}>
+                                <ImageBackground
+                                    source={require("../../img/detail_profile.png")}
+                                    resizeMode="cover"
+                                    style={{width:"100%", height:"100%",}}
+                                >
 
-                        </ImageBackground>
-                    </View>
-                </View>
-                <View style={{justifyContent:"center", alignItems:"center", marginTop:24}}>
-                    <Text style={styles.profileName}>
-                        김대윤
-                    </Text>
-                    <Text style={styles.profileSubName}>
-                        {party[0].name}
-                    </Text>
-                </View>
-                <View style={{flexDirection:"row", marginTop:32, borderWidth:1, borderRadius:8, borderColor:"#f4933a"}}>
-                    <TouchableOpacity
-                        style={{flex:1}}
-                        onPress={() => setTab(0)}
-                    >
-                        <View style={!tab ? styles.tabOrange : styles.tabWhite}>
-                            <Text style={!tab ? styles.tabOrangeText : styles.tabWhiteText}>
-                                약력
+                                </ImageBackground>
+                            </View>
+                        </View>
+                        <View style={{justifyContent:"center", alignItems:"center", marginTop:24}}>
+                            <Text style={styles.profileName}>
+                                김대윤
+                            </Text>
+                            <Text style={styles.profileSubName}>
+                                {party[0].name}
                             </Text>
                         </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={{flex:1}}
-                        onPress={() => setTab(1)}
-                    >
-                        <View style={tab ? styles.tabOrange : styles.tabWhite}>
-                            <Text style={tab ? styles.tabOrangeText : styles.tabWhiteText}>
-                                댓글
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-                {tab === 0 ? (
-                    <View>
-                        <View style={{flexDirection:"row", marginTop:40}}>
-                            <View style={{flex:1, marginRight:24}}>
-                                <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
-                                    <View>
-                                        <Icons.CakeIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
-                                    </View>
-                                    <View>
-                                        <Text style={styles.historyText}>생년월일</Text>
-                                    </View>
+                        <View style={{flexDirection:"row", marginTop:32, borderWidth:1, borderRadius:8, borderColor:"#f4933a"}}>
+                            <TouchableOpacity
+                                style={{flex:1}}
+                                onPress={() => setTab(0)}
+                            >
+                                <View style={!tab ? styles.tabOrange : styles.tabWhite}>
+                                    <Text style={!tab ? styles.tabOrangeText : styles.tabWhiteText}>
+                                        약력
+                                    </Text>
                                 </View>
-                                <View>
-                                    <Text style={styles.historyTextSubText}>1983년 10월 12일</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={{flex:1}}
+                                onPress={() => setTab(1)}
+                            >
+                                <View style={tab ? styles.tabOrange : styles.tabWhite}>
+                                    <Text style={tab ? styles.tabOrangeText : styles.tabWhiteText}>
+                                        댓글
+                                    </Text>
                                 </View>
-                            </View>
-                            <View style={{flex:1}}>
-                                <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
-                                    <View>
-                                        <Icons.PhoneIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
-                                    </View>
-                                    <View>
-                                        <Text style={styles.historyText}>전화번호</Text>
-                                    </View>
-                                </View>
-                                <View>
-                                    <Text style={styles.historyTextSubText}>02)2384-1234</Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={{flexDirection:"row", marginTop:40}}>
-                            <View style={{flex:1, marginRight:24}}>
-                                <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
-                                    <View>
-                                        <Icons.BriefcaseIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
-                                    </View>
-                                    <View>
-                                        <Text style={styles.historyText}>국회참석률</Text>
-                                    </View>
-                                </View>
-                                <View style={{flexDirection:"row", alignItems:"flex-end"}}>
-                                    <View>
-                                        <Text style={styles.historyBigText}>38</Text>
-                                    </View>
-                                    <View>
-                                        <Text style={[styles.historyTextSubText, {marginBottom:5}]}>%</Text>
-                                    </View>
-                                </View>
-                            </View>
-                            <View style={{flex:1}}>
-                                <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
-                                    <View>
-                                        <Icons.ChatBubbleLeftEllipsisIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
-                                    </View>
-                                    <View>
-                                        <Text style={styles.historyText}>댓글 응답률</Text>
-                                    </View>
-                                </View>
-                                <View style={{flexDirection:"row", alignItems:"flex-end"}}>
-                                    <View>
-                                        <Text style={styles.historyBigText}>38</Text>
-                                    </View>
-                                    <View>
-                                        <Text style={[styles.historyTextSubText, {marginBottom:5}]}>%</Text>
-                                    </View>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={{marginTop:40}}>
-                            <View style={{flex:1, marginRight:24}}>
-                                <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
-                                    <View>
-                                        <Icons.HandThumbUpIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
-                                    </View>
-                                    <View>
-                                        <Text style={styles.historyText}>발의한 안건</Text>
-                                    </View>
-                                </View>
-                                <View style={{marginTop:8}}>
-                                    <View style={{marginTop:8}}>
-                                        <TouchableOpacity>
-                                            <View style={{flexDirection:"row", justifyContent:"space-between",}}>
-                                                <View style={{marginRight:32, flex:30,}}>
-                                                    <Text numberOfLines={1} ellipsizeMode="tail" style={styles.historyTextSubText02}>문화예술진흥법 일부개정법률안(대안)(문화머시기머시기)</Text>
-                                                </View>
-                                                <View style={{flex:1}}>
-                                                    <Icons.ChevronRightIcon color="rgb(217,217,217)" size={25} style={commonStyles.mr8}/>
-                                                </View>
-                                            </View>
-                                        </TouchableOpacity>
-                                    </View>
-                                    <View style={{marginTop:8}}>
-                                        <TouchableOpacity>
-                                            <View style={{flexDirection:"row", justifyContent:"space-between",}}>
-                                                <View style={{marginRight:32, flex:30,}}>
-                                                    <Text numberOfLines={1} ellipsizeMode="tail" style={styles.historyTextSubText02}>문화예술진흥법 일부개정법률안(대안)(문화머시기머시기)</Text>
-                                                </View>
-                                                <View style={{flex:1}}>
-                                                    <Icons.ChevronRightIcon color="rgb(217,217,217)" size={25} style={commonStyles.mr8}/>
-                                                </View>
-                                            </View>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={{marginTop:40}}>
-                            <View style={{flex:1, marginRight:24}}>
-                                <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
-                                    <View>
-                                        <Icons.HandThumbDownIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
-                                    </View>
-                                    <View>
-                                        <Text style={styles.historyText}>반대한 안건</Text>
-                                    </View>
-                                </View>
-                                <View style={{marginTop:8}}>
-                                    <View style={{marginTop:8}}>
-                                        <TouchableOpacity>
-                                            <View style={{flexDirection:"row", justifyContent:"space-between",}}>
-                                                <View style={{marginRight:32, flex:30,}}>
-                                                    <Text numberOfLines={1} ellipsizeMode="tail" style={styles.historyTextSubText02}>문화예술진흥법 일부개정법률안(대안)(문화머시기머시기)</Text>
-                                                </View>
-                                                <View style={{flex:1}}>
-                                                    <Icons.ChevronRightIcon color="rgb(217,217,217)" size={25} style={commonStyles.mr8}/>
-                                                </View>
-                                            </View>
-                                        </TouchableOpacity>
-                                    </View>
-                                    <View style={{marginTop:8}}>
-                                        <TouchableOpacity>
-                                            <View style={{flexDirection:"row", justifyContent:"space-between",}}>
-                                                <View style={{marginRight:32, flex:30,}}>
-                                                    <Text numberOfLines={1} ellipsizeMode="tail" style={styles.historyTextSubText02}>문화예술진흥법 일부개정법률안(대안)(문화머시기머시기)</Text>
-                                                </View>
-                                                <View style={{flex:1}}>
-                                                    <Icons.ChevronRightIcon color="rgb(217,217,217)" size={25} style={commonStyles.mr8}/>
-                                                </View>
-                                            </View>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={{marginTop:40}}>
-                            <View style={{flex:1, marginRight:24}}>
-                                <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
-                                    <View>
-                                        <Icons.IdentificationIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
-                                    </View>
-                                    <View>
-                                        <Text style={styles.historyText}>학력 및 경력</Text>
-                                    </View>
-                                </View>
-                                <View>
-                                    <View>
-                                        <Text style={[styles.historyTextSubText02, {marginTop:24}]}>
-                                            [학력]
-                                        </Text>
-                                        <Text style={styles.historyTextSubText03}>
-                                            마산공고(26회){"\n"}
-                                            창원대학교 행정학과{"\n"}
-                                            중앙대학교 행정대학원 지방의회과 석사{"\n"}
-                                            창원대학교 대학원 행정학 박사
-                                        </Text>
-                                    </View>
-                                </View>
-                                <View>
-                                    <View>
-                                        <Text style={[styles.historyTextSubText02, {marginTop:24}]}>
-                                            [경력]
-                                        </Text>
-                                        <Text style={styles.historyTextSubText03}>
-                                            현) 국회 보건복지위원회 국민의힘 간사{"\n"}
-                                            현) 국민의힘 소상공인살리기 특별위원회 부위원장{"\n"}
-                                            현) 국민의힘 코로나19 대책 특별위원회 위원
-                                        </Text>
-                                    </View>
-                                </View>
-                                <View style={{paddingBottom:48}}>
-                                    <View>
-                                        <Text style={[styles.historyTextSubText03, {marginTop:24}]}>
-                                            미래통합당 경남도당 민생특위 위원장{"\n"}
-                                            제19대 국회의원 (새누리당/경남 창원시 성산구){"\n"}
-                                            새누리당 원내부대표
-                                        </Text>
-                                    </View>
-                                </View>
-                            </View>
+                            </TouchableOpacity>
                         </View>
                     </View>
-                ) :
-                (
-                    <View>
-                        <Text>456</Text>
-                    </View>
-                )}
+                    {tab === 0 ? (
+                        <View style={commonStyles.inner}>
+                            <View style={{flexDirection:"row", marginTop:40}}>
+                                <View style={{flex:1, marginRight:24}}>
+                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
+                                        <View>
+                                            <Icons.CakeIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
+                                        </View>
+                                        <View>
+                                            <Text style={styles.historyText}>생년월일</Text>
+                                        </View>
+                                    </View>
+                                    <View>
+                                        <Text style={styles.historyTextSubText}>1983년 10월 12일</Text>
+                                    </View>
+                                </View>
+                                <View style={{flex:1}}>
+                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
+                                        <View>
+                                            <Icons.PhoneIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
+                                        </View>
+                                        <View>
+                                            <Text style={styles.historyText}>전화번호</Text>
+                                        </View>
+                                    </View>
+                                    <View>
+                                        <Text style={styles.historyTextSubText}>02)2384-1234</Text>
+                                    </View>
+                                </View>
+                            </View>
+                            <View style={{flexDirection:"row", marginTop:40}}>
+                                <View style={{flex:1, marginRight:24}}>
+                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
+                                        <View>
+                                            <Icons.BriefcaseIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
+                                        </View>
+                                        <View>
+                                            <Text style={styles.historyText}>국회참석률</Text>
+                                        </View>
+                                    </View>
+                                    <View style={{flexDirection:"row", alignItems:"flex-end"}}>
+                                        <View>
+                                            <Text style={styles.historyBigText}>38</Text>
+                                        </View>
+                                        <View>
+                                            <Text style={[styles.historyTextSubText, {marginBottom:5}]}>%</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                                <View style={{flex:1}}>
+                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
+                                        <View>
+                                            <Icons.ChatBubbleLeftEllipsisIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
+                                        </View>
+                                        <View>
+                                            <Text style={styles.historyText}>댓글 응답률</Text>
+                                        </View>
+                                    </View>
+                                    <View style={{flexDirection:"row", alignItems:"flex-end"}}>
+                                        <View>
+                                            <Text style={styles.historyBigText}>38</Text>
+                                        </View>
+                                        <View>
+                                            <Text style={[styles.historyTextSubText, {marginBottom:5}]}>%</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+                            <View style={{marginTop:40}}>
+                                <View style={{flex:1, marginRight:24}}>
+                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
+                                        <View>
+                                            <Icons.HandThumbUpIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
+                                        </View>
+                                        <View>
+                                            <Text style={styles.historyText}>발의한 안건</Text>
+                                        </View>
+                                    </View>
+                                    <View style={{marginTop:8}}>
+                                        <View style={{marginTop:8}}>
+                                            <TouchableOpacity>
+                                                <View style={{flexDirection:"row", justifyContent:"space-between",}}>
+                                                    <View style={{marginRight:32, flex:30,}}>
+                                                        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.historyTextSubText02}>문화예술진흥법 일부개정법률안(대안)(문화머시기머시기)</Text>
+                                                    </View>
+                                                    <View style={{flex:1}}>
+                                                        <Icons.ChevronRightIcon color="rgb(217,217,217)" size={25} style={commonStyles.mr8}/>
+                                                    </View>
+                                                </View>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <View style={{marginTop:8}}>
+                                            <TouchableOpacity>
+                                                <View style={{flexDirection:"row", justifyContent:"space-between",}}>
+                                                    <View style={{marginRight:32, flex:30,}}>
+                                                        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.historyTextSubText02}>문화예술진흥법 일부개정법률안(대안)(문화머시기머시기)</Text>
+                                                    </View>
+                                                    <View style={{flex:1}}>
+                                                        <Icons.ChevronRightIcon color="rgb(217,217,217)" size={25} style={commonStyles.mr8}/>
+                                                    </View>
+                                                </View>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+                            <View style={{marginTop:40}}>
+                                <View style={{flex:1, marginRight:24}}>
+                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
+                                        <View>
+                                            <Icons.HandThumbDownIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
+                                        </View>
+                                        <View>
+                                            <Text style={styles.historyText}>반대한 안건</Text>
+                                        </View>
+                                    </View>
+                                    <View style={{marginTop:8}}>
+                                        <View style={{marginTop:8}}>
+                                            <TouchableOpacity>
+                                                <View style={{flexDirection:"row", justifyContent:"space-between",}}>
+                                                    <View style={{marginRight:32, flex:30,}}>
+                                                        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.historyTextSubText02}>문화예술진흥법 일부개정법률안(대안)(문화머시기머시기)</Text>
+                                                    </View>
+                                                    <View style={{flex:1}}>
+                                                        <Icons.ChevronRightIcon color="rgb(217,217,217)" size={25} style={commonStyles.mr8}/>
+                                                    </View>
+                                                </View>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <View style={{marginTop:8}}>
+                                            <TouchableOpacity>
+                                                <View style={{flexDirection:"row", justifyContent:"space-between",}}>
+                                                    <View style={{marginRight:32, flex:30,}}>
+                                                        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.historyTextSubText02}>문화예술진흥법 일부개정법률안(대안)(문화머시기머시기)</Text>
+                                                    </View>
+                                                    <View style={{flex:1}}>
+                                                        <Icons.ChevronRightIcon color="rgb(217,217,217)" size={25} style={commonStyles.mr8}/>
+                                                    </View>
+                                                </View>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+                            <View style={{marginTop:40}}>
+                                <View style={{flex:1, marginRight:24}}>
+                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
+                                        <View>
+                                            <Icons.IdentificationIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
+                                        </View>
+                                        <View>
+                                            <Text style={styles.historyText}>학력 및 경력</Text>
+                                        </View>
+                                    </View>
+                                    <View>
+                                        <View>
+                                            <Text style={[styles.historyTextSubText02, {marginTop:24}]}>
+                                                [학력]
+                                            </Text>
+                                            <Text style={styles.historyTextSubText03}>
+                                                마산공고(26회){"\n"}
+                                                창원대학교 행정학과{"\n"}
+                                                중앙대학교 행정대학원 지방의회과 석사{"\n"}
+                                                창원대학교 대학원 행정학 박사
+                                            </Text>
+                                        </View>
+                                    </View>
+                                    <View>
+                                        <View>
+                                            <Text style={[styles.historyTextSubText02, {marginTop:24}]}>
+                                                [경력]
+                                            </Text>
+                                            <Text style={styles.historyTextSubText03}>
+                                                현) 국회 보건복지위원회 국민의힘 간사{"\n"}
+                                                현) 국민의힘 소상공인살리기 특별위원회 부위원장{"\n"}
+                                                현) 국민의힘 코로나19 대책 특별위원회 위원
+                                            </Text>
+                                        </View>
+                                    </View>
+                                    <View style={{paddingBottom:48}}>
+                                        <View>
+                                            <Text style={[styles.historyTextSubText03, {marginTop:24}]}>
+                                                미래통합당 경남도당 민생특위 위원장{"\n"}
+                                                제19대 국회의원 (새누리당/경남 창원시 성산구){"\n"}
+                                                새누리당 원내부대표
+                                            </Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                    ) :
+                    (
+                        <View>
+                            <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between", paddingVertical:18, borderTopWidth:1, borderBottomWidth:1, borderColor:"#eee", marginTop:16,}}>
+                                <View style={{flexDirection:"row", alignItems:"center", paddingHorizontal:24,}}>
+                                    <Text style={styles.commentMainText}>댓글</Text>
+                                    <Text style={styles.commentSubText}>2,329개</Text>
+                                </View>
+                                <View>
+                                    <TouchableOpacity
+                                        activeOpacity={1}
+                                    >
+                                        <Icons.BarsArrowDownIcon color="rgb(217,217,217)" size={25} style={commonStyles.mr8}/>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            <View style={!myComment ? {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee", backgroundColor:"#fff"} : {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee",  backgroundColor:"#fff8f2"}}>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    onPress={() => (userCheck || myComment) &&
+                                        setModalUp(true)
+                                    }
+                                >
+                                    <View style={{paddingVertical:24}}>
+                                        <Text style={styles.commentName}>김대용</Text>
+                                        <TextInput multiline editable={false}  style={styles.commentContent}>
+                                            하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하
+                                            이하이하이하이하이하이하이하이하이하이하이하이
+                                            하이하이하이하이하이하이하이하이하이하이하이하이
+                                            하이하이하이하이하이하이하이하이하이
+                                        </TextInput>
+                                        <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
+                                            <Text style={styles.commentDay}>2022.10.14</Text>
+                                            <TouchableOpacity
+                                                activeOpacity={1}
+                                            >
+                                                <View style={[{flexDirection:"row",alignItems:"center"}, styles.commentUp]}>
+                                                    <Icons.HandThumbUpIcon color="rgb(217,217,217)" size={18} style={commonStyles.mr8}/>
+                                                    <Text style={styles.commentUpText}>329</Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={myComment ? {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee", backgroundColor:"#fff"} : {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee",  backgroundColor:"#fff8f2"}}>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    onPress={() => (userCheck && myComment) &&
+                                        setModalUp(true)
+                                    }
+                                >
+                                    <View style={{paddingVertical:24}}>
+                                        <View style={{flexDirection:"row", alignItems:"center"}}>
+                                            <Icons.ArrowUturnDownIcon color="#f4933a" size={18} style={{transform:[{rotate:"-90deg"}], marginRight:8}}/>
+                                            <Text style={[styles.commentName, {color:"#f4933a"}]}>@김대용</Text>
+                                        </View>
+                                        <TextInput multiline editable={false}  style={styles.commentContent}>
+                                            하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하
+                                            이하이하이하이하이하이하이하이하이하이하이하이
+                                            하이하이하이하이하이하이하이하이하이하이하이하이
+                                            하이하이하이하이하이하이하이하이하이
+                                        </TextInput>
+                                        <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
+                                            <Text style={styles.commentDay}>2022.10.14</Text>
+                                            <TouchableOpacity
+                                                activeOpacity={1}
+                                            >
+                                                <View style={[{flexDirection:"row",alignItems:"center"}, styles.commentUp]}>
+                                                    <Icons.HandThumbUpIcon color="rgb(217,217,217)" size={18} style={commonStyles.mr8}/>
+                                                    <Text style={styles.commentUpText}>329</Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    )}
 
-            </View>
+                </View>
+                
+            </ScrollView>
+            {tab === 1 && 
+                <View style={{paddingHorizontal:24, borderTopWidth:1, paddingVertical:8, borderColor:"#eee", position:"absolute", bottom:0, left:0, width:"100%", backgroundColor:"#fff"}}>
+                    <View style={{flexDirection:"row", alignItems:"center",}}>
+                        <TextInput 
+                            placeholder='최대200자까지 가능합니다.' 
+                            placeholderTextColor="#b1b1b1" 
+                            multiline style={{flex:9}} 
+                            value={inputValue} 
+                            onChangeText={(text) => setInputValue(text)}>
+                        </TextInput>
+                        <View style={{flex:1}}>
+                            <TouchableOpacity
+                                disabled = {disabled}
+                            >
+                                <View style={disabled ? styles.commentBtn : [styles.commentBtn, {borderColor:"#f4933a"}]}>
+                                    <Text style={disabled ? styles.commentBtnText : [styles.commentBtnText, {color:"#f4933a"}]}>확인</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            }
+            <Modal
+                visible={modalUp}
+                transparent={true}
+            >
+                <Pressable style={{
+                    flex:1,
+                    backgroundColor:'rgba(0,0,0,0.4)',
+
+                }}
+                onPress={()=>setModalUp(false)}
+                />
+                <View style={{justifyContent:"flex-end", alignItems:"center", flex:1, position:"absolute", bottom:0, left:0, width:"100%",}}>
+                    <View 
+                        style={{width:"90%", maxWidth:360, margin:16, borderRadius:8, backgroundColor:"#fff", overflow:"hidden",}}
+                    >
+                        {userCheck && myComment === false ? 
+                        <View>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                            >
+                                <View style={[styles.modalView,{borderBottomWidth:1, borderColor:"#eee"}]}>
+                                    <Text style={styles.modalText}>답글달기</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        :
+                        <View>
+                            <View>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                >
+                                    <View style={[styles.modalView,{borderBottomWidth:1, borderColor:"#eee"}]}>
+                                        <Text style={styles.modalText}>수정</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                            <View>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                >
+                                    <View style={styles.modalView}>
+                                        <Text style={styles.modalTextRed}>삭제</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </View> 
+                        }
+                    </View>
+                </View>
+            </Modal>
             
-        </ScrollView>
+        </View>
     );
 
     
@@ -353,5 +512,84 @@ const styles = StyleSheet.create({
         letterSpacing:-0.28,
         lineHeight:22,
     },
+    commentMainText:{
+        fontSize:14,
+        fontWeight:"bold",
+        letterSpacing:-0.28,
+        color:"#313131",
+        marginRight:8,
+    },
+    commentSubText:{
+        fontSize:12,
+        fontWeight:"bold",
+        letterSpacing:-0.24,
+        color:"#7b7b7b"
+    },
+    commentName:{
+        fontSize:14,
+        fontWeight:"bold",
+        letterSpacing:-0.56,
+        color:"#313131",
+        marginBottom:8,
+    },
+    commentContent:{
+        fontSize:14,
+        fontWeight:"normal",
+        letterSpacing:-0.28,
+        color:"#7b7b7b",
+        lineHeight:20,
+    },
+    commentDay:{
+        paddingTop:8,
+        fontSize:12,
+        fontWeight:"300",
+        letterSpacing:-0.24,
+        color:"#b1b1b1"
+    },
+    commentUp:{
+        borderWidth:1,
+        borderColor:"#eee",
+        borderRadius:8,
+        padding:8,
+        marginTop:8,
+    },
+    commentUpText:{
+        fontSize:12,
+        fontWeight:"500",
+        letterSpacing:-0.24,
+        color:"#7b7b7b"
+    },
+    commentBtn:{
+        borderWidth:1,
+        borderColor:"#d0d0d0",
+        height:32,
+        width:50,
+        borderRadius:4,
+        alignItems:"center",
+        justifyContent:"center",
+    },
+    commentBtnText:{
+        fontSize:12,
+        fontWeight:"bold",
+        letterSpacing:-0.48,
+        color:"#d0d0d0",
+    },
+    modalView:{
+        height:60,
+        justifyContent:"center",
+        alignItems:"center",
+    },
+    modalText:{
+        fontSize:14,
+        fontWeight:"normal",
+        letterSpacing:-0.56,
+        color:"#313131"
+    },
+    modalTextRed:{
+        fontSize:14,
+        fontWeight:"bold",
+        letterSpacing:-0.56,
+        color:"#F36060"
+    }
 
 });
