@@ -11,10 +11,12 @@ export default function Detail({ navigation }) {
         {id: 2, name:"정의당", src: require('../../img/detail_profile.png')},
     ];
 
-    const [userCheck , setUserCheck] = useState(true); //true일때 국회의원 false일때 국민
-    const [myComment, setMyComment] = useState(false); //true일때 내댓글임 false일때 내댓글이 아님
+    const [userCheck , setUserCheck] = useState(false); //true일때 국회의원 false일때 국민
+    const [myComment, setMyComment] = useState(true); //true일때 내댓글임 false일때 내댓글이 아님
     const [modalUp, setModalUp] = useState(false);
     const [inputValue, setInputValue] = useState("");
+    const [deleteComment, setDeleteComment] = useState(false);
+    const [like, setLike] = useState(false);
 
     let disabled = false;
 
@@ -60,6 +62,7 @@ export default function Detail({ navigation }) {
                         </View>
                         <View style={{flexDirection:"row", marginTop:32, borderWidth:1, borderRadius:8, borderColor:"#f4933a"}}>
                             <TouchableOpacity
+                                activeOpacity={1}
                                 style={{flex:1}}
                                 onPress={() => setTab(0)}
                             >
@@ -70,6 +73,7 @@ export default function Detail({ navigation }) {
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity
+                                activeOpacity={1}
                                 style={{flex:1}}
                                 onPress={() => setTab(1)}
                             >
@@ -274,7 +278,7 @@ export default function Detail({ navigation }) {
                         </View>
                     ) :
                     (
-                        <View>
+                        <View style={{paddingBottom:65}}>
                             <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between", paddingVertical:18, borderTopWidth:1, borderBottomWidth:1, borderColor:"#eee", marginTop:16,}}>
                                 <View style={{flexDirection:"row", alignItems:"center", paddingHorizontal:24,}}>
                                     <Text style={styles.commentMainText}>댓글</Text>
@@ -308,16 +312,16 @@ export default function Detail({ navigation }) {
                                             <TouchableOpacity
                                                 activeOpacity={1}
                                             >
-                                                <View style={[{flexDirection:"row",alignItems:"center"}, styles.commentUp]}>
-                                                    <Icons.HandThumbUpIcon color="rgb(217,217,217)" size={18} style={commonStyles.mr8}/>
-                                                    <Text style={styles.commentUpText}>329</Text>
+                                                <View style={!like ? [styles.commentUp, {flexDirection:"row",alignItems:"center"}] : [styles.commentUp, {flexDirection:"row",alignItems:"center", borderColor:"#f4933a"}]}>
+                                                    <Icons.HandThumbUpIcon color={!like ? "rgb(217,217,217)" : "#f4933a"} size={18} style={commonStyles.mr8} />
+                                                    <Text style={!like ? styles.commentUpText : [styles.commentBtnText, {color:"#f4933a"}]}>329</Text>
                                                 </View>
                                             </TouchableOpacity>
                                         </View>
                                     </View>
                                 </TouchableOpacity>
                             </View>
-                            <View style={myComment ? {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee", backgroundColor:"#fff"} : {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee",  backgroundColor:"#fff8f2"}}>
+                            <View style={myComment ? {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee", backgroundColor:"#FdFdFd",} : {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee",  backgroundColor:"#fff8f2"}}>
                                 <TouchableOpacity
                                     activeOpacity={1}
                                     onPress={() => (userCheck && myComment) &&
@@ -327,22 +331,22 @@ export default function Detail({ navigation }) {
                                     <View style={{paddingVertical:24}}>
                                         <View style={{flexDirection:"row", alignItems:"center"}}>
                                             <Icons.ArrowUturnDownIcon color="#f4933a" size={18} style={{transform:[{rotate:"-90deg"}], marginRight:8}}/>
-                                            <Text style={[styles.commentName, {color:"#f4933a"}]}>@김대용</Text>
+                                            <Text style={[styles.commentName, {color:"#f4933a", marginTop:5,}]}>@김대용</Text>
                                         </View>
                                         <TextInput multiline editable={false}  style={styles.commentContent}>
-                                            하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하
-                                            이하이하이하이하이하이하이하이하이하이하이하이
-                                            하이하이하이하이하이하이하이하이하이하이하이하이
-                                            하이하이하이하이하이하이하이하이하이
+                                            대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓
+                                            대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓
+                                            대댓대댓대댓대댓대댓대댓대댓대댓
+                                            대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓
                                         </TextInput>
                                         <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
                                             <Text style={styles.commentDay}>2022.10.14</Text>
                                             <TouchableOpacity
                                                 activeOpacity={1}
                                             >
-                                                <View style={[{flexDirection:"row",alignItems:"center"}, styles.commentUp]}>
-                                                    <Icons.HandThumbUpIcon color="rgb(217,217,217)" size={18} style={commonStyles.mr8}/>
-                                                    <Text style={styles.commentUpText}>329</Text>
+                                                <View style={!like ? [styles.commentUp, {flexDirection:"row",alignItems:"center"}] : [styles.commentUp, {flexDirection:"row",alignItems:"center", borderColor:"#f4933a"}]}>
+                                                    <Icons.HandThumbUpIcon color={!like ? "rgb(217,217,217)" : "#f4933a"} size={18} style={commonStyles.mr8} />
+                                                    <Text style={!like ? styles.commentUpText : [styles.commentBtnText, {color:"#f4933a"}]}>329</Text>
                                                 </View>
                                             </TouchableOpacity>
                                         </View>
@@ -361,9 +365,12 @@ export default function Detail({ navigation }) {
                         <TextInput 
                             placeholder='최대200자까지 가능합니다.' 
                             placeholderTextColor="#b1b1b1" 
-                            multiline style={{flex:9}} 
+                            multiline 
+                            style={{flex:9}} 
                             value={inputValue} 
-                            onChangeText={(text) => setInputValue(text)}>
+                            onChangeText={(text) => setInputValue(text)}
+                            maxLength={200}
+                        >
                         </TextInput>
                         <View style={{flex:1}}>
                             <TouchableOpacity
@@ -416,6 +423,10 @@ export default function Detail({ navigation }) {
                             <View>
                                 <TouchableOpacity
                                     activeOpacity={1}
+                                    onPress={() => {
+                                        setDeleteComment(true);
+                                        setModalUp(false)
+                                    }}
                                 >
                                     <View style={styles.modalView}>
                                         <Text style={styles.modalTextRed}>삭제</Text>
@@ -424,6 +435,39 @@ export default function Detail({ navigation }) {
                             </View>
                         </View> 
                         }
+                    </View>
+                </View>
+            </Modal>
+            <Modal
+                visible={deleteComment}
+                transparent={true}
+            >
+                <View style={{justifyContent:"center", alignItems:"center", flex:1, backgroundColor:"rgba(0,0,0,0.4)"}}>
+                    <View style={{width:"90%", maxWidth:360, borderRadius:8, backgroundColor:"#fff", overflow:"hidden",}}>
+                        <View style={{justifyContent:"center", alignItems:"center", paddingVertical:48}}>
+                            <Text>정말로 삭제 하시겠습니까?</Text>
+                        </View>
+                        <View style={{flexDirection:"row",}}>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                style={{flex:1}}
+                            >
+                                <View style={{paddingVertical:24}}>
+                                    <Text style={{textAlign:"center", color:"red"}}>삭제</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                style={{flex:1}}
+                                onPress={() => {
+                                    setDeleteComment(false);
+                                }}
+                            >
+                                <View style={{paddingVertical:24}}>
+                                    <Text style={{textAlign:"center"}}>취소</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </Modal>
