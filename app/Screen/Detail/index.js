@@ -1,9 +1,170 @@
 import { useState } from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, TextInput, ScrollView, ImageBackground, Modal, Pressable} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, TextInput, ScrollView, ImageBackground, Modal, Pressable, FlatList} from 'react-native';
 import * as Icons from 'react-native-heroicons/outline';
-import {commonStyles} from '../../common/index'
+import {commonStyles} from '../../common/index';
 
 export default function Detail({ navigation }) {
+    const loginState = {
+        login:true,
+        isCon:true,
+        email:'ezicland@naver.com',
+        name:'손동윤',
+        userCd:1
+    }
+    const arr = [
+        {   name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:1,
+            reComment:[
+                {
+                    con_name:'김대윤',
+                    con_content:'안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!1',
+                    con_regiDt:'2022.10.15',
+                    con_like:5,
+                    con_user_cd:2,
+                    con_commentCd:2,
+                },
+                {
+                    con_name:'김대윤',
+                    con_content:'어제댓글 생각해보니 별로네요 다시씁니다1',
+                    con_regiDt:'2022.10.16',
+                    con_like:5,
+                    con_user_cd:2,
+                    con_commentCd:3,
+                }
+            ]
+        },
+        {   name:'김대용',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ2',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:4,
+            reComment:[
+                {
+                    con_name:'김대윤',
+                    con_content:'어제댓글 생각해보니 별로네요 다시씁니다2',
+                    con_regiDt:'2022.10.16',
+                    con_like:5,
+                    con_user_cd:1,
+                    con_commentCd:5,
+                }
+            ]
+        },
+        {   name:'김대용',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ3',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:3,
+            commentCd:6,
+            reComment:[]
+        },
+        {   name:'김대용',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ4',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:4,
+            commentCd:7,
+            reComment:[
+                {
+                    con_name:'김대윤',
+                    con_content:'안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!4',
+                    con_regiDt:'2022.10.15',
+                    con_like:5,
+                    con_user_cd:1,
+                    con_commentCd:8,
+                },
+                {
+                    con_name:'김대윤',
+                    con_content:'어제댓글 생각해보니 별로네요 다시씁니다4',
+                    con_regiDt:'2022.10.16',
+                    con_like:5,
+                    con_user_cd:1,
+                    con_commentCd:9,
+                }
+            ]
+        },
+        {   name:'김대용',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ5',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:5,
+            commentCd:10,
+            reComment:[
+                {
+                    con_name:'김대윤',
+                    con_content:'안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!5',
+                    con_regiDt:'2022.10.15',
+                    con_like:5,
+                    con_user_cd:1,
+                    con_commentCd:11,
+                },
+                {
+                    con_name:'김대윤',
+                    con_content:'어제댓글 생각해보니 별로네요 다시씁니다5',
+                    con_regiDt:'2022.10.16',
+                    con_like:5,
+                    con_user_cd:1,
+                    con_commentCd:12,
+                }
+            ]
+        },
+        {   name:'김대용',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ6',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:6,
+            commentCd:13,
+            reComment:[
+                {
+                    con_name:'김대윤',
+                    con_content:'안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요!6',
+                    con_regiDt:'2022.10.15',
+                    con_like:5,
+                    con_user_cd:1,
+                    con_commentCd:14,
+                },
+                {
+                    con_name:'김대윤',
+                    con_content:'어제댓글 생각해보니 별로네요 다시씁니다6',
+                    con_regiDt:'2022.10.16',
+                    con_like:5,
+                    con_user_cd:1,
+                    con_commentCd:15,
+                }
+            ]
+        },
+        {   name:'김대용',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ7',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:7,
+            commentCd:16,
+            reComment:[
+                {
+                    con_name:'김대윤',
+                    con_content:'안녕하세요!안녕하세요!안녕하세요!안녕하세요!안녕하세요7',
+                    con_regiDt:'2022.10.15',
+                    con_like:5,
+                    con_user_cd:1,
+                    con_commentCd:17,
+                },
+                {
+                    con_name:'김대윤',
+                    con_content:'어제댓글 생각해보니 별로네요 다시씁니다7',
+                    con_regiDt:'2022.10.16',
+                    con_like:5,
+                    con_user_cd:1,
+                    con_commentCd:18,
+                }
+            ]
+        },
+];
+    const [commentCdId , setCommentCdId] = useState(null);
+    const [mine, setMine] = useState(false);
 
     const [tab , setTab] = useState(0);
     const party = [
@@ -11,20 +172,20 @@ export default function Detail({ navigation }) {
         {id: 2, name:"정의당", src: require('../../img/detail_profile.png')},
     ];
 
-    const [userCheck , setUserCheck] = useState(false); //true일때 국회의원 false일때 국민
-    const [myComment, setMyComment] = useState(true); //true일때 내댓글임 false일때 내댓글이 아님
     const [modalUp, setModalUp] = useState(false);
     const [inputValue, setInputValue] = useState("");
-    const [deleteComment, setDeleteComment] = useState(false);
+    const [modalDeleteComment, setModalDeleteComment] = useState(false);
     const [like, setLike] = useState(false);
 
     let disabled = false;
 
     inputValue.length !==0 ? disabled = false : disabled = true;
 
+
+
     return (
         <View style={{position:"relative", height:"100%"}}>
-            <ScrollView>
+            <ScrollView >
                 <View style={{height:180}}>
                     <ImageBackground source={party[0].src} resizeMode="cover">
                         <View style={{flexDirection:"row", justifyContent:"flex-end", height:'100%', marginTop:16, marginRight:16}}>
@@ -282,7 +443,7 @@ export default function Detail({ navigation }) {
                             <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between", paddingVertical:18, borderTopWidth:1, borderBottomWidth:1, borderColor:"#eee", marginTop:16,}}>
                                 <View style={{flexDirection:"row", alignItems:"center", paddingHorizontal:24,}}>
                                     <Text style={styles.commentMainText}>댓글</Text>
-                                    <Text style={styles.commentSubText}>2,329개</Text>
+                                    <Text style={styles.commentSubText}>{arr.length}개</Text>
                                 </View>
                                 <View>
                                     <TouchableOpacity
@@ -292,67 +453,98 @@ export default function Detail({ navigation }) {
                                     </TouchableOpacity>
                                 </View>
                             </View>
-                            <View style={!myComment ? {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee", backgroundColor:"#fff"} : {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee",  backgroundColor:"#fff8f2"}}>
-                                <TouchableOpacity
-                                    activeOpacity={1}
-                                    onPress={() => (userCheck || myComment) &&
-                                        setModalUp(true)
-                                    }
-                                >
-                                    <View style={{paddingVertical:24}}>
-                                        <Text style={styles.commentName}>김대용</Text>
-                                        <TextInput multiline editable={false}  style={styles.commentContent}>
-                                            하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하이하
-                                            이하이하이하이하이하이하이하이하이하이하이하이
-                                            하이하이하이하이하이하이하이하이하이하이하이하이
-                                            하이하이하이하이하이하이하이하이하이
-                                        </TextInput>
-                                        <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
-                                            <Text style={styles.commentDay}>2022.10.14</Text>
-                                            <TouchableOpacity
-                                                activeOpacity={1}
-                                            >
-                                                <View style={!like ? [styles.commentUp, {flexDirection:"row",alignItems:"center"}] : [styles.commentUp, {flexDirection:"row",alignItems:"center", borderColor:"#f4933a"}]}>
-                                                    <Icons.HandThumbUpIcon color={!like ? "rgb(217,217,217)" : "#f4933a"} size={18} style={commonStyles.mr8} />
-                                                    <Text style={!like ? styles.commentUpText : [styles.commentBtnText, {color:"#f4933a"}]}>329</Text>
-                                                </View>
-                                            </TouchableOpacity>
+                            <FlatList
+                                data={arr}
+                                renderItem={({item}) => {
+                                    return(
+                                        <View>
+                                            <View style={loginState.userCd !== item.userCd ? {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee", backgroundColor:"#fff"} : {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee",  backgroundColor:"#fff8f2"}}>
+                                                <TouchableOpacity
+                                                    activeOpacity={1}
+                                                    onPress={() => {
+                                                        (loginState.isCon || loginState.userCd === item.userCd) && setModalUp(true);
+                                                        (loginState.userCd === item.userCd) ? setMine(true) : setMine(false);
+                                                        setCommentCdId(item.commentCd);
+                                                    }}
+                                                >
+                                                    <View style={{paddingVertical:24}}>
+                                                        <Text style={styles.commentName}>{item.name}</Text>
+                                                        <TextInput multiline editable={false}  style={styles.commentContent}>
+                                                            {item.content}
+                                                        </TextInput>
+                                                        <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
+                                                            <Text style={styles.commentDay}>{item.regiDt}</Text>
+                                                            <TouchableOpacity
+                                                                activeOpacity={1}
+                                                                onPress = {() =>
+                                                                    setLike(!like)
+                                                                }
+                                                            >
+                                                                <View style={!like ? [styles.commentUp, {flexDirection:"row",alignItems:"center"}] : [styles.commentUp, {flexDirection:"row",alignItems:"center", borderColor:"#f4933a"}]}>
+                                                                    <Icons.HandThumbUpIcon color={!like ? "rgb(217,217,217)" : "#f4933a"} size={18} style={commonStyles.mr8} />
+                                                                    <Text style={!like ? styles.commentUpText : [styles.commentBtnText, {color:"#f4933a"}]}>{item.like}</Text>
+                                                                </View>
+                                                            </TouchableOpacity>
+                                                        </View>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            </View>
+                                            <FlatList
+                                                ListEmptyComponent={() =>{
+                                                    return(
+                                                        <View>
+
+                                                        </View>
+                                                    )
+                                                }}
+                                                data={item.reComment}
+                                                empty
+                                                renderItem={(reItem) =>{
+                                                    return(
+                                                        <View style={loginState.userCd !== reItem.item.con_user_cd ? {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee", backgroundColor:"#FdFdFd",} : {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee",  backgroundColor:"#fff8f2"}}>
+                                                            <TouchableOpacity
+                                                                activeOpacity={1}
+                                                                onPress={() => {
+                                                                    (loginState.isCon && loginState.userCd === reItem.item.con_user_cd) && setModalUp(true);
+                                                                    (loginState.userCd === reItem.item.con_user_cd) ? setMine(true) : setMine(false);
+                                                                    setCommentCdId(reItem.item.commentCd);
+                                                                }}
+                                                            >
+                                                                <View style={{paddingVertical:24}}>
+                                                                    <View style={{flexDirection:"row", alignItems:"center"}}>
+                                                                        <Icons.ArrowUturnDownIcon color="#f4933a" size={18} style={{transform:[{rotate:"-90deg"}], marginRight:8}}/>
+                                                                        <Text style={[styles.commentName, {color:"#f4933a", marginTop:5,}]}>@{reItem.item.con_name}</Text>
+                                                                    </View>
+                                                                    <TextInput multiline editable={false}  style={styles.commentContent}>
+                                                                        {reItem.item.con_content}
+                                                                    </TextInput>
+                                                                    <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
+                                                                        <Text style={styles.commentDay}>{reItem.item.con_regiDt}</Text>
+                                                                        <TouchableOpacity
+                                                                            activeOpacity={1}
+                                                                            onPress = {() =>
+                                                                                setLike(!like)
+                                                                            }
+                                                                        >
+                                                                            <View style={!like ? [styles.commentUp, {flexDirection:"row",alignItems:"center"}] : [styles.commentUp, {flexDirection:"row",alignItems:"center", borderColor:"#f4933a"}]}>
+                                                                                <Icons.HandThumbUpIcon color={!like ? "rgb(217,217,217)" : "#f4933a"} size={18} style={commonStyles.mr8} />
+                                                                                <Text style={!like ? styles.commentUpText : [styles.commentBtnText, {color:"#f4933a"}]}>{reItem.item.con_like}</Text>
+                                                                            </View>
+                                                                        </TouchableOpacity>
+                                                                    </View>
+                                                                </View>
+                                                            </TouchableOpacity>
+                                                        </View>
+                                                    )
+                                                }}
+
+                                            />
                                         </View>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={myComment ? {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee", backgroundColor:"#FdFdFd",} : {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee",  backgroundColor:"#fff8f2"}}>
-                                <TouchableOpacity
-                                    activeOpacity={1}
-                                    onPress={() => (userCheck && myComment) &&
-                                        setModalUp(true)
-                                    }
-                                >
-                                    <View style={{paddingVertical:24}}>
-                                        <View style={{flexDirection:"row", alignItems:"center"}}>
-                                            <Icons.ArrowUturnDownIcon color="#f4933a" size={18} style={{transform:[{rotate:"-90deg"}], marginRight:8}}/>
-                                            <Text style={[styles.commentName, {color:"#f4933a", marginTop:5,}]}>@김대용</Text>
-                                        </View>
-                                        <TextInput multiline editable={false}  style={styles.commentContent}>
-                                            대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓
-                                            대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓
-                                            대댓대댓대댓대댓대댓대댓대댓대댓
-                                            대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓대댓
-                                        </TextInput>
-                                        <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
-                                            <Text style={styles.commentDay}>2022.10.14</Text>
-                                            <TouchableOpacity
-                                                activeOpacity={1}
-                                            >
-                                                <View style={!like ? [styles.commentUp, {flexDirection:"row",alignItems:"center"}] : [styles.commentUp, {flexDirection:"row",alignItems:"center", borderColor:"#f4933a"}]}>
-                                                    <Icons.HandThumbUpIcon color={!like ? "rgb(217,217,217)" : "#f4933a"} size={18} style={commonStyles.mr8} />
-                                                    <Text style={!like ? styles.commentUpText : [styles.commentBtnText, {color:"#f4933a"}]}>329</Text>
-                                                </View>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
+                                        
+                                    )
+                                    
+                                }} 
+                            />
                         </View>
                     )}
 
@@ -399,7 +591,7 @@ export default function Detail({ navigation }) {
                     <View 
                         style={{width:"90%", maxWidth:360, margin:16, borderRadius:8, backgroundColor:"#fff", overflow:"hidden",}}
                     >
-                        {userCheck && myComment === false ? 
+                        {loginState.isCon && mine === false ? 
                         <View>
                             <TouchableOpacity
                                 activeOpacity={1}
@@ -439,7 +631,7 @@ export default function Detail({ navigation }) {
                 </View>
             </Modal>
             <Modal
-                visible={deleteComment}
+                visible={modalDeleteComment}
                 transparent={true}
             >
                 <View style={{justifyContent:"center", alignItems:"center", flex:1, backgroundColor:"rgba(0,0,0,0.4)"}}>
@@ -460,7 +652,7 @@ export default function Detail({ navigation }) {
                                 activeOpacity={1}
                                 style={{flex:1}}
                                 onPress={() => {
-                                    setDeleteComment(false);
+                                    setModalDeleteComment(false);
                                 }}
                             >
                                 <View style={{paddingVertical:24}}>
@@ -596,6 +788,7 @@ const styles = StyleSheet.create({
         borderRadius:8,
         padding:8,
         marginTop:8,
+        backgroundColor:"#fff"
     },
     commentUpText:{
         fontSize:12,
