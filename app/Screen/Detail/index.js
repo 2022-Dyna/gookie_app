@@ -11,7 +11,18 @@ export default function Detail({ navigation }) {
         name:'손동윤',
         userCd:1
     }
-    const [datas, setDatas] = useState([]);
+    const arr =[
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:1,
+            reComment:[]
+        }
+    ]
+    const [datas, setDatas] = useState(arr);
 
     
     //텝전환
@@ -35,14 +46,18 @@ export default function Detail({ navigation }) {
     //모달
     const [modalUp, setModalUp] = useState(false);
     const [modalDeleteComment, setModalDeleteComment] = useState(false);
+
+    //btn state
+    const [btnState, setBtnState] = useState(0);
     
     //내댓글 클릭시 변경관련
     const [mine, setMine] = useState(false);
     const [commentCdId , setCommentCdId] = useState(null);
 
+    //댓글달기
+    const nowDate = new Date().toLocaleDateString();
     const commentNum = useRef(0);
     const addComment = () => {
-        const nowDate = new Date().toLocaleDateString();
 
         const newData = {
             name:loginState.name,
@@ -57,6 +72,39 @@ export default function Detail({ navigation }) {
         setInputValue("");
         inputRef.current.blur();
         commentNum.current++
+    };
+
+    //대댓글달기
+    const newReData = {
+        con_name:loginState.name,
+        con_content:inputValue,
+        con_regiDt:nowDate,
+        con_like:0,
+        con_user_cd:loginState.userCd,
+        con_commentCd:commentNum.current,
+    };
+    
+    const addReComment = () => {
+        setDatas(state => {
+            return state.filter((item, index) => {
+                if (item.commentCd == commentCdId) {
+                    return item.reComment.concat(newReData);
+                }
+            });
+        });
+        console.log(datas)
+    }
+
+    //확인버튼
+    const onConfirm = () => {
+        if(btnState === 0){
+            !loginState.isCon && addComment();
+        }else if(btnState === 1){
+            loginState.isCon && addReComment();
+            return;
+        }else if(btnState === 2){
+            return;
+        }
     };
 
 
@@ -429,7 +477,7 @@ export default function Detail({ navigation }) {
                 <View style={{paddingHorizontal:24, borderTopWidth:1, paddingVertical:8, borderColor:"#eee", position:"absolute", bottom:0, left:0, width:"100%", backgroundColor:"#fff"}}>
                     <View style={{flexDirection:"row", alignItems:"center",}}>
                         <TextInput 
-                            placeholder='최대200자까지 가능합니다.' 
+                            placeholder={loginState.isCon ? '넌 댓글달 자격이없어' : '최대200자까지 가능합니다.'}
                             placeholderTextColor="#b1b1b1" 
                             multiline 
                             style={{flex:9}} 
@@ -437,12 +485,17 @@ export default function Detail({ navigation }) {
                             onChangeText={(text) => setInputValue(text)}
                             maxLength={200}
                             ref={inputRef}
+                            editable={
+                                loginState.isCon && btnState === 0 ? false : true
+                            }
                         >
                         </TextInput>
                         <View style={{flex:1}}>
                             <TouchableOpacity
                                 disabled = {disabled}
-                                onPress = {addComment}
+                                onPress = {
+                                    onConfirm
+                                }
                             >
                                 <View style={disabled ? styles.commentBtn : [styles.commentBtn, {borderColor:"#f4933a"}]}>
                                     <Text style={disabled ? styles.commentBtnText : [styles.commentBtnText, {color:"#f4933a"}]}>확인</Text>
@@ -471,6 +524,7 @@ export default function Detail({ navigation }) {
                         <View>
                             <TouchableOpacity
                                 activeOpacity={1}
+                                onPress = {() => setBtnState(1)}
                             >
                                 <View style={[styles.modalView,{borderBottomWidth:1, borderColor:"#eee"}]}>
                                     <Text style={styles.modalText}>답글달기</Text>
@@ -482,6 +536,7 @@ export default function Detail({ navigation }) {
                             <View>
                                 <TouchableOpacity
                                     activeOpacity={1}
+                                    onPress = {() => setBtnState(2)}
                                 >
                                     <View style={[styles.modalView,{borderBottomWidth:1, borderColor:"#eee"}]}>
                                         <Text style={styles.modalText}>수정</Text>
