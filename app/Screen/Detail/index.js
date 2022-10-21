@@ -75,24 +75,26 @@ export default function Detail({ navigation }) {
     };
 
     //대댓글달기
-    const newReData = {
-        con_name:loginState.name,
-        con_content:inputValue,
-        con_regiDt:nowDate,
-        con_like:0,
-        con_user_cd:loginState.userCd,
-        con_commentCd:commentNum.current,
-    };
-    
     const addReComment = () => {
+        const newReData = {
+            con_name:loginState.name,
+            con_content:inputValue,
+            con_regiDt:nowDate,
+            con_like:0,
+            con_user_cd:loginState.userCd,
+            con_commentCd:commentNum.current,
+        };
         setDatas(state => {
             return state.filter((item, index) => {
                 if (item.commentCd == commentCdId) {
-                    return item.reComment.concat(newReData);
+                    return item.reComment.push(newReData);
                 }
             });
         });
-        console.log(datas)
+        setInputValue("");
+        inputRef.current.blur();
+        setBtnState(0);
+        commentNum.current++
     }
 
     //확인버튼
@@ -477,7 +479,9 @@ export default function Detail({ navigation }) {
                 <View style={{paddingHorizontal:24, borderTopWidth:1, paddingVertical:8, borderColor:"#eee", position:"absolute", bottom:0, left:0, width:"100%", backgroundColor:"#fff"}}>
                     <View style={{flexDirection:"row", alignItems:"center",}}>
                         <TextInput 
-                            placeholder={loginState.isCon ? '넌 댓글달 자격이없어' : '최대200자까지 가능합니다.'}
+                            placeholder={
+                                loginState.isCon && btnState === 0 ? '국회의원은 답글만 작성할 수 있습니다.' : '최대200자까지 가능합니다.'
+                            }
                             placeholderTextColor="#b1b1b1" 
                             multiline 
                             style={{flex:9}} 
@@ -524,7 +528,11 @@ export default function Detail({ navigation }) {
                         <View>
                             <TouchableOpacity
                                 activeOpacity={1}
-                                onPress = {() => setBtnState(1)}
+                                onPress = {() => {
+                                    setBtnState(1);
+                                    setModalUp(false);
+                                    inputRef.current.focus();
+                                }}
                             >
                                 <View style={[styles.modalView,{borderBottomWidth:1, borderColor:"#eee"}]}>
                                     <Text style={styles.modalText}>답글달기</Text>
