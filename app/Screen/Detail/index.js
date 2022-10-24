@@ -6,7 +6,7 @@ import {commonStyles} from '../../common/index';
 export default function Detail({ navigation }) {
     const loginState = {
         login:true,
-        isCon:false,
+        isCon:true,
         email:'ezicland@naver.com',
         name:'손동윤',
         userCd:1
