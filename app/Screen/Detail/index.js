@@ -6,7 +6,7 @@ import {commonStyles} from '../../common/index';
 export default function Detail({ navigation }) {
     const loginState = {
         login:true,
-        isCon:true,
+        isCon:false,
         email:'ezicland@naver.com',
         name:'손동윤',
         userCd:1
@@ -18,9 +18,18 @@ export default function Detail({ navigation }) {
             regiDt:'2022.10.14',
             like:10,
             userCd:2,
-            commentCd:1,
+            commentCd:1125125,
             reComment:[]
-        }
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
     ]
     const [datas, setDatas] = useState(arr);
 
@@ -46,6 +55,7 @@ export default function Detail({ navigation }) {
     //모달
     const [modalUp, setModalUp] = useState(false);
     const [modalDeleteComment, setModalDeleteComment] = useState(false);
+    const [modalCheck , setModalCheck] = useState(false);
 
     //btn state
     const [btnState, setBtnState] = useState(0);
@@ -71,10 +81,12 @@ export default function Detail({ navigation }) {
         setDatas([ newData, ...datas]);
         setInputValue("");
         inputRef.current.blur();
-        commentNum.current++
+        commentNum.current++;
+        setCommentCdId(null);
     };
 
     //대댓글달기
+    const reCommentNum = useRef(0);
     const addReComment = () => {
         const newReData = {
             con_name:loginState.name,
@@ -82,30 +94,80 @@ export default function Detail({ navigation }) {
             con_regiDt:nowDate,
             con_like:0,
             con_user_cd:loginState.userCd,
-            con_commentCd:commentNum.current,
+            con_commentCd:reCommentNum.current,
         };
         setDatas(state => {
-            return state.filter((item, index) => {
+            return state.filter((item) => {
                 if (item.commentCd == commentCdId) {
-                    return item.reComment.push(newReData);
+                    item.reComment.push(newReData);
                 }
+                return item;
             });
         });
         setInputValue("");
         inputRef.current.blur();
         setBtnState(0);
-        commentNum.current++
+        reCommentNum.current++;
+        setCommentCdId(null);
+    }
+    //내 대댓글 수정하기
+    const editReComment = () => {
+        setDatas(state => {
+            const arr = state.filter(item=>{
+                item.reComment = item.reComment.filter((reItem)=>{
+                    if(reItem.con_commentCd == commentCdId){
+                        reItem.con_content = inputValue;
+                    }
+                    return reItem;
+                });
+                return item;
+            });
+            return arr;
+        });
+        setInputValue("");
+        inputRef.current.blur();
+        setBtnState(0);
+        setCommentCdId(null);
+    }
+
+    //댓글 수정
+    const editComment = () => {
+        setDatas(state => {
+            const arr = state.filter(item=>{
+                if(item.commentCd == commentCdId){
+                    item.content = inputValue
+                }
+                return item;
+            });
+            return arr;
+        });
+        setInputValue("");
+        inputRef.current.blur();
+        setBtnState(0);
+        setCommentCdId(null);
     }
 
     //확인버튼
     const onConfirm = () => {
-        if(btnState === 0){
-            !loginState.isCon && addComment();
-        }else if(btnState === 1){
-            loginState.isCon && addReComment();
-            return;
-        }else if(btnState === 2){
-            return;
+        if(loginState.isCon){
+            if(btnState === 0){
+                return;
+            }else if(btnState === 1){
+                addReComment();
+                return;
+            }else if(btnState === 2){
+                editReComment();
+                return;
+            }
+        }else{
+            if(btnState === 0){
+                addComment();
+            }else if(btnState === 1){
+                return;
+            }else if(btnState === 2){
+                editComment();
+                return;
+            }
         }
     };
 
@@ -392,9 +454,19 @@ export default function Detail({ navigation }) {
                                                 <TouchableOpacity
                                                     activeOpacity={1}
                                                     onPress={() => {
-                                                        (loginState.isCon || loginState.userCd === item.userCd) && setModalUp(true);
+                                                        if(loginState.isCon || loginState.userCd === item.userCd){
+                                                            if(inputValue.length !== 0){
+                                                                setModalCheck(true);
+                                                            }else{
+                                                                if(commentCdId === null){
+                                                                    setCommentCdId(item.commentCd);
+                                                                    setModalUp(true);
+                                                                }else{
+                                                                    setModalCheck(true);
+                                                                }
+                                                            }
+                                                        }
                                                         (loginState.userCd === item.userCd) ? setMine(true) : setMine(false);
-                                                        setCommentCdId(item.commentCd);
                                                     }}
                                                 >
                                                     <View style={{paddingVertical:24}}>
@@ -429,9 +501,19 @@ export default function Detail({ navigation }) {
                                                             <TouchableOpacity
                                                                 activeOpacity={1}
                                                                 onPress={() => {
-                                                                    (loginState.isCon && loginState.userCd === reItem.item.con_user_cd) && setModalUp(true);
+                                                                    if(loginState.isCon && loginState.userCd === reItem.item.con_user_cd){
+                                                                        if(inputValue.length !== 0){
+                                                                            setModalCheck(true);
+                                                                        }else{
+                                                                            if(commentCdId === null){
+                                                                                setCommentCdId(reItem.item.con_commentCd);
+                                                                                setModalUp(true);
+                                                                            }else{
+                                                                                setModalCheck(true);
+                                                                            }
+                                                                        }
+                                                                    }
                                                                     (loginState.userCd === reItem.item.con_user_cd) ? setMine(true) : setMine(false);
-                                                                    setCommentCdId(reItem.item.commentCd);
                                                                 }}
                                                             >
                                                                 <View style={{paddingVertical:24}}>
@@ -516,9 +598,13 @@ export default function Detail({ navigation }) {
                 <Pressable style={{
                     flex:1,
                     backgroundColor:'rgba(0,0,0,0.4)',
-
                 }}
-                onPress={()=>setModalUp(false)}
+                onPress={()=>{
+                    setBtnState(0);
+                    setInputValue("");
+                    setCommentCdId(null);
+                    setModalUp(false);
+                }}
                 />
                 <View style={{justifyContent:"flex-end", alignItems:"center", flex:1, position:"absolute", bottom:0, left:0, width:"100%",}}>
                     <View 
@@ -531,7 +617,8 @@ export default function Detail({ navigation }) {
                                 onPress = {() => {
                                     setBtnState(1);
                                     setModalUp(false);
-                                    inputRef.current.focus();
+                                    setInputValue("");
+                                    // inputRef.current.focus();
                                 }}
                             >
                                 <View style={[styles.modalView,{borderBottomWidth:1, borderColor:"#eee"}]}>
@@ -544,7 +631,30 @@ export default function Detail({ navigation }) {
                             <View>
                                 <TouchableOpacity
                                     activeOpacity={1}
-                                    onPress = {() => setBtnState(2)}
+                                    onPress = {() => {
+                                        setBtnState(2);
+                                        setModalUp(false);
+                                        loginState.isCon ?
+                                        datas.filter(item => {
+                                            item.reComment = item.reComment.filter(
+                                                (reItem) => {
+                                                if (reItem.con_commentCd == commentCdId) {
+                                                    setInputValue(reItem.con_content);
+                                                }
+                                                return reItem;
+                                                },
+                                            );
+                                            return item;
+                                        })
+                                        :
+                                        datas.filter(item => {
+                                            if(item.commentCd == commentCdId){
+                                                setInputValue(item.content)
+                                            }
+                                            return item;
+                                        })
+                                    }}
+                                    
                                 >
                                     <View style={[styles.modalView,{borderBottomWidth:1, borderColor:"#eee"}]}>
                                         <Text style={styles.modalText}>수정</Text>
@@ -555,7 +665,7 @@ export default function Detail({ navigation }) {
                                 <TouchableOpacity
                                     activeOpacity={1}
                                     onPress={() => {
-                                        setDeleteComment(true);
+                                        setModalDeleteComment(true);
                                         setModalUp(false)
                                     }}
                                 >
@@ -582,6 +692,29 @@ export default function Detail({ navigation }) {
                             <TouchableOpacity
                                 activeOpacity={1}
                                 style={{flex:1}}
+                                onPress={() => {
+                                    loginState.isCon ?
+                                    setDatas(state=>{
+                                        const arr = state.filter(item=>{
+                                            return item.reComment = item.reComment.filter((conItem)=>{
+                                                if(commentCdId !== conItem.con_commentCd){
+                                                    return conItem;
+                                                }
+                                            })
+                                        })
+                                        return arr;
+                                    })
+                                    :
+                                    setDatas(state=>{
+                                        const arr = state.filter(item=>{
+                                                if(commentCdId!==item.commentCd){
+                                                return item;
+                                            }
+                                        })
+                                        return arr;
+                                    })
+                                    setModalDeleteComment(false);
+                                }}
                             >
                                 <View style={{paddingVertical:24}}>
                                     <Text style={{textAlign:"center", color:"red"}}>삭제</Text>
@@ -596,6 +729,45 @@ export default function Detail({ navigation }) {
                             >
                                 <View style={{paddingVertical:24}}>
                                     <Text style={{textAlign:"center"}}>취소</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
+            <Modal
+                visible={modalCheck}
+                transparent={true}
+            >
+                <View style={{justifyContent:"center", alignItems:"center", flex:1, backgroundColor:"rgba(0,0,0,0.4)"}}>
+                    <View style={{width:"90%", maxWidth:360, borderRadius:8, backgroundColor:"#fff", overflow:"hidden",}}>
+                        <View style={{justifyContent:"center", alignItems:"center", paddingVertical:48}}>
+                            <Text>현재 진행중인 작업이 있습니다. 현재 작업을 종료하시겠습니까?</Text>
+                        </View>
+                        <View style={{flexDirection:"row",}}>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                style={{flex:1}}
+                                onPress={() => {
+                                    setBtnState(0);
+                                    setInputValue("");
+                                    setCommentCdId(null);
+                                    setModalCheck(false);
+                                }}
+                            >
+                                <View style={{paddingVertical:24}}>
+                                    <Text style={{textAlign:"center", color:"blue"}}>예</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                style={{flex:1}}
+                                onPress={() => {
+                                    setModalCheck(false);
+                                }}
+                            >
+                                <View style={{paddingVertical:24}}>
+                                    <Text style={{textAlign:"center"}}>아니요</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
