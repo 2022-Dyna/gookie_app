@@ -182,7 +182,7 @@ export default function ScreenA({ navigation }) {
                                                             }}
                                                             style={{flex:1}}
                                                         >
-                                                            <Icons.StarIcon color={markLike ? "#f4933a" : "rgba(217,217,271,1)"} size={18} fill={markLike ? "#f4933a" : "transparent"} />
+                                                            <Icons.StarIcon color={markLike ? "#f4933a" : "rgba(217,217,217,1)"} size={18} fill={markLike ? "#f4933a" : "transparent"} />
                                                         </TouchableOpacity>
                                                     </View>
                                                 </View>
