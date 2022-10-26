@@ -19,7 +19,16 @@ export default function Detail({ navigation }) {
             like:10,
             userCd:2,
             commentCd:1125125,
-            reComment:[]
+            reComment:[
+                {
+                    con_name:"김대윤",
+                    con_content:"ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎ",
+                    con_regiDt:"123123",
+                    con_like:5,
+                    con_user_cd:1,
+                    con_commentCd:0,
+                }
+            ]
         },
         {
             name:'손동윤',
@@ -51,11 +60,16 @@ export default function Detail({ navigation }) {
     
     //좋아요클릭시 색변경
     const [like, setLike] = useState(false);
+
+    //즐겨찾기 클릭시 색변경
+    const [markLike, setMarkLike] = useState(false);
     
     //모달
     const [modalUp, setModalUp] = useState(false);
     const [modalDeleteComment, setModalDeleteComment] = useState(false);
     const [modalCheck , setModalCheck] = useState(false);
+    const [modalLoginCheck, setModalLoginCheck] = useState(false);
+    const [modalCommentSort, setModalCommentSort] = useState(false);
 
     //btn state
     const [btnState, setBtnState] = useState(0);
@@ -185,7 +199,20 @@ export default function Detail({ navigation }) {
                                 </Text>
                             </View>
                             <View>
-                                <Icons.StarIcon color="#fff" size={25}/>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    onPress ={() => {
+                                        if(loginState.login){
+                                            setMarkLike(!markLike);
+                                        }else{
+                                            setMarkLike(false);
+                                            setModalLoginCheck(true);
+                                        }
+                                        
+                                    }}
+                                >
+                                    <Icons.StarIcon color={markLike ? "#f4933a" : "#fff"} size={25} fill={markLike ? "#f4933a" : "transparent"} />
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </ImageBackground>
@@ -438,6 +465,9 @@ export default function Detail({ navigation }) {
                                 <View>
                                     <TouchableOpacity
                                         activeOpacity={1}
+                                        onPress ={() => {
+                                            setModalCommentSort(true);
+                                        }}
                                     >
                                         <Icons.BarsArrowDownIcon color="rgb(217,217,217)" size={25} style={commonStyles.mr8}/>
                                     </TouchableOpacity>
@@ -450,23 +480,35 @@ export default function Detail({ navigation }) {
                                 renderItem={({item}) => {
                                     return(
                                         <View>
-                                            <View style={loginState.userCd !== item.userCd ? {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee", backgroundColor:"#fff"} : {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee",  backgroundColor:"#fff8f2"}}>
+                                            <View style={
+                                                loginState.login
+                                                ? loginState.userCd !== item.userCd
+                                                    ? {paddingHorizontal: 24, borderBottomWidth: 1, borderColor: '#eee', backgroundColor: '#fff'}
+                                                    : {paddingHorizontal: 24, borderBottomWidth: 1, borderColor: '#eee', backgroundColor: '#fff8f2'}
+                                                : {paddingHorizontal: 24, borderBottomWidth: 1, borderColor: '#eee', backgroundColor: '#fff'}
+                                            }
+                                            >
                                                 <TouchableOpacity
                                                     activeOpacity={1}
                                                     onPress={() => {
-                                                        if(loginState.isCon || loginState.userCd === item.userCd){
-                                                            if(inputValue.length !== 0){
-                                                                setModalCheck(true);
-                                                            }else{
-                                                                if(commentCdId === null){
-                                                                    setCommentCdId(item.commentCd);
-                                                                    setModalUp(true);
-                                                                }else{
+                                                        if(loginState.login){
+                                                            if(loginState.isCon || loginState.userCd === item.userCd){
+                                                                if(inputValue.length !== 0){
                                                                     setModalCheck(true);
+                                                                }else{
+                                                                    if(commentCdId === null){
+                                                                        setCommentCdId(item.commentCd);
+                                                                        setModalUp(true);
+                                                                    }else{
+                                                                        setModalCheck(true);
+                                                                    }
                                                                 }
                                                             }
+                                                            (loginState.userCd === item.userCd) ? setMine(true) : setMine(false);
+                                                        }else{
+                                                            setModalLoginCheck(true);
                                                         }
-                                                        (loginState.userCd === item.userCd) ? setMine(true) : setMine(false);
+                                                        
                                                     }}
                                                 >
                                                     <View style={{paddingVertical:24}}>
@@ -478,8 +520,12 @@ export default function Detail({ navigation }) {
                                                             <Text style={styles.commentDay}>{item.regiDt}</Text>
                                                             <TouchableOpacity
                                                                 activeOpacity={1}
-                                                                onPress = {() =>
-                                                                    setLike(!like)
+                                                                onPress = {() =>{
+                                                                    if(loginState.login){
+                                                                        setLike(!like)
+                                                                    }else{
+                                                                        setModalLoginCheck(true);
+                                                                    }}
                                                                 }
                                                             >
                                                                 <View style={!like ? [styles.commentUp, {flexDirection:"row",alignItems:"center"}] : [styles.commentUp, {flexDirection:"row",alignItems:"center", borderColor:"#f4933a"}]}>
@@ -497,23 +543,34 @@ export default function Detail({ navigation }) {
                                                 empty
                                                 renderItem={(reItem) =>{
                                                     return(
-                                                        <View style={loginState.userCd !== reItem.item.con_user_cd ? {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee", backgroundColor:"#FdFdFd",} : {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee",  backgroundColor:"#fff8f2"}}>
+                                                        <View style={
+                                                            loginState.login
+                                                            ? loginState.userCd !== reItem.item.con_user_cd 
+                                                                ? {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee", backgroundColor:"#FdFdFd",} 
+                                                                : {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee",  backgroundColor:"#fff8f2"}
+                                                            : {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee", backgroundColor:"#FdFdFd",}
+                                                            }>
                                                             <TouchableOpacity
                                                                 activeOpacity={1}
                                                                 onPress={() => {
-                                                                    if(loginState.isCon && loginState.userCd === reItem.item.con_user_cd){
-                                                                        if(inputValue.length !== 0){
-                                                                            setModalCheck(true);
-                                                                        }else{
-                                                                            if(commentCdId === null){
-                                                                                setCommentCdId(reItem.item.con_commentCd);
-                                                                                setModalUp(true);
-                                                                            }else{
+                                                                    if(loginState.login){
+                                                                        if(loginState.isCon && loginState.userCd === reItem.item.con_user_cd){
+                                                                            if(inputValue.length !== 0){
                                                                                 setModalCheck(true);
+                                                                            }else{
+                                                                                if(commentCdId === null){
+                                                                                    setCommentCdId(reItem.item.con_commentCd);
+                                                                                    setModalUp(true);
+                                                                                }else{
+                                                                                    setModalCheck(true);
+                                                                                }
                                                                             }
                                                                         }
+                                                                        (loginState.userCd === reItem.item.con_user_cd) ? setMine(true) : setMine(false);
+                                                                    }else{
+                                                                        setModalLoginCheck(true);
                                                                     }
-                                                                    (loginState.userCd === reItem.item.con_user_cd) ? setMine(true) : setMine(false);
+                                                                    
                                                                 }}
                                                             >
                                                                 <View style={{paddingVertical:24}}>
@@ -528,8 +585,12 @@ export default function Detail({ navigation }) {
                                                                         <Text style={styles.commentDay}>{reItem.item.con_regiDt}</Text>
                                                                         <TouchableOpacity
                                                                             activeOpacity={1}
-                                                                            onPress = {() =>
-                                                                                setLike(!like)
+                                                                            onPress = {() =>{
+                                                                                if(loginState.login){
+                                                                                    setLike(!like)
+                                                                                }else{
+                                                                                    setModalLoginCheck(true);
+                                                                                }}
                                                                             }
                                                                         >
                                                                             <View style={!like ? [styles.commentUp, {flexDirection:"row",alignItems:"center"}] : [styles.commentUp, {flexDirection:"row",alignItems:"center", borderColor:"#f4933a"}]}>
@@ -559,36 +620,46 @@ export default function Detail({ navigation }) {
             </ScrollView>
             {tab === 1 && 
                 <View style={{paddingHorizontal:24, borderTopWidth:1, paddingVertical:8, borderColor:"#eee", position:"absolute", bottom:0, left:0, width:"100%", backgroundColor:"#fff"}}>
-                    <View style={{flexDirection:"row", alignItems:"center",}}>
-                        <TextInput 
-                            placeholder={
-                                loginState.isCon && btnState === 0 ? '국회의원은 답글만 작성할 수 있습니다.' : '최대200자까지 가능합니다.'
-                            }
-                            placeholderTextColor="#b1b1b1" 
-                            multiline 
-                            style={{flex:9}} 
-                            value={inputValue} 
-                            onChangeText={(text) => setInputValue(text)}
-                            maxLength={200}
-                            ref={inputRef}
-                            editable={
-                                loginState.isCon && btnState === 0 ? false : true
-                            }
+                        <TouchableOpacity
+                            activeOpacity={1}
+                            onPress = {() => {
+                                !loginState.login && setModalLoginCheck(true); 
+                            }}
                         >
-                        </TextInput>
-                        <View style={{flex:1}}>
-                            <TouchableOpacity
-                                disabled = {disabled}
-                                onPress = {
-                                    onConfirm
-                                }
-                            >
-                                <View style={disabled ? styles.commentBtn : [styles.commentBtn, {borderColor:"#f4933a"}]}>
-                                    <Text style={disabled ? styles.commentBtnText : [styles.commentBtnText, {color:"#f4933a"}]}>확인</Text>
+                            <View style={{flexDirection:"row", alignItems:"center",}}>
+                                <TextInput 
+                                    placeholder={
+                                        loginState.login 
+                                        ?
+                                        loginState.isCon && btnState === 0 ? '국회의원은 답글만 작성할 수 있습니다.' : '최대200자까지 가능합니다.'
+                                        : "로그인이 필요합니다."
+                                    }
+                                    placeholderTextColor="#b1b1b1" 
+                                    multiline 
+                                    style={{flex:9}} 
+                                    value={inputValue} 
+                                    onChangeText={(text) => setInputValue(text)}
+                                    maxLength={200}
+                                    ref={inputRef}
+                                    editable={
+                                        loginState.isCon && btnState === 0 ? false : true
+                                    }
+                                >
+                                </TextInput>
+                                <View style={{flex:1}}>
+                                    <TouchableOpacity
+                                        disabled = {disabled}
+                                        onPress = {
+                                            onConfirm
+                                        }
+                                    >
+                                        <View style={disabled ? styles.commentBtn : [styles.commentBtn, {borderColor:"#f4933a"}]}>
+                                            <Text style={disabled ? styles.commentBtnText : [styles.commentBtnText, {color:"#f4933a"}]}>확인</Text>
+                                        </View>
+                                    </TouchableOpacity>
                                 </View>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                            </View>
+                        </TouchableOpacity>
                 </View>
             }
             <Modal
@@ -771,6 +842,87 @@ export default function Detail({ navigation }) {
                                 </View>
                             </TouchableOpacity>
                         </View>
+                    </View>
+                </View>
+            </Modal>
+            <Modal
+                visible={modalLoginCheck}
+                transparent={true}
+            >
+                <View style={{justifyContent:"center", alignItems:"center", flex:1, backgroundColor:"rgba(0,0,0,0.4)"}}>
+                    <View style={{width:"90%", maxWidth:360, borderRadius:8, backgroundColor:"#fff", overflow:"hidden",}}>
+                        <View style={{justifyContent:"center", alignItems:"center", paddingVertical:48}}>
+                            <Text>로그인안했슴다 로그인하십쇼</Text>
+                        </View>
+                        <View style={{flexDirection:"row",}}>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                style={{flex:1}}
+                                onPress={() => {
+                                    navigation.navigate('Login')
+                                }}
+                            >
+                                <View style={{paddingVertical:24}}>
+                                    <Text style={{textAlign:"center", color:"blue"}}>예</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                style={{flex:1}}
+                                onPress={() => {
+                                    setModalLoginCheck(false);
+                                }}
+                            >
+                                <View style={{paddingVertical:24}}>
+                                    <Text style={{textAlign:"center"}}>아니요</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
+            <Modal
+                visible={modalCommentSort}
+                transparent={true}
+            >
+                <Pressable style={{
+                    flex:1,
+                    backgroundColor:'rgba(0,0,0,0.4)',
+                }}
+                onPress={()=>{
+                    setModalCommentSort(false);
+                }}
+                />
+                <View style={{justifyContent:"flex-end", alignItems:"center", flex:1, position:"absolute", bottom:0, left:0, width:"100%",}}>
+                    <View 
+                        style={{width:"90%", maxWidth:360, margin:16, borderRadius:8, backgroundColor:"#fff", overflow:"hidden",}}
+                    >
+                        <View>
+                            <View>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    onPress = {() => {
+                                        setModalCommentSort(false);
+                                    }}
+                                >
+                                    <View style={[styles.modalView,{borderBottomWidth:1, borderColor:"#eee"}]}>
+                                        <Text style={styles.modalText}>최신순</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                            <View>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    onPress={() => {
+                                        setModalCommentSort(false);
+                                    }}
+                                >
+                                    <View style={styles.modalView}>
+                                        <Text style={styles.modalText}>인기순</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </View> 
                     </View>
                 </View>
             </Modal>
