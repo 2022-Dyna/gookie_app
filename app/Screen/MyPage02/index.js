@@ -132,14 +132,17 @@ export default function MyPage02({ navigation }) {
               </View>
               <FlatList
                 data={commentData}
-                renderItem={({item}) => {
+                renderItem={({item, index}) => {
                   return(
                     <View>
                         <TouchableOpacity
                         activeOpacity={1}
                         onPress={() => navigation.navigate('Detail')}
                       >
-                        <View style={{flexDirection:"row", alignItems:"center", borderBottomWidth:1, borderColor:"#eee", paddingVertical:12, paddingHorizontal:8,}}>
+                        <View style={
+                          index === 0 ? {flexDirection:"row", alignItems:"center", paddingVertical:12, paddingHorizontal:8,}
+                          : {flexDirection:"row", alignItems:"center", borderTopWidth:1, borderColor:"#eee", paddingVertical:12, paddingHorizontal:8,}
+                        }>
                           <Text style={styles.commentName}>{item.name}</Text>
                           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.commentContent}>{item.content}</Text>
                         </View>
@@ -158,14 +161,17 @@ export default function MyPage02({ navigation }) {
                 <View>
                   <FlatList 
                     data={markData}
-                    renderItem = {({item}) => {
+                    renderItem = {({item, index}) => {
                       return(
                         <View>
                           <TouchableOpacity
                             activeOpacity={1}
                             onPress={() => navigation.navigate('Detail')}
                           >
-                            <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between", borderBottomWidth:1, borderColor:"#eee", paddingVertical:12, paddingHorizontal:8,}}>
+                            <View style={
+                              index === 0 ? {flexDirection:"row", alignItems:"center", justifyContent:"space-between", paddingVertical:12, paddingHorizontal:8,}
+                              : {flexDirection:"row", alignItems:"center", justifyContent:"space-between", borderTopWidth:1, borderColor:"#eee", paddingVertical:12, paddingHorizontal:8,}
+                            }>
                               <View style={{flexDirection:"row", alignItems:"center"}}>
                                 <Text style={styles.commentName}>{item.name}</Text>
                                 <Text numberOfLines={1} ellipsizeMode="tail" style={styles.group}>{item.group}</Text>
