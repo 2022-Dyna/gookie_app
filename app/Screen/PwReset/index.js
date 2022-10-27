@@ -11,7 +11,7 @@ import * as Icons from 'react-native-heroicons/outline';
 import {commonStyles} from '../../common';
 import ConfirmModal from '../../Component/ConfirmModal';
 
-export default function newPwReset({navigation}) {
+export default function pwReset({navigation}) {
   const loginState = {
     login: true,
     isCon: true,
@@ -154,7 +154,7 @@ export default function newPwReset({navigation}) {
               <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => setNewPwSecret(prev => !prev)}>
-                {pwSecret === true ? (
+                {newPwSecret === true ? (
                   <Icons.EyeSlashIcon
                     color="#d0d0d0"
                     fill="transparent"
@@ -194,7 +194,7 @@ export default function newPwReset({navigation}) {
               <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => setNewPwConfirmSecret(prev => !prev)}>
-                {pwSecret === true ? (
+                {newPwConfirmSecret === true ? (
                   <Icons.EyeSlashIcon
                     color="#d0d0d0"
                     fill="transparent"
