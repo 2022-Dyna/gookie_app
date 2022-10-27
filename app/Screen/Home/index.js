@@ -7,6 +7,7 @@ import {
   Image,
   StyleSheet,
   FlatList,
+  Button,
 } from 'react-native';
 import * as Icons from 'react-native-heroicons/outline';
 import {commonStyles} from '../../common/index';
@@ -114,6 +115,10 @@ export default function Home({navigation}) {
   return (
     <View>
       <ScrollView>
+        <Button
+          title="Go to MyPage"
+          onPress={() => navigation.navigate('MyPage02')}
+        />
         <View style={{width: '100%', height: 160}}>
           <Image
             source={require('../../img/banner.png')}
