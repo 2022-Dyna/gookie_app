@@ -11,7 +11,7 @@ import * as Icons from 'react-native-heroicons/outline';
 import {commonStyles} from '../../common';
 import ConfirmModal from '../../Component/ConfirmModal';
 
-export default function pwReset({navigation}) {
+export default function PwReset({navigation}) {
   const loginState = {
     login: true,
     isCon: true,
