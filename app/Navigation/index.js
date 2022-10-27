@@ -13,6 +13,8 @@ import JoinCongress from '../Screen/JoinCongress';
 import PwFind from '../Screen/PwFind';
 import PwReset from '../Screen/PwReset';
 import Detail from '../Screen/Detail';
+import MyPageComment from '../Screen/MyPageComment';
+import MyPage02 from '../Screen/MyPage02';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -54,6 +56,8 @@ function MainStackNavigator() {
       <MainStack.Screen name="PwFind" component={PwFind} />
       <MainStack.Screen name="PwReset" component={PwReset} />
       <MainStack.Screen name="Detail" component={Detail} />
+      <MainStack.Screen name="MyPageComment" component={MyPageComment} />
+      <MainStack.Screen name="MyPage02" component={MyPage02} />
     </MainStack.Navigator>
   );
 }
