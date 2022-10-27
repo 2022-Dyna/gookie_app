@@ -121,6 +121,9 @@ export const commonStyles = StyleSheet.create({
   modalBtnPressColor: {
     backgroundColor: '#d87419',
   },
+  modalBtnGrayColor: {
+    backgroundColor: '#d0d0d0',
+  },
   modalBtnText: {
     fontSize: 14,
     fontWeight: 'bold',

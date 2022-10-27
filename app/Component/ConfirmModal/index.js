@@ -3,8 +3,16 @@ import {View, Text, TouchableOpacity, Modal} from 'react-native';
 import {commonStyles} from '../../common/index';
 
 export default function ConfirmModal(props) {
-  const {btnBoolean, onPress, titleText, bodyText, btnText, transparent} =
-    props;
+  const {
+    btnBoolean,
+    onPress,
+    titleText,
+    bodyText,
+    btnText,
+    transparent,
+    btnText2 = null,
+    onCancel = () => {},
+  } = props;
   const [btnPress, setBtnPress] = useState(false);
 
   return (
@@ -20,20 +28,37 @@ export default function ConfirmModal(props) {
             </Text>
             <Text style={commonStyles.modalDesc}>{bodyText}</Text>
           </View>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={onPress}
-            onPressIn={() => setBtnPress(true)}
-            onPressOut={() => setBtnPress(false)}>
-            <View
-              style={
-                !btnPress
-                  ? [commonStyles.modalBtn]
-                  : [commonStyles.modalBtn, commonStyles.modalBtnPressColor]
-              }>
-              <Text style={commonStyles.modalBtnText}>{btnText}</Text>
+          <View style={{flexDirection: 'row'}}>
+            {btnText2 !== null && (
+              <View style={{flex: 1}}>
+                <TouchableOpacity activeOpacity={1} onPress={onCancel}>
+                  <View
+                    style={[
+                      commonStyles.modalBtn,
+                      commonStyles.modalBtnGrayColor,
+                    ]}>
+                    <Text style={commonStyles.modalBtnText}>{btnText2}</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            )}
+            <View style={{flex: 1}}>
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={onPress}
+                onPressIn={() => setBtnPress(true)}
+                onPressOut={() => setBtnPress(false)}>
+                <View
+                  style={
+                    !btnPress
+                      ? [commonStyles.modalBtn]
+                      : [commonStyles.modalBtn, commonStyles.modalBtnPressColor]
+                  }>
+                  <Text style={commonStyles.modalBtnText}>{btnText}</Text>
+                </View>
+              </TouchableOpacity>
             </View>
-          </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Modal>
