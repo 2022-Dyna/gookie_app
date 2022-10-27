@@ -1,98 +1,96 @@
-import {View, Text, TouchableOpacity, ScrollView, StyleSheet, FlatList} from 'react-native';
-import { useSelector, useDispatch, } from 'react-redux';
+import {View, Text, TouchableOpacity, ScrollView, StyleSheet, FlatList,} from 'react-native';
 import { useState } from 'react';
-import * as loginAction from '../../Reducer/action/index';
 import ConfirmModal from '../../Component/ConfirmModal';
 import * as Icons from 'react-native-heroicons/outline';
 
-export default function MyPage({ navigation }) {
-    const dispatch = useDispatch();
-    const loginState = {
-        login:true,
-        isCon:true,
-        email:'ezicland@naver.com',
-        name:'손동윤',
-        userCd:1
-    }
-      const commentData = [
-        {
-          name : "강기윤",
-          content : "안녕하세요 저는 오늘 처음 가입한 강기윤입니당구리당당숭당당"
-        },
-        {
-          name : "강기윤2",
-          content : "안녕하세요 저는 오늘 처음 가입한 강기윤입니당구리당당숭당당"
-        },
-        {
-          name : "강기윤3",
-          content : "안녕하세요 저는 오늘 처음 가입한 강기윤입니당구리당당숭당당"
-        },
-        {
-          name : "강기윤4",
-          content : "안녕하세요 저는 오늘 처음 가입한 강기윤입니당구리당당숭당당"
-        },
-        {
-          name : "강기윤5",
-          content : "안녕하세요 저는 오늘 처음 가입한 강기윤입니당구리당당숭당당"
-        },
-      ]
+export default function MyPage02({ navigation }) {
     
-        const markData = [
-          {
-            name : "강기윤",
-            group : "국민의힘"
-          },
-          {
-            name : "강대식",
-            group : "국민의힘"
-          },
-          {
-            name : "강득구",
-            group : "더불어민주당"
-          },
-          {
-            name : "강기윤",
-            group : "국민의힘"
-          },
-          {
-            name : "강대식",
-            group : "국민의힘"
-          },
-          {
-            name : "강득구",
-            group : "더불어민주당"
-          },
-          {
-            name : "강기윤",
-            group : "국민의힘"
-          },
-          {
-            name : "강대식",
-            group : "국민의힘"
-          },
-          {
-            name : "강득구",
-            group : "더불어민주당"
-          },
-          {
-            name : "강기윤",
-            group : "국민의힘"
-          },
-          {
-            name : "강대식",
-            group : "국민의힘"
-          },
-          {
-            name : "강득구",
-            group : "더불어민주당"
-          },
-        ]
-    
-        //즐겨찾기 클릭시 색변경
-        const [markLike, setMarkLike] = useState(false);
-    
-        //즐격찾기 취소 모달
-        const [modalCancel, setModalCancel] = useState(false);
+  const loginState = {
+    login:true,
+    isCon:true,
+    email:'ezicland@naver.com',
+    name:'손동윤',
+    userCd:1
+}
+  const commentData = [
+    {
+      name : "강기윤",
+      content : "안녕하세요 저는 오늘 처음 가입한 강기윤입니당구리당당숭당당"
+    },
+    {
+      name : "강기윤2",
+      content : "안녕하세요 저는 오늘 처음 가입한 강기윤입니당구리당당숭당당"
+    },
+    {
+      name : "강기윤3",
+      content : "안녕하세요 저는 오늘 처음 가입한 강기윤입니당구리당당숭당당"
+    },
+    {
+      name : "강기윤4",
+      content : "안녕하세요 저는 오늘 처음 가입한 강기윤입니당구리당당숭당당"
+    },
+    {
+      name : "강기윤5",
+      content : "안녕하세요 저는 오늘 처음 가입한 강기윤입니당구리당당숭당당"
+    },
+  ]
+
+    const markData = [
+      {
+        name : "강기윤",
+        group : "국민의힘"
+      },
+      {
+        name : "강대식",
+        group : "국민의힘"
+      },
+      {
+        name : "강득구",
+        group : "더불어민주당"
+      },
+      {
+        name : "강기윤",
+        group : "국민의힘"
+      },
+      {
+        name : "강대식",
+        group : "국민의힘"
+      },
+      {
+        name : "강득구",
+        group : "더불어민주당"
+      },
+      {
+        name : "강기윤",
+        group : "국민의힘"
+      },
+      {
+        name : "강대식",
+        group : "국민의힘"
+      },
+      {
+        name : "강득구",
+        group : "더불어민주당"
+      },
+      {
+        name : "강기윤",
+        group : "국민의힘"
+      },
+      {
+        name : "강대식",
+        group : "국민의힘"
+      },
+      {
+        name : "강득구",
+        group : "더불어민주당"
+      },
+    ]
+
+    //즐겨찾기 클릭시 색변경
+    const [markLike, setMarkLike] = useState(false);
+
+    //즐격찾기 취소 모달
+    const [modalCancel, setModalCancel] = useState(false);
 
     return (
         <View>
@@ -226,80 +224,80 @@ export default function MyPage({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    myPageTit:{
-      fontSize:16,
-      fontWeight:"bold",
-      letterSpacing:-0.32,
-      color:"#313131",
-      textAlign:"center"
-    },
-    myName:{
-      fontSize:24,
-      fontWeight:"bold",
-      letterSpacing:-0.96,
-      color:"#313131",
-      paddingBottom:8
-    },
-    myMail:{
-      fontSize:12,
-      fontWeight:"normal",
-      letterSpacing:-0.24,
-      color:"#b1b1b1",
-    },
-    myEditBox:{
-      width:60,
-      height:40,
-      borderRadius:8,
-      borderWidth:1,
-      borderColor:"#f4933a",
-      justifyContent:"center",
-      alignItems:"center",
-      backgroundColor:"#fff"
-    },
-    myEditText:{
-      fontSize:14,
-      fontWeight:"normal",
-      letterSpacing:-0.28,
-      color:"#f4933a"
-    },
-    subTit:{
-      fontSize:16,
-      fontWeight:"bold",
-      letterSpacing:-0.32,
-      color:"#313131",
-    },
-    allView:{
-      fontSize:12,
-      fontWeight:"bold",
-      letterSpacing:-0.24,
-      color:"#b1b1b1",
-    },
-    commentName:{
-      fontSize:14,
-      fontWeight:"bold",
-      letterSpacing:-0.28,
-      color:'#454545',
-      width:60
-    },
-    commentContent:{
-      fontSize:12,
-      fontWeight:"normal",
-      letterSpacing:-0.24,
-      color:"#7b7b7b",
-      flex:1,
-      paddingRight:50,
-    },
-    group:{
-      fontSize:12,
-      fontWeight:"normal",
-      letterSpacing:-0.24,
-      color:"#b1b1b1",
-    },
-    logout:{
-      fontSize:12,
-      fontWeight:"bold",
-      letterSpacing:-0.24,
-      color:"#b1b1b1",
-      textAlign:"center",
-    },
-  })
+  myPageTit:{
+    fontSize:16,
+    fontWeight:"bold",
+    letterSpacing:-0.32,
+    color:"#313131",
+    textAlign:"center"
+  },
+  myName:{
+    fontSize:24,
+    fontWeight:"bold",
+    letterSpacing:-0.96,
+    color:"#313131",
+    paddingBottom:8
+  },
+  myMail:{
+    fontSize:12,
+    fontWeight:"normal",
+    letterSpacing:-0.24,
+    color:"#b1b1b1",
+  },
+  myEditBox:{
+    width:60,
+    height:40,
+    borderRadius:8,
+    borderWidth:1,
+    borderColor:"#f4933a",
+    justifyContent:"center",
+    alignItems:"center",
+    backgroundColor:"#fff"
+  },
+  myEditText:{
+    fontSize:14,
+    fontWeight:"normal",
+    letterSpacing:-0.28,
+    color:"#f4933a"
+  },
+  subTit:{
+    fontSize:16,
+    fontWeight:"bold",
+    letterSpacing:-0.32,
+    color:"#313131",
+  },
+  allView:{
+    fontSize:12,
+    fontWeight:"bold",
+    letterSpacing:-0.24,
+    color:"#b1b1b1",
+  },
+  commentName:{
+    fontSize:14,
+    fontWeight:"bold",
+    letterSpacing:-0.28,
+    color:'#454545',
+    width:60
+  },
+  commentContent:{
+    fontSize:12,
+    fontWeight:"normal",
+    letterSpacing:-0.24,
+    color:"#7b7b7b",
+    flex:1,
+    paddingRight:50,
+  },
+  group:{
+    fontSize:12,
+    fontWeight:"normal",
+    letterSpacing:-0.24,
+    color:"#b1b1b1",
+  },
+  logout:{
+    fontSize:12,
+    fontWeight:"bold",
+    letterSpacing:-0.24,
+    color:"#b1b1b1",
+    textAlign:"center",
+  },
+})
