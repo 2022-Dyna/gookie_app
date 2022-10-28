@@ -2,6 +2,7 @@ import { useReducer, useRef, useState } from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, TextInput, ScrollView, ImageBackground, Modal, Pressable, FlatList} from 'react-native';
 import * as Icons from 'react-native-heroicons/outline';
 import {commonStyles} from '../../common/index';
+import ConfirmModal from '../../Component/ConfirmModal';
 
 export default function Detail({ navigation }) {
     const loginState = {
@@ -750,137 +751,74 @@ export default function Detail({ navigation }) {
                     </View>
                 </View>
             </Modal>
-            <Modal
-                visible={modalDeleteComment}
+            <ConfirmModal
                 transparent={true}
-            >
-                <View style={{justifyContent:"center", alignItems:"center", flex:1, backgroundColor:"rgba(0,0,0,0.4)"}}>
-                    <View style={{width:"90%", maxWidth:360, borderRadius:8, backgroundColor:"#fff", overflow:"hidden",}}>
-                        <View style={{justifyContent:"center", alignItems:"center", paddingVertical:48}}>
-                            <Text>정말로 삭제 하시겠습니까?</Text>
-                        </View>
-                        <View style={{flexDirection:"row",}}>
-                            <TouchableOpacity
-                                activeOpacity={1}
-                                style={{flex:1}}
-                                onPress={() => {
-                                    loginState.isCon ?
-                                    setDatas(state=>{
-                                        const arr = state.filter(item=>{
-                                            return item.reComment = item.reComment.filter((conItem)=>{
-                                                if(commentCdId !== conItem.con_commentCd){
-                                                    return conItem;
-                                                }
-                                            })
-                                        })
-                                        return arr;
-                                    })
-                                    :
-                                    setDatas(state=>{
-                                        const arr = state.filter(item=>{
-                                                if(commentCdId!==item.commentCd){
-                                                return item;
-                                            }
-                                        })
-                                        return arr;
-                                    })
-                                    setModalDeleteComment(false);
-                                }}
-                            >
-                                <View style={{paddingVertical:24}}>
-                                    <Text style={{textAlign:"center", color:"red"}}>삭제</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={1}
-                                style={{flex:1}}
-                                onPress={() => {
-                                    setModalDeleteComment(false);
-                                }}
-                            >
-                                <View style={{paddingVertical:24}}>
-                                    <Text style={{textAlign:"center"}}>취소</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
-            </Modal>
-            <Modal
-                visible={modalCheck}
+                btnBoolean={modalDeleteComment}
+                onPress={() => {
+                    loginState.isCon ?
+                    setDatas(state=>{
+                        const arr = state.filter(item=>{
+                            return item.reComment = item.reComment.filter((conItem)=>{
+                                if(commentCdId !== conItem.con_commentCd){
+                                    return conItem;
+                                }
+                            })
+                        })
+                        return arr;
+                    })
+                    :
+                    setDatas(state=>{
+                        const arr = state.filter(item=>{
+                                if(commentCdId!==item.commentCd){
+                                return item;
+                            }
+                        })
+                        return arr;
+                    })
+                    setBtnState(0);
+                    setInputValue("");
+                    setCommentCdId(null);
+                    setModalDeleteComment(false);
+                }}
+                onCancel={() => {
+                    setModalDeleteComment(false);
+                }}
+                titleText={'댓글삭제'}
+                bodyText={'정말로 삭제 하시겠습니까?'}
+                btnText={'삭제'}
+                btnText2={'취소'}
+            />
+            <ConfirmModal
                 transparent={true}
-            >
-                <View style={{justifyContent:"center", alignItems:"center", flex:1, backgroundColor:"rgba(0,0,0,0.4)"}}>
-                    <View style={{width:"90%", maxWidth:360, borderRadius:8, backgroundColor:"#fff", overflow:"hidden",}}>
-                        <View style={{justifyContent:"center", alignItems:"center", paddingVertical:48}}>
-                            <Text>현재 진행중인 작업이 있습니다. 현재 작업을 종료하시겠습니까?</Text>
-                        </View>
-                        <View style={{flexDirection:"row",}}>
-                            <TouchableOpacity
-                                activeOpacity={1}
-                                style={{flex:1}}
-                                onPress={() => {
-                                    setBtnState(0);
-                                    setInputValue("");
-                                    setCommentCdId(null);
-                                    setModalCheck(false);
-                                }}
-                            >
-                                <View style={{paddingVertical:24}}>
-                                    <Text style={{textAlign:"center", color:"blue"}}>예</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={1}
-                                style={{flex:1}}
-                                onPress={() => {
-                                    setModalCheck(false);
-                                }}
-                            >
-                                <View style={{paddingVertical:24}}>
-                                    <Text style={{textAlign:"center"}}>아니요</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
-            </Modal>
-            <Modal
-                visible={modalLoginCheck}
+                btnBoolean={modalCheck}
+                onPress={() => {
+                    setBtnState(0);
+                    setInputValue("");
+                    setCommentCdId(null);
+                    setModalCheck(false);
+                }}
+                onCancel={() => {
+                    setModalCheck(false);
+                }}
+                titleText={'진행중인 작업 종료'}
+                bodyText={'현재 진행중인 작업이 있습니다. 현재 작업을 종료하시겠습니까?'}
+                btnText={'확인'}
+                btnText2={'취소'}
+            />
+            <ConfirmModal
                 transparent={true}
-            >
-                <View style={{justifyContent:"center", alignItems:"center", flex:1, backgroundColor:"rgba(0,0,0,0.4)"}}>
-                    <View style={{width:"90%", maxWidth:360, borderRadius:8, backgroundColor:"#fff", overflow:"hidden",}}>
-                        <View style={{justifyContent:"center", alignItems:"center", paddingVertical:48}}>
-                            <Text>로그인안했슴다 로그인하십쇼</Text>
-                        </View>
-                        <View style={{flexDirection:"row",}}>
-                            <TouchableOpacity
-                                activeOpacity={1}
-                                style={{flex:1}}
-                                onPress={() => {
-                                    navigation.navigate('Login')
-                                }}
-                            >
-                                <View style={{paddingVertical:24}}>
-                                    <Text style={{textAlign:"center", color:"blue"}}>예</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={1}
-                                style={{flex:1}}
-                                onPress={() => {
-                                    setModalLoginCheck(false);
-                                }}
-                            >
-                                <View style={{paddingVertical:24}}>
-                                    <Text style={{textAlign:"center"}}>아니요</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
-            </Modal>
+                btnBoolean={modalLoginCheck}
+                onPress={() => {
+                    navigation.navigate('Login')
+                }}
+                onCancel={() => {
+                    setModalLoginCheck(false);
+                }}
+                titleText={'로그인 확인'}
+                bodyText={'로그인안했슴다 로그인하십쇼'}
+                btnText={'확인'}
+                btnText2={'취소'}
+            />
             <Modal
                 visible={modalCommentSort}
                 transparent={true}

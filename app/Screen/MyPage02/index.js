@@ -180,12 +180,11 @@ export default function MyPage02({ navigation }) {
                                 <TouchableOpacity
                                   activeOpacity={1}
                                   onPress = {() => {
-                                      setMarkLike(!markLike)
                                       setModalCancel(true);
                                   }}
                                   style={{flex:1}}
                                 >
-                                  <Icons.StarIcon color={markLike ? "#f4933a" : "rgba(217,217,217,1)"} size={18} fill={markLike ? "#f4933a" : "transparent"} />
+                                  <Icons.StarIcon color="#f4933a" size={18} fill="#f4933a" />
                                 </TouchableOpacity>
                               </View>
                             </View>
@@ -222,8 +221,8 @@ export default function MyPage02({ navigation }) {
               }}
               titleText={'즐겨찾기 해제'}
               bodyText={'즐겨찾기를 정말로 해제하시겠습니까?'}
-              btnText2={'취소'}
               btnText={'확인'}
+              btnText2={'취소'}
           />
         </View>
     );
