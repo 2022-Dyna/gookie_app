@@ -378,7 +378,9 @@ export default function Home({navigation}) {
                           borderTopColor: '#eee',
                         }
                       }>
-                      <TouchableOpacity activeOpacity={1}>
+                      <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={() => navigation.navigate('Detail')}>
                         <View
                           style={{
                             flexDirection: 'row',
@@ -472,7 +474,9 @@ export default function Home({navigation}) {
                   }
                   return (
                     <View style={{marginRight: 10}}>
-                      <TouchableOpacity activeOpacity={1}>
+                      <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={() => navigation.navigate('Detail')}>
                         <View style={styles.cardImg}>
                           <Image
                             source={item.imgSrc}
