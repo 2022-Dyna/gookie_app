@@ -122,7 +122,10 @@ export default function Alarm({navigation}) {
                     <View>
                       {!loginState.isCon && (
                         <View
-                          style={[commonStyles.mb16, {flexDirection: 'row'}]}>
+                          style={[
+                            commonStyles.mb24,
+                            {flexDirection: 'row', alignItems: 'center'},
+                          ]}>
                           <View style={commonStyles.mr8}>
                             <Text style={styles.alarmName}>{item.name}</Text>
                           </View>
@@ -170,8 +173,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#eeeeee',
   },
-  alarmName: {fontSize: 14, color: '#454545', letterSpacing: -0.28},
-  alarmGroup: {fonSize: 12, color: '#b1b1b1', letterSpacing: -0.24},
+  alarmName: {
+    fontSize: 14,
+    color: '#454545',
+    letterSpacing: -0.28,
+    fontWeight: 'bold',
+  },
+  alarmGroup: {fontSize: 12, color: '#b1b1b1', letterSpacing: -0.24},
   alarmDate: {fontSize: 12, color: '#b1b1b1', letterSpacing: -0.24},
   alarmDesc: {fontSize: 12, color: '#7b7b7b', letterSpacing: -0.24},
 });
