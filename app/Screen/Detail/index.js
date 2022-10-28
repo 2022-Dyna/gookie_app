@@ -71,6 +71,7 @@ export default function Detail({ navigation }) {
     const [modalCheck , setModalCheck] = useState(false);
     const [modalLoginCheck, setModalLoginCheck] = useState(false);
     const [modalCommentSort, setModalCommentSort] = useState(false);
+    const [modalCancel, setModalCancel] = useState(false);
 
     //btn state
     const [btnState, setBtnState] = useState(0);
@@ -190,7 +191,7 @@ export default function Detail({ navigation }) {
 
     return (
         <View style={{position:"relative", height:"100%"}}>
-            <ScrollView >
+            <ScrollView>
                 <View style={{height:180}}>
                     <ImageBackground source={party[0].src} resizeMode="cover">
                         <View style={{flexDirection:"row", justifyContent:"flex-end", height:'100%', marginTop:16, marginRight:16}}>
@@ -205,6 +206,9 @@ export default function Detail({ navigation }) {
                                     onPress ={() => {
                                         if(loginState.login){
                                             setMarkLike(!markLike);
+                                            if(markLike){
+                                                setModalCancel(true)
+                                            }
                                         }else{
                                             setMarkLike(false);
                                             setModalLoginCheck(true);
@@ -212,7 +216,7 @@ export default function Detail({ navigation }) {
                                         
                                     }}
                                 >
-                                    <Icons.StarIcon color={markLike ? "#f4933a" : "#fff"} size={25} fill={markLike ? "#f4933a" : "transparent"} />
+                                    <Icons.StarIcon color={markLike ? "#ffbd12" : "#fff"} size={25} fill={markLike ? "#ffbd12" : "transparent"} />
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -475,7 +479,12 @@ export default function Detail({ navigation }) {
                                 </View>
                             </View>
                             <FlatList
-                                ListEmptyComponent={() =><View></View>}
+                                contentContainerStyle={datas.length === 0 && {flex:1}}
+                                ListEmptyComponent={() =>
+                                    <View style={{justifyContent:"center", alignItems:"center", paddingVertical:100}}>
+                                        <Text style={{fontSize:12, color:"#7b7b7b", letterSpacing:-0.24,}}>등록된 댓글이 없습니다.</Text>
+                                    </View>
+                                }
                                 data={datas}
                                 empty
                                 renderItem={({item}) => {
@@ -816,6 +825,20 @@ export default function Detail({ navigation }) {
                 }}
                 titleText={'로그인 확인'}
                 bodyText={'로그인안했슴다 로그인하십쇼'}
+                btnText={'확인'}
+                btnText2={'취소'}
+            />
+            <ConfirmModal
+                transparent={true}
+                btnBoolean={modalCancel}
+                onPress={() => {
+                    setModalCancel(false);
+                }}
+                onCancel={() => {
+                    setModalCancel(false);
+                }}
+                titleText={'즐겨찾기 해제'}
+                bodyText={'즐겨찾기를 정말로 해제하시겠습니까?'}
                 btnText={'확인'}
                 btnText2={'취소'}
             />

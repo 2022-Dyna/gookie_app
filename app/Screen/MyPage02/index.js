@@ -121,16 +121,25 @@ export default function MyPage02({ navigation }) {
                 <View>
                   <Text style={styles.subTit}>내가 쓴 댓글</Text>
                 </View>
-                <View>
-                  <TouchableOpacity
-                    activeOpacity={1}
-                    onPress={() => navigation.navigate('MyPageComment')}
-                  >
-                    <Text style={styles.allView}>전체보기</Text>
-                  </TouchableOpacity>
-                </View>
+                {
+                  commentData.length !==0 && 
+                  <View>
+                    <TouchableOpacity
+                      activeOpacity={1}
+                      onPress={() => navigation.navigate('MyPageComment')}
+                    >
+                      <Text style={styles.allView}>전체보기</Text>
+                    </TouchableOpacity>
+                  </View>
+                }
               </View>
               <FlatList
+                ListEmptyComponent={() =>
+                <View style={{paddingTop:8, paddingBottom:32}}>
+                  <Text style={{fontSize:12, color:"#b1b1b1", letterSpacing:-0.24}}>내가 쓴 댓글이 없어요</Text>
+                </View>
+                }
+                empty
                 data={commentData}
                 renderItem={({item, index}) => {
                   return(
@@ -159,7 +168,13 @@ export default function MyPage02({ navigation }) {
                 </View>
               </View>
                 <View>
-                  <FlatList 
+                  <FlatList
+                    ListEmptyComponent={() =>
+                    <View style={{paddingTop:8, paddingBottom:32}}>
+                      <Text style={{fontSize:12, color:"#b1b1b1", letterSpacing:-0.24}}>즐겨찾기 한 의원이 없어요.</Text>
+                    </View>
+                    }
+                    empty
                     data={markData}
                     renderItem = {({item, index}) => {
                       return(
@@ -184,7 +199,7 @@ export default function MyPage02({ navigation }) {
                                   }}
                                   style={{flex:1}}
                                 >
-                                  <Icons.StarIcon color="#f4933a" size={18} fill="#f4933a" />
+                                  <Icons.StarIcon color="#ffbd12" size={18} fill="#ffbd12" />
                                 </TouchableOpacity>
                               </View>
                             </View>

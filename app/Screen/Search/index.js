@@ -2,8 +2,17 @@ import { View, Text, ScrollView, TouchableOpacity, StyleSheet, FlatList} from "r
 import { useState } from 'react';
 import * as Icons from 'react-native-heroicons/outline';
 import { commonStyles } from "../../common";
+import ConfirmModal from '../../Component/ConfirmModal';
 
 export default function ScreenA({ navigation }) {
+    const loginState = {
+        login:true,
+        isCon:true,
+        email:'ezicland@naver.com',
+        name:'손동윤',
+        userCd:1
+    }
+
     //의원 데이터
     const data =[
         {
@@ -89,6 +98,12 @@ export default function ScreenA({ navigation }) {
     //탭변경
     const [tab, setTab] = useState(0);
 
+    //즐겨찾기 취소 모달
+    const [modalCancel, setModalCancel] = useState(false);
+
+    //즐찾시 로그인 체크 모달
+    const [modalLoginCheck, setModalLoginCheck] = useState(false);
+
     return (
         <View>
             <ScrollView
@@ -169,22 +184,36 @@ export default function ScreenA({ navigation }) {
                                         data={item.content}
                                         renderItem={(conItem) => {
                                             return(
-                                                <View style={{flexDirection:"row", justifyContent:"space-between", borderBottomWidth:1, borderColor:"#eee", paddingVertical:12, paddingHorizontal:8,}}>
-                                                    <View style={{flexDirection:"row", alignItems:"center", justifyContent:"center",}}>
-                                                        <Text style={styles.congressName}>{conItem.item.name}</Text>
-                                                        <Text style={styles.congressParty}>{conItem.item.group}</Text>
-                                                    </View>
-                                                    <View>
-                                                        <TouchableOpacity
-                                                            activeOpacity={1}
-                                                            onPress = {() => {
-                                                                setMarkLike(!markLike)
-                                                            }}
-                                                            style={{flex:1}}
-                                                        >
-                                                            <Icons.StarIcon color={markLike ? "#f4933a" : "rgba(217,217,217,1)"} size={18} fill={markLike ? "#f4933a" : "transparent"} />
-                                                        </TouchableOpacity>
-                                                    </View>
+                                                <View>
+                                                    <TouchableOpacity
+                                                        activeOpacity={1}
+                                                        onPress ={() => {navigation.navigate('Detail')}}
+                                                    >
+                                                        <View style={{flexDirection:"row", justifyContent:"space-between", borderBottomWidth:1, borderColor:"#eee", paddingVertical:12, paddingHorizontal:8,}}>
+                                                            <View style={{flexDirection:"row", alignItems:"center", justifyContent:"center",}}>
+                                                                <Text style={styles.congressName}>{conItem.item.name}</Text>
+                                                                <Text style={styles.congressParty}>{conItem.item.group}</Text>
+                                                            </View>
+                                                            <View>
+                                                                <TouchableOpacity
+                                                                    activeOpacity={1}
+                                                                    onPress = {() => {
+                                                                        setMarkLike(!markLike)
+                                                                        if(!loginState.login){
+                                                                            setModalLoginCheck(true)
+                                                                        }else{
+                                                                            if(markLike){
+                                                                                setModalCancel(true)
+                                                                            }
+                                                                        }
+                                                                    }}
+                                                                    style={{flex:1}}
+                                                                >
+                                                                    <Icons.StarIcon color={markLike ? "#ffbd12" : "rgba(217,217,217,1)"} size={18} fill={markLike ? "#ffbd12" : "transparent"} />
+                                                                </TouchableOpacity>
+                                                            </View>
+                                                        </View>
+                                                    </TouchableOpacity>
                                                 </View>
                                             )
                                         }}
@@ -195,6 +224,36 @@ export default function ScreenA({ navigation }) {
                     }}
                 />
             </ScrollView>
+            <ConfirmModal
+                transparent={true}
+                btnBoolean={modalCancel}
+                onPress={() => {
+                    setModalCancel(false);
+                }}
+                onCancel={() => {
+                    setModalCancel(false);
+                }}
+                titleText={'즐겨찾기 해제'}
+                bodyText={'즐겨찾기를 정말로 해제하시겠습니까?'}
+                btnText={'확인'}
+                btnText2={'취소'}
+            />
+
+            <ConfirmModal
+                transparent={true}
+                btnBoolean={modalLoginCheck}
+                onPress={() => {
+                    setModalLoginCheck(false);
+                    navigation.navigate('Login')
+                }}
+                onCancel={() => {
+                    setModalLoginCheck(false);
+                }}
+                titleText={'로그인 확인'}
+                bodyText={'로그인 하시겠습니까?'}
+                btnText={'확인'}
+                btnText2={'취소'}
+            />
         </View>
     );
 }
