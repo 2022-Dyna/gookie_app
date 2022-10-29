@@ -49,8 +49,14 @@ export default function Detail({ navigation }) {
     
     //배경 및 당변경
     const party = [
-        {id: 1, name:"더불어민주당", src: require('../../img/detail_img.png')},
-        {id: 2, name:"정의당", src: require('../../img/detail_profile.png')},
+        {id: 1, name:"더불어민주당", src: require('../../img/detail_img01.png')},
+        {id: 2, name:"국민의힘", src: require('../../img/detail_img02.png')},
+        {id: 3, name:"정의당", src: require('../../img/detail_img03.png')},
+        {id: 4, name:"국민의당", src: require('../../img/detail_img04.png')},
+        {id: 5, name:"열린민주당", src: require('../../img/detail_img05.png')},
+        {id: 6, name:"기본소득당", src: require('../../img/detail_img06.png')},
+        {id: 7, name:"시대전환", src: require('../../img/detail_img07.png')},
+        {id: 8, name:"무소속", src: require('../../img/detail_img08.png')},
     ];
     
     //인풋창 텍스트 변경관련

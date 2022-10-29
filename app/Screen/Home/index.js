@@ -8,11 +8,13 @@ import {
   StyleSheet,
   FlatList,
   Button,
+  Dimensions,
 } from 'react-native';
 import * as Icons from 'react-native-heroicons/outline';
 import {commonStyles} from '../../common/index';
 
 export default function Home({navigation}) {
+  const width = Dimensions.get('window').width;
   const datas1 = [
     {
       imgSrc: require('../../img/congress_img.png'),
@@ -119,12 +121,15 @@ export default function Home({navigation}) {
           title="Go to MyPage"
           onPress={() => navigation.navigate('MyPage02')}
         />
-        <View style={{width: '100%', height: 160}}>
-          <Image
-            source={require('../../img/banner.png')}
-            resizeMode="cover"
-            style={{width: '100%', height: '100%'}}
-          />
+        <View style={{width: '100%'}}>
+          <TouchableOpacity
+            activeOpacity={1}
+          >
+            <Image
+              source={require('../../img/banner.png')}
+              style={{width: '100%', height:width*0.5}}
+            />
+          </TouchableOpacity>
         </View>
         <View style={{backgroundColor: '#f8f7f7'}}>
           {/* 이번주 소통왕 */}
