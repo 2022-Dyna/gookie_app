@@ -33,7 +33,7 @@ export default function Login({navigation}) {
   const userLogin = () =>{
     console.log(id);
     console.log(pw);
-    axios.post('http://192.168.241.1:8075/api/v1/login',
+    axios.post('http://192.168.0.46:8075/api/v1/login',
         {
           memberLoginId:id,
           memberLoginPw:pw,

@@ -19,6 +19,7 @@ export default function Join({navigation}) {
   const [emailValue, setEmailValue] = useState('');
   const [numberValue, setNumberValue] = useState('');
   const [pwValue, setPwValue] = useState('');
+  const [pwConfirmValue, setPwConfirmValue] = useState('');
 
   const [emailMsg, setEmailMsg] = useState('');
   const [pwMsg, setPwMsg] = useState('');
@@ -27,11 +28,13 @@ export default function Join({navigation}) {
   const [emailFocus, setEmailFocus] = useState(false);
   const [numberFocus, setNumberFocus] = useState(false);
   const [pwFocus, setPwFocus] = useState(false);
+  const [pwConfirmFocus, setPwConfirmFocus] = useState(false);
   const [nextPress, setNextPress] = useState(false);
   const [completePress, setCompletePress] = useState(false);
   const [emailPress, setEmailPress] = useState(false);
   const [numberPress, setNumberPress] = useState(false);
   const [pwSecret, setPwSecret] = useState(true);
+  const [pwConfirmSecret, setPwConfirmSecret] = useState(true);
   const [emailSend, setEmailSend] = useState(false);
   const [modalVertify, setModalVertify] = useState(false);
   const [modalComplete, setModalComplete] = useState(false);
@@ -47,7 +50,10 @@ export default function Join({navigation}) {
   let disabledEmail = false;
   let disabledNumber = false;
   nameValue.length !== 0 ? (disabledNext = false) : (disabledNext = true);
-  emailValue.length !== 0 && numberValue.length !== 0 && pwValue.length !== 0
+  emailValue.length !== 0 &&
+  numberValue.length !== 0 &&
+  pwValue.length !== 0 &&
+  pwConfirmValue.length !== 0
     ? (disabledComplete = false)
     : (disabledComplete = true);
   emailValue.length !== 0 ? (disabledEmail = false) : (disabledEmail = true);
@@ -59,7 +65,7 @@ export default function Join({navigation}) {
   //1. 이메일 인증번호 발급
   const getEmailVaild = () => {
     axios
-      .get('http://192.168.241.1:8075/api/v1/join', {
+      .get('http://192.168.0.46:8075/api/v1/join', {
         params: {
           memberLoginId: emailValue,
         },
@@ -84,14 +90,14 @@ export default function Join({navigation}) {
   //2. 회원가입 통신
   const userJoin = () => {
     axios
-      .post('http://192.168.241.1:8075/api/v1/join', {
+      .post('http://192.168.0.46:8075/api/v1/join', {
         memberLoginId: emailValue,
         memberLoginPw: pwValue,
         memberName: nameValue,
       })
       .then(res => {
         console.log(res.data);
-        if (res.data.data > 0) {
+        if (res.data.data.error == 0) {
           setModalComplete(true);
           setPwMsg('');
         } else {
@@ -114,16 +120,25 @@ export default function Join({navigation}) {
     }
   };
   const onValid = () => {
-    if (pwValue.length < 6 || pwValue.length > 20) {
-      setPwMsg('비밀번호가 너무 짧습니다.');
-    } else if (pwValue.search(/\s/) !== -1) {
-      setPwMsg('공백없이 입력해주세요.');
-    } else if (pwValue.search(/[0-9]/g) < 0 || pwValue.search(/[a-z]/g) < 0) {
-      setPwMsg('영문, 숫자를 혼합하여 입력해주세요.');
-    } else {
-      if (emailCode) {
-        userJoin();
+    if (emailCode) {
+      if (pwValue === pwConfirmValue) {
+        if (pwValue.length < 6 || pwValue.length > 20) {
+          setPwMsg('비밀번호가 너무 짧습니다.');
+        } else if (pwValue.search(/\s/) !== -1) {
+          setPwMsg('공백없이 입력해주세요.');
+        } else if (
+          pwValue.search(/[0-9]/g) < 0 ||
+          pwValue.search(/[a-z]/g) < 0
+        ) {
+          setPwMsg('영문, 숫자를 혼합하여 입력해주세요.');
+        } else {
+          userJoin();
+        }
+      } else {
+        setPwMsg('비밀번호가 일치하지 않습니다.');
       }
+    } else {
+      setPwMsg('이메일 인증 해주세요.');
     }
   };
 
@@ -356,12 +371,57 @@ export default function Join({navigation}) {
                       </TouchableOpacity>
                     </View>
                   </View>
-                  {pwMsg.length !== 0 && (
-                    <Text style={[commonStyles.mt8, commonStyles.validText]}>
-                      {pwMsg}
-                    </Text>
-                  )}
                 </View>
+
+                <View style={commonStyles.mt8}>
+                  <Text style={[commonStyles.labeltext, commonStyles.mb8]}>
+                    비밀번호 확인
+                  </Text>
+                  <View style={{position: 'relative'}}>
+                    <TextInput
+                      style={
+                        !pwConfirmFocus
+                          ? [commonStyles.input, {paddingRight: 54}]
+                          : [commonStyles.inputfocus, {paddingRight: 54}]
+                      }
+                      name="pw"
+                      value={pwConfirmValue}
+                      onFocus={() => setPwConfirmFocus(true)}
+                      onBlur={() => setPwConfirmFocus(false)}
+                      onChange={e => setPwConfirmValue(e.nativeEvent.text)}
+                      secureTextEntry={pwConfirmSecret}
+                    />
+                    <View
+                      style={{
+                        position: 'absolute',
+                        top: 12,
+                        right: 15,
+                      }}>
+                      <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={() => setPwConfirmSecret(prev => !prev)}>
+                        {pwConfirmSecret === true ? (
+                          <Icons.EyeSlashIcon
+                            color="#d0d0d0"
+                            fill="transparent"
+                            size={24}
+                          />
+                        ) : (
+                          <Icons.EyeIcon
+                            color="#d0d0d0"
+                            fill="transparent"
+                            size={24}
+                          />
+                        )}
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+                {pwMsg.length !== 0 && (
+                  <Text style={[commonStyles.mt8, commonStyles.validText]}>
+                    {pwMsg}
+                  </Text>
+                )}
               </View>
             )}
           </ScrollView>
