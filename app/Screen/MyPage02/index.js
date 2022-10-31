@@ -89,8 +89,11 @@ export default function MyPage02({ navigation }) {
     //즐겨찾기 클릭시 색변경
     const [markLike, setMarkLike] = useState(false);
 
-    //즐격찾기 취소 모달
+    //즐겨찾기 취소 모달
     const [modalCancel, setModalCancel] = useState(false);
+
+    //로그아웃 확인 모달
+    const [modalLogout, setModalLogout] = useState(false);
 
     return (
         <View>
@@ -214,8 +217,7 @@ export default function MyPage02({ navigation }) {
                 <TouchableOpacity
                   activeOpacity={1}
                   onPress={()=>{
-                    dispatch(loginAction.makeLogout());
-                    navigation.navigate('Home');
+                    setModalLogout(true);
                 }}
                 >
                   <View style={{justifyContent:"center", alignItems:"center",}}>
@@ -236,6 +238,22 @@ export default function MyPage02({ navigation }) {
               }}
               titleText={'즐겨찾기 해제'}
               bodyText={'즐겨찾기를 정말로 해제하시겠습니까?'}
+              btnText={'확인'}
+              btnText2={'취소'}
+          />
+          <ConfirmModal
+              transparent={true}
+              btnBoolean={modalLogout}
+              onPress={() => {
+                dispatch(loginAction.makeLogout());
+                navigation.navigate('Home');
+                setModalLogout(false);
+              }}
+              onCancel={() => {
+                setModalLogout(false);
+              }}
+              titleText={'로그아웃'}
+              bodyText={'정말 로그아웃 하시겠습니까?'}
               btnText={'확인'}
               btnText2={'취소'}
           />

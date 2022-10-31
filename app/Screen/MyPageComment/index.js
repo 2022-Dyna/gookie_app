@@ -81,7 +81,28 @@ export default function MyPageComment({ navigation }) {
                   내가 쓴 댓글
                 </Text>
               </View>
-              <FlatList 
+              <FlatList
+                ListEmptyComponent={() =>{
+                  return (
+                    <View
+                      style={{
+                        paddingTop:100
+                      }}>
+                      <View>
+                        <Text
+                          style={{
+                            fontSize: 12,
+                            color: '#7b7b7b',
+                            letterSpacing: -0.24,
+                            textAlign:"center"
+                          }}>
+                          내가 쓴 댓글이 없습니다.
+                        </Text>
+                      </View>
+                    </View>
+                  );
+                }}
+                empty
                 data={data}
                 renderItem={({item}) => {
                   return (

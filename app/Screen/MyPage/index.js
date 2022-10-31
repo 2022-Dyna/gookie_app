@@ -94,155 +94,173 @@ export default function MyPage({ navigation }) {
         //즐격찾기 취소 모달
         const [modalCancel, setModalCancel] = useState(false);
 
-        return (
-          <View>
-            <ScrollView>
-              <View style={{paddingVertical:16,}}>
-                <Text style={styles.myPageTit}>마이페이지</Text>
+        //로그아웃 확인 모달
+        const [modalLogout, setModalLogout] = useState(false);
+
+    return (
+        <View>
+          <ScrollView>
+            <View style={{paddingVertical:16,}}>
+              <Text style={styles.myPageTit}>마이페이지</Text>
+            </View>
+            <View style={{borderBottomWidth:8, borderColor:"#f8f7f7"}}>
+              <View style={{paddingVertical:32, paddingHorizontal:24, flexDirection:"row", justifyContent:"space-between", alignItems:"center",}}>
+                <View>
+                  <Text style={styles.myName}>{loginState.name}</Text>
+                  <Text style={styles.myMail}>{loginState.email}</Text>
+                </View>
+                <View>
+                  <TouchableOpacity
+                    activeOpacity={1}
+                    onPress={() => navigation.navigate('PwReset')}
+                  >
+                    <View style={styles.myEditBox}>
+                      <Text style={styles.myEditText}>수정</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
               </View>
-              <View style={{borderBottomWidth:8, borderColor:"#f8f7f7"}}>
-                <View style={{paddingVertical:32, paddingHorizontal:24, flexDirection:"row", justifyContent:"space-between", alignItems:"center",}}>
-                  <View>
-                    <Text style={styles.myName}>{loginState.name}</Text>
-                    <Text style={styles.myMail}>{loginState.email}</Text>
-                  </View>
+            </View>
+            <View style={{paddingVertical:32, paddingHorizontal:24, borderBottomWidth:8, borderColor:"#f8f7f7"}}>
+              <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between", paddingBottom:8,}}>
+                <View>
+                  <Text style={styles.subTit}>내가 쓴 댓글</Text>
+                </View>
+                {
+                  commentData.length !==0 && 
                   <View>
                     <TouchableOpacity
                       activeOpacity={1}
-                      onPress={() => navigation.navigate('PwReset')}
+                      onPress={() => navigation.navigate('MyPageComment')}
                     >
-                      <View style={styles.myEditBox}>
-                        <Text style={styles.myEditText}>수정</Text>
-                      </View>
+                      <Text style={styles.allView}>전체보기</Text>
                     </TouchableOpacity>
                   </View>
-                </View>
+                }
               </View>
-              <View style={{paddingVertical:32, paddingHorizontal:24, borderBottomWidth:8, borderColor:"#f8f7f7"}}>
-                <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between", paddingBottom:8,}}>
-                  <View>
-                    <Text style={styles.subTit}>내가 쓴 댓글</Text>
-                  </View>
-                  {
-                    commentData.length !==0 && 
+              <FlatList
+                ListEmptyComponent={() =>
+                <View style={{paddingTop:8, paddingBottom:32}}>
+                  <Text style={{fontSize:12, color:"#b1b1b1", letterSpacing:-0.24}}>내가 쓴 댓글이 없어요</Text>
+                </View>
+                }
+                empty
+                data={commentData}
+                renderItem={({item, index}) => {
+                  return(
                     <View>
-                      <TouchableOpacity
+                        <TouchableOpacity
                         activeOpacity={1}
-                        onPress={() => navigation.navigate('MyPageComment')}
+                        onPress={() => navigation.navigate('Detail')}
                       >
-                        <Text style={styles.allView}>전체보기</Text>
+                        <View style={
+                          index === 0 ? {flexDirection:"row", alignItems:"center", paddingVertical:12, paddingHorizontal:8,}
+                          : {flexDirection:"row", alignItems:"center", borderTopWidth:1, borderColor:"#eee", paddingVertical:12, paddingHorizontal:8,}
+                        }>
+                          <Text style={styles.commentName}>{item.name}</Text>
+                          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.commentContent}>{item.content}</Text>
+                        </View>
                       </TouchableOpacity>
                     </View>
-                  }
+                  )
+                }}
+              />
+            </View>
+            <View style={{paddingVertical:32, paddingHorizontal:24, borderBottomWidth:8, borderColor:"#f8f7f7"}}>
+              <View style={{paddingBottom:8,}}>
+                <View>
+                  <Text style={styles.subTit}>즐겨찾기 목록</Text>
                 </View>
-                <FlatList
-                  ListEmptyComponent={() =>
-                  <View style={{paddingTop:8, paddingBottom:32}}>
-                    <Text style={{fontSize:12, color:"#b1b1b1", letterSpacing:-0.24}}>내가 쓴 댓글이 없어요</Text>
-                  </View>
-                  }
-                  empty
-                  data={commentData}
-                  renderItem={({item, index}) => {
-                    return(
-                      <View>
-                          <TouchableOpacity
-                          activeOpacity={1}
-                          onPress={() => navigation.navigate('Detail')}
-                        >
-                          <View style={
-                            index === 0 ? {flexDirection:"row", alignItems:"center", paddingVertical:12, paddingHorizontal:8,}
-                            : {flexDirection:"row", alignItems:"center", borderTopWidth:1, borderColor:"#eee", paddingVertical:12, paddingHorizontal:8,}
-                          }>
-                            <Text style={styles.commentName}>{item.name}</Text>
-                            <Text numberOfLines={1} ellipsizeMode="tail" style={styles.commentContent}>{item.content}</Text>
-                          </View>
-                        </TouchableOpacity>
-                      </View>
-                    )
-                  }}
-                />
               </View>
-              <View style={{paddingVertical:32, paddingHorizontal:24, borderBottomWidth:8, borderColor:"#f8f7f7"}}>
-                <View style={{paddingBottom:8,}}>
-                  <View>
-                    <Text style={styles.subTit}>즐겨찾기 목록</Text>
-                  </View>
-                </View>
-                  <View>
-                    <FlatList
-                      ListEmptyComponent={() =>
-                      <View style={{paddingTop:8, paddingBottom:32}}>
-                        <Text style={{fontSize:12, color:"#b1b1b1", letterSpacing:-0.24}}>즐겨찾기 한 의원이 없어요.</Text>
-                      </View>
-                      }
-                      empty
-                      data={markData}
-                      renderItem = {({item, index}) => {
-                        return(
-                          <View>
-                            <TouchableOpacity
-                              activeOpacity={1}
-                              onPress={() => navigation.navigate('Detail')}
-                            >
-                              <View style={
-                                index === 0 ? {flexDirection:"row", alignItems:"center", justifyContent:"space-between", paddingVertical:12, paddingHorizontal:8,}
-                                : {flexDirection:"row", alignItems:"center", justifyContent:"space-between", borderTopWidth:1, borderColor:"#eee", paddingVertical:12, paddingHorizontal:8,}
-                              }>
-                                <View style={{flexDirection:"row", alignItems:"center"}}>
-                                  <Text style={styles.commentName}>{item.name}</Text>
-                                  <Text numberOfLines={1} ellipsizeMode="tail" style={styles.group}>{item.group}</Text>
-                                </View>
-                                <View>
-                                  <TouchableOpacity
-                                    activeOpacity={1}
-                                    onPress = {() => {
-                                        setModalCancel(true);
-                                    }}
-                                    style={{flex:1}}
-                                  >
-                                    <Icons.StarIcon color="#ffbd12" size={18} fill="#ffbd12" />
-                                  </TouchableOpacity>
-                                </View>
-                              </View>
-                            </TouchableOpacity>
-                          </View>
-                        )
-                      }}
-                    />
-                  </View>
-              </View>
-              <View style={{paddingVertical:56,}}>
-                  <TouchableOpacity
-                    activeOpacity={1}
-                    onPress={()=>{
-                      dispatch(loginAction.makeLogout());
-                      navigation.navigate('Home');
-                  }}
-                  >
-                    <View style={{justifyContent:"center", alignItems:"center",}}>
-                      <Text style={styles.logout}>로그아웃</Text>
-                      <View style={{width:50, height:1, backgroundColor:"#d0d0d0",}}></View>
+                <View>
+                  <FlatList
+                    ListEmptyComponent={() =>
+                    <View style={{paddingTop:8, paddingBottom:32}}>
+                      <Text style={{fontSize:12, color:"#b1b1b1", letterSpacing:-0.24}}>즐겨찾기 한 의원이 없어요.</Text>
                     </View>
-                  </TouchableOpacity>
-              </View>
-            </ScrollView>
-            <ConfirmModal
-                transparent={true}
-                btnBoolean={modalCancel}
-                onPress={() => {
-                  setModalCancel(false);
+                    }
+                    empty
+                    data={markData}
+                    renderItem = {({item, index}) => {
+                      return(
+                        <View>
+                          <TouchableOpacity
+                            activeOpacity={1}
+                            onPress={() => navigation.navigate('Detail')}
+                          >
+                            <View style={
+                              index === 0 ? {flexDirection:"row", alignItems:"center", justifyContent:"space-between", paddingVertical:12, paddingHorizontal:8,}
+                              : {flexDirection:"row", alignItems:"center", justifyContent:"space-between", borderTopWidth:1, borderColor:"#eee", paddingVertical:12, paddingHorizontal:8,}
+                            }>
+                              <View style={{flexDirection:"row", alignItems:"center"}}>
+                                <Text style={styles.commentName}>{item.name}</Text>
+                                <Text numberOfLines={1} ellipsizeMode="tail" style={styles.group}>{item.group}</Text>
+                              </View>
+                              <View>
+                                <TouchableOpacity
+                                  activeOpacity={1}
+                                  onPress = {() => {
+                                      setModalCancel(true);
+                                  }}
+                                  style={{flex:1}}
+                                >
+                                  <Icons.StarIcon color="#ffbd12" size={18} fill="#ffbd12" />
+                                </TouchableOpacity>
+                              </View>
+                            </View>
+                          </TouchableOpacity>
+                        </View>
+                      )
+                    }}
+                  />
+                </View>
+            </View>
+            <View style={{paddingVertical:56,}}>
+                <TouchableOpacity
+                  activeOpacity={1}
+                  onPress={()=>{
+                    setModalLogout(true);
                 }}
-                onCancel={() => {
-                  setModalCancel(false);
-                }}
-                titleText={'즐겨찾기 해제'}
-                bodyText={'즐겨찾기를 정말로 해제하시겠습니까?'}
-                btnText={'확인'}
-                btnText2={'취소'}
-            />
-          </View>
-      );
+                >
+                  <View style={{justifyContent:"center", alignItems:"center",}}>
+                    <Text style={styles.logout}>로그아웃</Text>
+                    <View style={{width:50, height:1, backgroundColor:"#d0d0d0",}}></View>
+                  </View>
+                </TouchableOpacity>
+            </View>
+          </ScrollView>
+          <ConfirmModal
+              transparent={true}
+              btnBoolean={modalCancel}
+              onPress={() => {
+                setModalCancel(false);
+              }}
+              onCancel={() => {
+                setModalCancel(false);
+              }}
+              titleText={'즐겨찾기 해제'}
+              bodyText={'즐겨찾기를 정말로 해제하시겠습니까?'}
+              btnText={'확인'}
+              btnText2={'취소'}
+          />
+          <ConfirmModal
+              transparent={true}
+              btnBoolean={modalLogout}
+              onPress={() => {
+                dispatch(loginAction.makeLogout());
+                navigation.navigate('Home');
+                setModalLogout(false);
+              }}
+              onCancel={() => {
+                setModalLogout(false);
+              }}
+              titleText={'로그아웃'}
+              bodyText={'정말 로그아웃 하시겠습니까?'}
+              btnText={'확인'}
+              btnText2={'취소'}
+          />
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
