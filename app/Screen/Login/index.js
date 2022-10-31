@@ -13,42 +13,41 @@ import {useSelector, useDispatch} from 'react-redux';
 import * as loginAction from '../../Reducer/action/index';
 import {commonStyles} from '../../common/index';
 import ConfirmModal from '../../Component/ConfirmModal';
-import axios from "axios";
-import {LOGIN} from "../../Reducer/action/ActionTypes";
+import axios from 'axios';
+import {LOGIN} from '../../Reducer/action/ActionTypes';
 
 export default function Login({navigation}) {
   const dispatch = useDispatch();
 
   const [emailfocus, setEmailFocus] = useState(false);
   const [pwfocus, setPwFocus] = useState(false);
-  const [autoLogin, setAutoLogin] = useState(false);
+  const [autoLogin, setAutoLogin] = useState(true);
   const [pressLogin, setPressLogin] = useState(false);
   const [loginFail, setLoginFail] = useState(false);
   const [loginSuccess, setLoginSuccess] = useState(false);
-  const [id , setId] = useState(null);
-  const [pw , setPw] = useState(null);
+  const [id, setId] = useState(null);
+  const [pw, setPw] = useState(null);
 
-
-
-  const userLogin = () =>{
+  const userLogin = () => {
     console.log(id);
     console.log(pw);
-    axios.post('http://192.168.0.46:8075/api/v1/login',
-        {
-          memberLoginId:id,
-          memberLoginPw:pw,
-        }).then(res=>{
-      console.log(res.data);
-      if(res.data.data===0){
-        setLoginSuccess(true);
-
-      }else {
-        setLoginFail(true);
-      }
-    }).catch(err=>{
-      console.log(err);
-    })
-  }
+    axios
+      .post('http://144.24.94.124:8091/api/v1/login', {
+        memberLoginId: id,
+        memberLoginPw: pw,
+      })
+      .then(res => {
+        console.log(res.data);
+        if (res.data.data === 0) {
+          setLoginSuccess(true);
+        } else {
+          setLoginFail(true);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   return (
     <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
@@ -69,7 +68,7 @@ export default function Login({navigation}) {
               onBlur={() => {
                 setEmailFocus(false);
               }}
-              onChangeText={text=>setId(text)}
+              onChangeText={text => setId(text)}
             />
           </View>
           <View style={commonStyles.mt16}>
@@ -85,7 +84,7 @@ export default function Login({navigation}) {
                 setPwFocus(false);
               }}
               secureTextEntry={true}
-              onChangeText={text=>setPw(text)}
+              onChangeText={text => setPw(text)}
             />
           </View>
           <View>
@@ -179,16 +178,16 @@ export default function Login({navigation}) {
             btnText={'확인'}
           />
           <ConfirmModal
-              transparent={true}
-              btnBoolean={loginSuccess}
-              onPress={() => {
-                setLoginSuccess(false);
-                navigation.navigate('Home');
-                dispatch(loginAction.makeLogin());
-              }}
-              titleText={'로그인 성공'}
-              bodyText={'구키에 오신걸 환영합니다!.'}
-              btnText={'확인'}
+            transparent={true}
+            btnBoolean={loginSuccess}
+            onPress={() => {
+              setLoginSuccess(false);
+              navigation.navigate('Home');
+              dispatch(loginAction.makeLogin());
+            }}
+            titleText={'로그인 성공'}
+            bodyText={'구키에 오신걸 환영합니다!.'}
+            btnText={'확인'}
           />
         </View>
       </View>

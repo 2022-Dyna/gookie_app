@@ -1,5 +1,5 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationContainer,DefaultTheme } from '@react-navigation/native';
+import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 
 import ScreenB from '../Screen/ScreenB';
 import ScreenA from '../Screen/ScreenA';
@@ -22,14 +22,14 @@ import {useDispatch, useSelector} from 'react-redux';
 
 export default function Navigation() {
   const loginState = useSelector(state => state.login);
-  console.log(loginState,'로그인 여부');
-    const MyTheme = {
-        ...DefaultTheme,
-        colors: {
-            ...DefaultTheme.colors,
-            background: 'white'
-        },
-    };
+  console.log(loginState, '로그인 여부');
+  const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: 'white',
+    },
+  };
 
   return (
     <NavigationContainer theme={MyTheme}>
@@ -86,7 +86,11 @@ function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      screenOptions={{headerShown: false}}
+      screenOptions={{
+        headerShown: false,
+        tabBarInactiveTintColor: '#bbb',
+        tabBarActiveTintColor: '#f4933a',
+      }}
       tabBarOptions={{keyboardHidesTabBar: true}}>
       <BottomTab.Screen
         name="Home"

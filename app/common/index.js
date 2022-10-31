@@ -129,6 +129,11 @@ export const commonStyles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#ffffff',
   },
+  // loader
+  loaderWrap: {
+    position: 'relative',
+    height: '100%',
+  },
   // margin
   mb8: {
     marginBottom: 8,

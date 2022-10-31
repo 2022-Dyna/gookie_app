@@ -65,7 +65,7 @@ export default function Join({navigation}) {
   //1. 이메일 인증번호 발급
   const getEmailVaild = () => {
     axios
-      .get('http://192.168.0.46:8075/api/v1/join', {
+      .get('http://144.24.94.124:8091/api/v1/join', {
         params: {
           memberLoginId: emailValue,
         },
@@ -90,7 +90,7 @@ export default function Join({navigation}) {
   //2. 회원가입 통신
   const userJoin = () => {
     axios
-      .post('http://192.168.0.46:8075/api/v1/join', {
+      .post('http://144.24.94.124:8091/api/v1/join', {
         memberLoginId: emailValue,
         memberLoginPw: pwValue,
         memberName: nameValue,
