@@ -21,6 +21,8 @@ export default function PwReset({navigation}) {
     pw: 'abcd1234', // 비밀번호 임시로 작성
   };
 
+  const [pwResetLoading, setPwResetLoading] = useState(false);
+
   const [pwValue, setPwValue] = useState('');
   const [newPwValue, setnewPwValue] = useState('');
   const [newPwConfirmValue, setnewPwConfirmValue] = useState('');
@@ -55,6 +57,8 @@ export default function PwReset({navigation}) {
         ) {
           setPwMsg('영문, 숫자를 혼합하여 입력해주세요.');
         } else {
+          setPwResetLoading(true);
+          setPwResetLoading(false);
           setModalComplete(true);
         }
       } else {
@@ -66,7 +70,9 @@ export default function PwReset({navigation}) {
   };
 
   return (
-    <View>
+    <View style={commonStyles.loaderWrap}>
+      {pwResetLoading && <Loader type={'trans'} />}
+
       <View style={styles.pwResetTit}>
         <Text style={styles.pwResetTitText}>내정보 수정</Text>
       </View>

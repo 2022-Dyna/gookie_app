@@ -11,9 +11,11 @@ import * as Icons from 'react-native-heroicons/outline';
 import {commonStyles} from '../../common';
 import ConfirmModal from '../../Component/ConfirmModal';
 import axios from 'axios';
+import Loader from '../../Component/Loader';
 
 export default function Join({navigation}) {
   const [step, setStep] = useState(0);
+  const [joinLoading, setJoinLoading] = useState(false);
 
   const [nameValue, setNameValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
@@ -77,8 +79,10 @@ export default function Join({navigation}) {
         console.log(res.data);
         if (res.data.data.check === 0) {
           setEmailCode(res.data.data.code);
+          setJoinLoading(false);
           setModalVertify(true);
         } else {
+          setJoinLoading(false);
           setEmailFail(true);
         }
       })
@@ -98,6 +102,7 @@ export default function Join({navigation}) {
       .then(res => {
         console.log(res.data);
         if (res.data.data.error == 0) {
+          setJoinLoading(false);
           setModalComplete(true);
           setPwMsg('');
         } else {
@@ -115,6 +120,7 @@ export default function Join({navigation}) {
     if (!regex.test(emailValue)) {
       setEmailMsg('올바른 이메일 주소를 입력해주세요.');
     } else {
+      setJoinLoading(true);
       setEmailMsg('');
       getEmailVaild();
     }
@@ -132,6 +138,7 @@ export default function Join({navigation}) {
         ) {
           setPwMsg('영문, 숫자를 혼합하여 입력해주세요.');
         } else {
+          setJoinLoading(true);
           userJoin();
         }
       } else {
@@ -143,7 +150,8 @@ export default function Join({navigation}) {
   };
 
   return (
-    <View>
+    <View style={commonStyles.loaderWrap}>
+      {joinLoading && <Loader type={'trans'} />}
       <View style={[commonStyles.inner, styles.basic]}>
         <View>
           <Text style={styles.percentText}>{step + 1} / 2</Text>
@@ -281,13 +289,16 @@ export default function Join({navigation}) {
                         onPressIn={() => setNumberPress(true)}
                         onPressOut={() => setNumberPress(false)}
                         onPress={() => {
+                          setJoinLoading(true);
                           console.log(numberValue, 'nv');
                           console.log(emailCode, 'em');
 
                           if (numberValue == emailCode) {
+                            setJoinLoading(false);
                             setCodeSuccess(true);
                             setEmailCode(true);
                           } else {
+                            setJoinLoading(false);
                             setCodeFail(true);
                           }
                         }}>
