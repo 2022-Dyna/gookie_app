@@ -19,6 +19,7 @@ import {
   Text,
   useColorScheme,
   View,
+  LogBox
 } from 'react-native';
 
 import {
@@ -36,6 +37,7 @@ import reducers from './Reducer/reducer';
 import { Provider } from 'react-redux';
 
 const store = createStore(reducers);
+LogBox.ignoreAllLogs();
 
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
@@ -43,6 +45,7 @@ const store = createStore(reducers);
 
 
 const App: () => Node = () => {
+
   useEffect(() => {
     try {
       setTimeout(() => {

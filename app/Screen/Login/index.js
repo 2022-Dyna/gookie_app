@@ -15,6 +15,8 @@ import {commonStyles} from '../../common/index';
 import ConfirmModal from '../../Component/ConfirmModal';
 import axios from 'axios';
 import {LOGIN} from '../../Reducer/action/ActionTypes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {as} from "react-native/sdks/hermes/test/Parser/flow/export";
 
 export default function Login({navigation}) {
   const dispatch = useDispatch();
@@ -27,18 +29,20 @@ export default function Login({navigation}) {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [id, setId] = useState(null);
   const [pw, setPw] = useState(null);
+  const [loginUser, setLoginUser] = useState(null);
 
   const userLogin = () => {
     console.log(id);
     console.log(pw);
     axios
-      .post('http://144.24.94.124:8091/api/v1/login', {
+      .post('http://192.168.1.103:8091/api/v1/login', {
         memberLoginId: id,
         memberLoginPw: pw,
       })
       .then(res => {
-        console.log(res.data);
-        if (res.data.data === 0) {
+        console.log(res.data.data);
+        if (res.data.data.result == 0) {
+          setLoginUser(res.data.data.loginObj);
           setLoginSuccess(true);
         } else {
           setLoginFail(true);
@@ -180,10 +184,12 @@ export default function Login({navigation}) {
           <ConfirmModal
             transparent={true}
             btnBoolean={loginSuccess}
-            onPress={() => {
+            onPress={async() =>  {
               setLoginSuccess(false);
+              await AsyncStorage.setItem('loginUser',JSON.stringify(loginUser));
               navigation.navigate('Home');
               dispatch(loginAction.makeLogin());
+
             }}
             titleText={'로그인 성공'}
             bodyText={'구키에 오신걸 환영합니다!.'}
