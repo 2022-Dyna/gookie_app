@@ -4,6 +4,7 @@ import * as Icons from 'react-native-heroicons/outline';
 import { commonStyles } from "../../common";
 import ConfirmModal from '../../Component/ConfirmModal';
 import Loader from "../../Component/Loader";
+import axios from "axios";
 
 export default function ScreenA({ navigation }) {
     const loginState = {
@@ -14,7 +15,9 @@ export default function ScreenA({ navigation }) {
         userCd:1
     }
 
-    //의원 데이터
+
+
+            //의원 데이터
     const data =[
         {
             title: 'ㄱ [강 - 김]',
@@ -96,12 +99,93 @@ export default function ScreenA({ navigation }) {
     const [tabLoading, setTabLoading] = useState(false);
     const [datas, setDatas] = useState([]);
 
+    const [ga, setGa] = useState(null);
+    const [na, setNa] = useState(null);
+    const [da, setDa] = useState(null);
+    const [ra, setRa] = useState(null);
+    const [ma, setMa] = useState(null);
+    const [ba, setBa] = useState(null);
+    const [sa, setSa] = useState(null);
+    const [aa, setAa] = useState(null);
+    const [ja, setJa] = useState(null);
+    const [ca, setCa] = useState(null);
+    const [ka, setKa] = useState(null);
+    const [ta, setTa] = useState(null);
+    const [fa, setFa] = useState(null);
+    const [ha, setHa] = useState(null);
+
+    const getList = () =>{
+        axios.get('http://144.24.94.124:8091/api/v1/gookie/list',{})
+            .then(res=> {
+                console.log(res.data.data);
+                res.data.data.forEach((item)=>{
+                    // const ga = /[ㄱ-ㄱ|ㅏ-ㅣ|가-깋]/;
+                    // if(ga.test(item.hg_nm.charAt(0))){
+                    //     setGa(item);
+                    // }
+                    // const na = /[ㄴ-ㄴ|ㅏ-ㅣ|나-닣]/;
+                    // if(na.test(item.hg_nm.charAt(0))){
+                    //     setNa(item);
+                    // }
+                    // const da = /[ㄷ-ㄷ|ㅏ-ㅣ|다-딯]/;
+                    // if(da.test(item.hg_nm.charAt(0))){
+                    //     setDa(item);
+                    // }
+                    // const ra = /[ㄹ-ㄹ|ㅏ-ㅣ|라-맇]/;
+                    // if(ra.test(item.hg_nm.charAt(0))){
+                    //     setRa(item);
+                    // }
+                    // const ma = /[ㅁ-ㅁ|ㅏ-ㅣ|마-밓]/;
+                    // if(ma.test(item.hg_nm.charAt(0))){
+                    //     setMa(item);
+                    // }
+                    // const ba = /[ㅂ-ㅂ|ㅏ-ㅣ|바-빟]/;
+                    // if(ba.test(item.hg_nm.charAt(0))){
+                    //     setBa(item);
+                    // }
+                    // const sa = /[ㅅ-ㅅ|ㅏ-ㅣ|사-싷]/;
+                    // if(sa.test(item.hg_nm.charAt(0))){
+                    //     setSa(item);
+                    // }
+                    // const aa = /[ㅇ-ㅇ|ㅏ-ㅣ|아-잏]/;
+                    // if(aa.test(item.hg_nm.charAt(0))){
+                    //     setAa(item);
+                    // }
+                    // const ja = /[ㅈ-ㅈ|ㅏ-ㅣ|자-짛]/;
+                    // if(ja.test(item.hg_nm.charAt(0))){
+                    //     setJa(item);
+                    // }
+                    // const ca = /[ㅊ-ㅊ|ㅏ-ㅣ|차-칳]/;
+                    // if(ca.test(item.hg_nm.charAt(0))){
+                    //     setCa(item);
+                    // }
+                    // const ka = /[ㅋ-ㅋ|ㅏ-ㅣ|카-킿]/;
+                    // if(ka.test(item.hg_nm.charAt(0))){
+                    //     setKa(item);
+                    // }
+                    // const ta = /[ㅌ-ㅌ|ㅏ-ㅣ|타-팋]/;
+                    // if(ta.test(item.hg_nm.charAt(0))){
+                    //     setTa(item);
+                    // }
+                    // const fa = /[ㅍ-ㅍ|ㅏ-ㅣ|파-핗]/;
+                    // if(fa.test(item.hg_nm.charAt(0))){
+                    //     setFa(item);
+                    // }
+                    // const ha = /[ㅎ-ㅎ|ㅏ-ㅣ|하-힣]/;
+                    // if(ha.test(item.hg_nm.charAt(0))){
+                    //     setHa(item);
+                    // }
+
+
+                })
+            });
+    }
+
     //즐겨찾기 클릭시 색변경
     const [markLike, setMarkLike] = useState(false);
 
     //탭변경
     const [tab, setTab] = useState(0);
-
     //즐겨찾기 취소 모달
     const [modalCancel, setModalCancel] = useState(false);
 
@@ -115,8 +199,8 @@ export default function ScreenA({ navigation }) {
         } catch (e) {
             console.log(e.message);
         }
+        getList();
     }, []);
-    
 
     return (
         <View style={{height:"100%"}}>
@@ -186,7 +270,7 @@ export default function ScreenA({ navigation }) {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        <FlatList 
+                        <FlatList
                             data={datas}
                             renderItem={({item}) => {
                                 return(
@@ -197,7 +281,7 @@ export default function ScreenA({ navigation }) {
                                             </View>
                                         </View>
                                         <View style={{paddingHorizontal:24,}}>
-                                            <FlatList 
+                                            <FlatList
                                                 data={item.content}
                                                 renderItem={(conItem) => {
                                                     return(

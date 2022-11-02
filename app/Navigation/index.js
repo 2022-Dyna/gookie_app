@@ -19,9 +19,13 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useDispatch, useSelector} from 'react-redux';
+import {useEffect} from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as loginAction from "../Reducer/action";
 
 export default function Navigation() {
   const loginState = useSelector(state => state.login);
+  const dispatch = useDispatch();
   console.log(loginState, '로그인 여부');
   const MyTheme = {
     ...DefaultTheme,
@@ -30,6 +34,16 @@ export default function Navigation() {
       background: 'white',
     },
   };
+  useEffect(()=>{
+      const load = async ()=>{
+          const LoginUser = await AsyncStorage.getItem("loginUser");
+          if(LoginUser!=null){
+              console.log(LoginUser);
+              dispatch(loginAction.makeLogin());
+          }
+      };
+      load();
+  },[])
 
   return (
     <NavigationContainer theme={MyTheme}>

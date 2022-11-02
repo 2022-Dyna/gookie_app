@@ -1,8 +1,10 @@
-import { useReducer, useRef, useState } from 'react';
+import {useEffect, useReducer, useRef, useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, TextInput, ScrollView, ImageBackground, Modal, Pressable, FlatList} from 'react-native';
 import * as Icons from 'react-native-heroicons/outline';
 import {commonStyles} from '../../common/index';
 import ConfirmModal from '../../Component/ConfirmModal';
+import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Detail({ navigation }) {
     const loginState = {
@@ -37,16 +39,108 @@ export default function Detail({ navigation }) {
             regiDt:'2022.10.14',
             like:10,
             userCd:2,
+            commentCd:1125125,
+            reComment:[
+                {
+                    con_name:"김대윤",
+                    con_content:"ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎ",
+                    con_regiDt:"123123",
+                    con_like:5,
+                    con_user_cd:1,
+                    con_commentCd:0,
+                }
+            ]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:1125125,
+            reComment:[
+                {
+                    con_name:"김대윤",
+                    con_content:"ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎ",
+                    con_regiDt:"123123",
+                    con_like:5,
+                    con_user_cd:1,
+                    con_commentCd:0,
+                }
+            ]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:1125125,
+            reComment:[
+                {
+                    con_name:"김대윤",
+                    con_content:"ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎ",
+                    con_regiDt:"123123",
+                    con_like:5,
+                    con_user_cd:1,
+                    con_commentCd:0,
+                }
+            ]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:1125125,
+            reComment:[
+                {
+                    con_name:"김대윤",
+                    con_content:"ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎ",
+                    con_regiDt:"123123",
+                    con_like:5,
+                    con_user_cd:1,
+                    con_commentCd:0,
+                }
+            ]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:1125125,
+            reComment:[
+                {
+                    con_name:"김대윤",
+                    con_content:"ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎ",
+                    con_regiDt:"123123",
+                    con_like:5,
+                    con_user_cd:1,
+                    con_commentCd:0,
+                }
+            ]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
             commentCd:21671124,
             reComment:[]
         },
     ]
     const [datas, setDatas] = useState(arr);
+    const [detailProfie, setDetailProfile] = useState(null);
+    const [partyNum, setPartyNum] = useState(0);
 
-    
+
     //텝전환
     const [tab , setTab] = useState(0);
-    
+
     //배경 및 당변경
     const party = [
         {id: 1, name:"더불어민주당", src: require('../../img/detail_img01.png')},
@@ -58,19 +152,76 @@ export default function Detail({ navigation }) {
         {id: 7, name:"시대전환", src: require('../../img/detail_img07.png')},
         {id: 8, name:"무소속", src: require('../../img/detail_img08.png')},
     ];
-    
+
+    //1. 국회의원 디테일 통신
+    const getDetail = () =>{
+        axios.get('http://144.24.94.124:8091/api/v1/gookie/detail',{
+            params:{
+                monaCd : '0VU8517t',
+                eMail : 'eodyd7072@naver.com'
+            }
+        }).then(res=>{
+            const bthArr = res.data.data.result.bthDate.split('-');
+            const telNoArr = res.data.data.result.telNo.split('-');
+            res.data.data.result.bthDate = `${bthArr[0]}년 ${bthArr[1]}월 ${bthArr[2]}일`
+            res.data.data.result.telNo = `${telNoArr[0]}) ${telNoArr[1]} - ${telNoArr[2]}`
+            res.data.data.result.meetingAtt = res.data.data.meetingAtt;
+            res.data.data.result.replyPer = res.data.data.replyPer;
+
+            const detailObj =  res.data.data.result;
+            setDetailProfile(detailObj);
+            console.log(detailObj);
+            switch (detailObj.polyNm){
+                case '더불어민주당':
+                    setPartyNum(0);
+                    break;
+                case '국민의힘':
+                    setPartyNum(1);
+                    break;
+                case '정의당':
+                    setPartyNum(2);
+                    break;
+                case '국민의당':
+                    setPartyNum(3);
+                    break;
+                case '열린민주당':
+                    setPartyNum(4);
+                    break;
+                case '기본소득당':
+                    setPartyNum(5);
+                    break;
+                case '시대전환':
+                    setPartyNum(6);
+                    break;
+                case '무소속':
+                    setPartyNum(7);
+                    break;
+            }
+        })
+    }
+
+    useEffect(() => {
+        const load = async () =>{
+            const loginUser = await AsyncStorage.getItem("loginUser");
+            const loginUserObj = JSON.parse(loginUser); // async storage에 담긴 로그인유저 객체
+            getDetail();
+
+        };
+        load();
+    }, []);
+
     //인풋창 텍스트 변경관련
     const inputRef = useRef(null)
     const [inputValue, setInputValue] = useState("");
     let disabled = false;
     inputValue.length !==0 ? disabled = false : disabled = true;
-    
+
     //좋아요클릭시 색변경
     const [like, setLike] = useState(false);
 
     //즐겨찾기 클릭시 색변경
     const [markLike, setMarkLike] = useState(false);
-    
+
     //모달
     const [modalUp, setModalUp] = useState(false);
     const [modalDeleteComment, setModalDeleteComment] = useState(false);
@@ -81,7 +232,7 @@ export default function Detail({ navigation }) {
 
     //btn state
     const [btnState, setBtnState] = useState(0);
-    
+
     //내댓글 클릭시 변경관련
     const [mine, setMine] = useState(false);
     const [commentCdId , setCommentCdId] = useState(null);
@@ -199,7 +350,7 @@ export default function Detail({ navigation }) {
         <View style={{position:"relative", height:"100%"}}>
             <ScrollView>
                 <View style={{height:180}}>
-                    <ImageBackground source={party[0].src} resizeMode="cover">
+                    <ImageBackground source={party[partyNum].src} resizeMode="cover">
                         <View style={{flexDirection:"row", justifyContent:"flex-end", height:'100%', marginTop:16, marginRight:16}}>
                             <View>
                                 <Text style={styles.markText}>
@@ -219,7 +370,7 @@ export default function Detail({ navigation }) {
                                             setMarkLike(false);
                                             setModalLoginCheck(true);
                                         }
-                                        
+
                                     }}
                                 >
                                     <Icons.StarIcon color={markLike ? "#ffbd12" : "#fff"} size={25} fill={markLike ? "#ffbd12" : "transparent"} />
@@ -237,16 +388,15 @@ export default function Detail({ navigation }) {
                                     resizeMode="cover"
                                     style={{width:"100%", height:"100%",}}
                                 >
-
                                 </ImageBackground>
                             </View>
                         </View>
                         <View style={{justifyContent:"center", alignItems:"center", marginTop:24}}>
                             <Text style={styles.profileName}>
-                                김대윤
+                                {`${detailProfie!=null?detailProfie.hgNm:'a'}`}
                             </Text>
                             <Text style={styles.profileSubName}>
-                                {party[0].name}
+                                {party[partyNum].name}
                             </Text>
                         </View>
                         <View style={{flexDirection:"row", marginTop:32, borderWidth:1, borderRadius:8, borderColor:"#f4933a"}}>
@@ -287,7 +437,7 @@ export default function Detail({ navigation }) {
                                         </View>
                                     </View>
                                     <View>
-                                        <Text style={styles.historyTextSubText}>1983년 10월 12일</Text>
+                                        <Text style={styles.historyTextSubText}>{`${detailProfie!=null?detailProfie.bthDate:'a'}`}</Text>
                                     </View>
                                 </View>
                                 <View style={{flex:1}}>
@@ -300,7 +450,7 @@ export default function Detail({ navigation }) {
                                         </View>
                                     </View>
                                     <View>
-                                        <Text style={styles.historyTextSubText}>02)2384-1234</Text>
+                                        <Text style={styles.historyTextSubText}>{`${detailProfie!=null?detailProfie.telNo:'a'}`}</Text>
                                     </View>
                                 </View>
                             </View>
@@ -316,7 +466,7 @@ export default function Detail({ navigation }) {
                                     </View>
                                     <View style={{flexDirection:"row", alignItems:"flex-end"}}>
                                         <View>
-                                            <Text style={styles.historyBigText}>38</Text>
+                                            <Text style={styles.historyBigText}>{`${detailProfie!=null?detailProfie.meetingAtt:'0'}`}</Text>
                                         </View>
                                         <View>
                                             <Text style={[styles.historyTextSubText, {marginBottom:5}]}>%</Text>
@@ -334,7 +484,7 @@ export default function Detail({ navigation }) {
                                     </View>
                                     <View style={{flexDirection:"row", alignItems:"flex-end"}}>
                                         <View>
-                                            <Text style={styles.historyBigText}>38</Text>
+                                            <Text style={styles.historyBigText}>{`${detailProfie!=null?detailProfie.replyPer:'0'}`}</Text>
                                         </View>
                                         <View>
                                             <Text style={[styles.historyTextSubText, {marginBottom:5}]}>%</Text>
@@ -468,23 +618,30 @@ export default function Detail({ navigation }) {
                     ) :
                     (
                         <View style={{paddingBottom:65}}>
-                            <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between", paddingVertical:18, borderTopWidth:1, borderBottomWidth:1, borderColor:"#eee", marginTop:16,}}>
-                                <View style={{flexDirection:"row", alignItems:"center", paddingHorizontal:24,}}>
-                                    <Text style={styles.commentMainText}>댓글</Text>
-                                    <Text style={styles.commentSubText}>{datas.length}개</Text>
-                                </View>
-                                <View>
-                                    <TouchableOpacity
-                                        activeOpacity={1}
-                                        onPress ={() => {
-                                            setModalCommentSort(true);
-                                        }}
-                                    >
-                                        <Icons.BarsArrowDownIcon color="rgb(217,217,217)" size={25} style={commonStyles.mr8}/>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
+
                             <FlatList
+                                ListHeaderComponent={()=>{
+                                    return(
+                                        <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between", paddingVertical:18, borderTopWidth:1, borderBottomWidth:1, borderColor:"#eee", marginTop:16,}}>
+                                            <View style={{flexDirection:"row", alignItems:"center", paddingHorizontal:24,}}>
+                                                <Text style={styles.commentMainText}>댓글</Text>
+                                                <Text style={styles.commentSubText}>{datas.length}개</Text>
+                                            </View>
+                                            <View>
+                                                <TouchableOpacity
+                                                    activeOpacity={1}
+                                                    onPress ={() => {
+                                                        setModalCommentSort(true);
+                                                    }}
+                                                >
+                                                    <Icons.BarsArrowDownIcon color="rgb(217,217,217)" size={25} style={commonStyles.mr8}/>
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+                                    )
+                                }}
+
+                                stickyHeaderIndices={[0]}
                                 contentContainerStyle={datas.length === 0 && {flex:1}}
                                 ListEmptyComponent={() =>
                                     <View style={{justifyContent:"center", alignItems:"center", paddingVertical:100}}>
@@ -524,7 +681,7 @@ export default function Detail({ navigation }) {
                                                         }else{
                                                             setModalLoginCheck(true);
                                                         }
-                                                        
+
                                                     }}
                                                 >
                                                     <View style={{paddingVertical:24}}>
@@ -561,8 +718,8 @@ export default function Detail({ navigation }) {
                                                     return(
                                                         <View style={
                                                             loginState.login
-                                                            ? loginState.userCd !== reItem.item.con_user_cd 
-                                                                ? {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee", backgroundColor:"#FdFdFd",} 
+                                                            ? loginState.userCd !== reItem.item.con_user_cd
+                                                                ? {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee", backgroundColor:"#FdFdFd",}
                                                                 : {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee",  backgroundColor:"#fff8f2"}
                                                             : {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee", backgroundColor:"#FdFdFd",}
                                                             }>
@@ -586,7 +743,7 @@ export default function Detail({ navigation }) {
                                                                     }else{
                                                                         setModalLoginCheck(true);
                                                                     }
-                                                                    
+
                                                                 }}
                                                             >
                                                                 <View style={{paddingVertical:24}}>
@@ -623,37 +780,37 @@ export default function Detail({ navigation }) {
 
                                             />
                                         </View>
-                                        
+
                                     )
-                                    
-                                }} 
+
+                                }}
                             />
                         </View>
                     )}
 
                 </View>
-                
+
             </ScrollView>
-            {tab === 1 && 
+            {tab === 1 &&
                 <View style={{paddingHorizontal:24, borderTopWidth:1, paddingVertical:8, borderColor:"#eee", position:"absolute", bottom:0, left:0, width:"100%", backgroundColor:"#fff"}}>
                         <TouchableOpacity
                             activeOpacity={1}
                             onPress = {() => {
-                                !loginState.login && setModalLoginCheck(true); 
+                                !loginState.login && setModalLoginCheck(true);
                             }}
                         >
                             <View style={{flexDirection:"row", alignItems:"center",}}>
-                                <TextInput 
+                                <TextInput
                                     placeholder={
-                                        loginState.login 
+                                        loginState.login
                                         ?
                                         loginState.isCon && btnState === 0 ? '국회의원은 답글만 작성할 수 있습니다.' : '최대200자까지 가능합니다.'
                                         : "로그인이 필요합니다."
                                     }
-                                    placeholderTextColor="#b1b1b1" 
-                                    multiline 
-                                    style={{flex:9}} 
-                                    value={inputValue} 
+                                    placeholderTextColor="#b1b1b1"
+                                    multiline
+                                    style={{flex:9}}
+                                    value={inputValue}
                                     onChangeText={(text) => setInputValue(text)}
                                     maxLength={200}
                                     ref={inputRef}
@@ -694,10 +851,10 @@ export default function Detail({ navigation }) {
                 }}
                 />
                 <View style={{justifyContent:"flex-end", alignItems:"center", flex:1, position:"absolute", bottom:0, left:0, width:"100%",}}>
-                    <View 
+                    <View
                         style={{width:"90%", maxWidth:360, margin:16, borderRadius:8, backgroundColor:"#fff", overflow:"hidden",}}
                     >
-                        {loginState.isCon && mine === false ? 
+                        {loginState.isCon && mine === false ?
                         <View>
                             <TouchableOpacity
                                 activeOpacity={1}
@@ -741,7 +898,7 @@ export default function Detail({ navigation }) {
                                             return item;
                                         })
                                     }}
-                                    
+
                                 >
                                     <View style={[styles.modalView,{borderBottomWidth:1, borderColor:"#eee"}]}>
                                         <Text style={styles.modalText}>수정</Text>
@@ -761,7 +918,7 @@ export default function Detail({ navigation }) {
                                     </View>
                                 </TouchableOpacity>
                             </View>
-                        </View> 
+                        </View>
                         }
                     </View>
                 </View>
@@ -861,7 +1018,7 @@ export default function Detail({ navigation }) {
                 }}
                 />
                 <View style={{justifyContent:"flex-end", alignItems:"center", flex:1, position:"absolute", bottom:0, left:0, width:"100%",}}>
-                    <View 
+                    <View
                         style={{width:"90%", maxWidth:360, margin:16, borderRadius:8, backgroundColor:"#fff", overflow:"hidden",}}
                     >
                         <View>
@@ -889,15 +1046,15 @@ export default function Detail({ navigation }) {
                                     </View>
                                 </TouchableOpacity>
                             </View>
-                        </View> 
+                        </View>
                     </View>
                 </View>
             </Modal>
-            
+
         </View>
     );
 
-    
+
 }
 const styles = StyleSheet.create({
     markText:{

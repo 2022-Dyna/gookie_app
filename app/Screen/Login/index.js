@@ -38,24 +38,26 @@ export default function Login({navigation}) {
     console.log(id);
     console.log(pw);
     axios
-      .post('http://192.168.1.103:8091/api/v1/login', {
+      .post('http://144.24.94.124:8091/api/v1/login', {
         memberLoginId: id,
         memberLoginPw: pw,
       })
-      .then(res => {
+      .then(async res => {
         console.log(res.data.data);
         if (res.data.data.result == 0) {
-          setLoginUser(res.data.data.loginObj);
-        console.log(res.data);
-        if (res.data.data === 0) {
+          if(autoLogin){
+            await AsyncStorage.setItem(
+              'loginUser',
+              JSON.stringify(res.data.data.loginObj),
+            );
+          }
           setLoginLoading(false);
           setLoginSuccess(true);
-        } else {
+        }else {
           setLoginLoading(false);
           setLoginFail(true);
         }
-      })
-      .catch(err => {
+      }).catch(err => {
         console.log(err);
       });
   };
@@ -193,7 +195,7 @@ export default function Login({navigation}) {
             <ConfirmModal
               transparent={true}
               btnBoolean={loginSuccess}
-              onPress={() => {
+              onPress={ () => {
                 setLoginSuccess(false);
                 navigation.navigate('Home');
                 dispatch(loginAction.makeLogin());
