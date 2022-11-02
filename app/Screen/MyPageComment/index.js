@@ -12,7 +12,7 @@ import {commonStyles} from "../../common"
 
 export default function MyPageComment({navigation}) {
   const [loading, setLoading] = useState(true);
-  const [itemLoading, setItemLoading] = useState(true);
+  const [itemLoading, setItemLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
   const data = [
@@ -38,161 +38,153 @@ export default function MyPageComment({navigation}) {
       name: '강기윤2',
       group: '국민의힘2',
       date: '22.10.27',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리2',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리4',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리5',
     },
     {
       name: '강기윤2',
       group: '국민의힘2',
       date: '22.10.27',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리2',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리6',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리7',
     },
     {
       name: '강기윤2',
       group: '국민의힘2',
       date: '22.10.27',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리2',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리8',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리9',
     },
     {
       name: '강기윤2',
       group: '국민의힘2',
       date: '22.10.27',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리2',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리10',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리11',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리12',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리13',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리14',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리15',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리16',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리17',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리18',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리19',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리20',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리21',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리22',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리23',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리24',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리25',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리26',
     },
     {
       name: '강기윤3',
       group: '국민의힘2',
       date: '22.10.28',
-      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리3',
+      content: '우리 11월까지만 힘내자우리 11월까지만 힘내자우리27',
     },
   ];
 
   const [datas, setDatas] = useState([]);
-  const [pageOptions, setPageOptions] = useState({num: 5, page: 1});
+  const [pageOptions, setPageOptions] = useState({num: 10, page: 1});
   
-  const pageRefresh = () => {
-    if(!refreshing){
-        setRefreshing(true);
-        setPageOptions(state => ({...pageOptions, page: state.page + 1}));
-        dataLoad();
-        setRefreshing(false);
-      }
-  }
-
   const dataLoad = () => {
+    setItemLoading(true);
     setDatas(
       data.filter((item, index) => {
         if (index < pageOptions.num * pageOptions.page) {
@@ -203,11 +195,6 @@ export default function MyPageComment({navigation}) {
     setPageOptions(state => ({...pageOptions, page: state.page + 1}));
   };
 
-  useEffect(() => {
-    dataLoad();
-    setLoading(false);
-  }, []);
-
   const pageLoad = () => {
     const totalPage = Math.ceil(data.length / pageOptions.num);
     if (pageOptions.page <= totalPage) {
@@ -216,6 +203,36 @@ export default function MyPageComment({navigation}) {
       setItemLoading(false);
     }
   };
+
+  const pageRefresh = () => {
+    if(!refreshing){
+        setRefreshing(true);
+        // setPageOptions(state => ({...pageOptions, page: 1}));
+        // dataLoad();
+        setDatas(
+          data.filter((item, index) => {
+            if (index < pageOptions.num) {
+              return item;
+            }
+          }),
+        );
+        setPageOptions(state => ({...pageOptions, page: 2}));
+        setRefreshing(false);
+      }
+  }
+
+
+  useEffect(() => {
+    setDatas(
+      data.filter((item, index) => {
+        if (index < pageOptions.num) {
+          return item;
+        }
+      }),
+    );
+    setLoading(false);
+  }, []);
+
 
   return (
     <View style={{height:"100%"}}>
@@ -251,8 +268,9 @@ export default function MyPageComment({navigation}) {
               empty
               data={datas}
               onEndReached={pageLoad}
-              onRefresh={pageRefresh}
+              onRefresh={pageRefresh} 
               refreshing={refreshing}
+              onEndReachedThreshold={0.3}
               ListFooterComponent={itemLoading && <Loader type={"small"}/>}
               renderItem={({item, index}) => {
                 return (

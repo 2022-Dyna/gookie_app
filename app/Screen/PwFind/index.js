@@ -8,14 +8,18 @@ import {
 } from 'react-native';
 import {commonStyles} from '../../common';
 import ConfirmModal from '../../Component/ConfirmModal';
+import Loader from '../../Component/Loader';
 
 export default function PwFind({navigation}) {
+  const [pwFindLoading, setPwFindLoading] = useState(false);
+
   const [emailValue, setEmailValue] = useState('');
   const [emailMsg, setEmailMsg] = useState('');
 
   const [emailFocus, setEmailFocus] = useState(false);
   const [completePress, setCompletePress] = useState(false);
   const [modalComplete, setModalComplete] = useState(false);
+
 
   let disabledComplete = false;
   emailValue.length !== 0
@@ -28,12 +32,15 @@ export default function PwFind({navigation}) {
     if (!regex.test(emailValue)) {
       setEmailMsg('올바른 이메일 주소를 입력해주세요.');
     } else {
+      setPwFindLoading(true);
+      setPwFindLoading(false);
       setModalComplete(true);
     }
   };
 
   return (
-    <View>
+    <View style={commonStyles.loaderWrap}>
+      {pwFindLoading && <Loader type={"trans"} />}
       <View style={[commonStyles.inner, styles.basic]}>
         <View>
           <Text style={[commonStyles.maintit, commonStyles.mb24]}>

@@ -15,9 +15,12 @@ import {commonStyles} from '../../common/index';
 import ConfirmModal from '../../Component/ConfirmModal';
 import axios from 'axios';
 import {LOGIN} from '../../Reducer/action/ActionTypes';
+import Loader from '../../Component/Loader';
 
 export default function Login({navigation}) {
   const dispatch = useDispatch();
+
+  const [loginLoading, setLoginLoading] = useState(false);
 
   const [emailfocus, setEmailFocus] = useState(false);
   const [pwfocus, setPwFocus] = useState(false);
@@ -29,6 +32,7 @@ export default function Login({navigation}) {
   const [pw, setPw] = useState(null);
 
   const userLogin = () => {
+    setLoginLoading(true);
     console.log(id);
     console.log(pw);
     axios
@@ -39,8 +43,10 @@ export default function Login({navigation}) {
       .then(res => {
         console.log(res.data);
         if (res.data.data === 0) {
+          setLoginLoading(false);
           setLoginSuccess(true);
         } else {
+          setLoginLoading(false);
           setLoginFail(true);
         }
       })
@@ -50,148 +56,151 @@ export default function Login({navigation}) {
   };
 
   return (
-    <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
-      <View style={styles.container}>
-        <View style={styles.inner}>
-          <View>
-            <Text style={[commonStyles.maintit, commonStyles.mb8]}>로그인</Text>
-          </View>
-          <View style={styles.mt16}>
-            <Text style={[commonStyles.labeltext, commonStyles.mb8]}>
-              이메일
-            </Text>
-            <TextInput
-              style={!emailfocus ? commonStyles.input : commonStyles.inputfocus}
-              onFocus={() => {
-                setEmailFocus(true);
-              }}
-              onBlur={() => {
-                setEmailFocus(false);
-              }}
-              onChangeText={text => setId(text)}
-            />
-          </View>
-          <View style={commonStyles.mt16}>
-            <Text style={[commonStyles.labeltext, commonStyles.mb8]}>
-              비밀번호
-            </Text>
-            <TextInput
-              style={!pwfocus ? commonStyles.input : commonStyles.inputfocus}
-              onFocus={() => {
-                setPwFocus(true);
-              }}
-              onBlur={() => {
-                setPwFocus(false);
-              }}
-              secureTextEntry={true}
-              onChangeText={text => setPw(text)}
-            />
-          </View>
-          <View>
+    <View style={commonStyles.loaderWrap}>
+      {loginLoading && <Loader type={"trans"} />}
+      <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
+        <View style={styles.container}>
+          <View style={styles.inner}>
             <View>
+              <Text style={[commonStyles.maintit, commonStyles.mb8]}>로그인</Text>
+            </View>
+            <View style={styles.mt16}>
+              <Text style={[commonStyles.labeltext, commonStyles.mb8]}>
+                이메일
+              </Text>
+              <TextInput
+                style={!emailfocus ? commonStyles.input : commonStyles.inputfocus}
+                onFocus={() => {
+                  setEmailFocus(true);
+                }}
+                onBlur={() => {
+                  setEmailFocus(false);
+                }}
+                onChangeText={text => setId(text)}
+              />
+            </View>
+            <View style={commonStyles.mt16}>
+              <Text style={[commonStyles.labeltext, commonStyles.mb8]}>
+                비밀번호
+              </Text>
+              <TextInput
+                style={!pwfocus ? commonStyles.input : commonStyles.inputfocus}
+                onFocus={() => {
+                  setPwFocus(true);
+                }}
+                onBlur={() => {
+                  setPwFocus(false);
+                }}
+                secureTextEntry={true}
+                onChangeText={text => setPw(text)}
+              />
+            </View>
+            <View>
+              <View>
+                <TouchableOpacity
+                  onPress={() => {
+                    setAutoLogin(!autoLogin);
+                  }}
+                  activeOpacity={1}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginTop: 16,
+                    }}>
+                    <FWIcon
+                      color={autoLogin ? '#f4933a' : '#d0d0d0'}
+                      name="check-square"
+                      size={25}
+                    />
+                    <Text style={{marginLeft: 8}}>자동 로그인</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginTop: 32,
+              }}>
               <TouchableOpacity
                 onPress={() => {
-                  setAutoLogin(!autoLogin);
+                  navigation.navigate('Join');
                 }}
                 activeOpacity={1}>
+                <Text style={styles.jointext}>회원가입</Text>
+              </TouchableOpacity>
+              <Text
+                style={{
+                  paddingHorizontal: 16,
+                  fontSize: 12,
+                  fontWeight: '300',
+                  color: '#7b7b7b',
+                }}>
+                |
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('PwFind');
+                }}
+                activeOpacity={1}>
+                <Text style={styles.jointext}>비밀번호 찾기</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{marginTop: 24}}>
+              <TouchableOpacity
+                onPressIn={() => {
+                  setPressLogin(true);
+                }}
+                onPressOut={() => {
+                  setPressLogin(false);
+                }}
+                onPress={() => userLogin()}>
                 <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginTop: 16,
-                  }}>
-                  <FWIcon
-                    color={autoLogin ? '#f4933a' : '#d0d0d0'}
-                    name="check-square"
-                    size={25}
-                  />
-                  <Text style={{marginLeft: 8}}>자동 로그인</Text>
+                  style={[
+                    pressLogin ? styles.btnStyleChange : styles.btnStyle,
+                    styles.btnLineColor,
+                  ]}>
+                  <Text style={[styles.btnTextStyle, styles.btnTextColor2]}>
+                    로그인
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              marginTop: 32,
-            }}>
-            <TouchableOpacity
+            <View style={{marginTop: 24}}>
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => navigation.navigate('JoinCongress')}>
+                <Text style={styles.jointext02}>국회의원 ID / PW 발급받기</Text>
+              </TouchableOpacity>
+            </View>
+            <ConfirmModal
+              transparent={true}
+              btnBoolean={loginFail}
               onPress={() => {
-                navigation.navigate('Join');
+                setLoginFail(false);
               }}
-              activeOpacity={1}>
-              <Text style={styles.jointext}>회원가입</Text>
-            </TouchableOpacity>
-            <Text
-              style={{
-                paddingHorizontal: 16,
-                fontSize: 12,
-                fontWeight: '300',
-                color: '#7b7b7b',
-              }}>
-              |
-            </Text>
-            <TouchableOpacity
+              titleText={'로그인 실패'}
+              bodyText={'아이디 혹은 비밀번호를 확인해주세요.'}
+              btnText={'확인'}
+            />
+            <ConfirmModal
+              transparent={true}
+              btnBoolean={loginSuccess}
               onPress={() => {
-                navigation.navigate('PwFind');
+                setLoginSuccess(false);
+                navigation.navigate('Home');
+                dispatch(loginAction.makeLogin());
               }}
-              activeOpacity={1}>
-              <Text style={styles.jointext}>비밀번호 찾기</Text>
-            </TouchableOpacity>
+              titleText={'로그인 성공'}
+              bodyText={'구키에 오신걸 환영합니다!.'}
+              btnText={'확인'}
+            />
           </View>
-          <View style={{marginTop: 24}}>
-            <TouchableOpacity
-              onPressIn={() => {
-                setPressLogin(true);
-              }}
-              onPressOut={() => {
-                setPressLogin(false);
-              }}
-              onPress={() => userLogin()}>
-              <View
-                style={[
-                  pressLogin ? styles.btnStyleChange : styles.btnStyle,
-                  styles.btnLineColor,
-                ]}>
-                <Text style={[styles.btnTextStyle, styles.btnTextColor2]}>
-                  로그인
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{marginTop: 24}}>
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={() => navigation.navigate('JoinCongress')}>
-              <Text style={styles.jointext02}>국회의원 ID / PW 발급받기</Text>
-            </TouchableOpacity>
-          </View>
-          <ConfirmModal
-            transparent={true}
-            btnBoolean={loginFail}
-            onPress={() => {
-              setLoginFail(false);
-            }}
-            titleText={'로그인 실패'}
-            bodyText={'아이디 혹은 비밀번호를 확인해주세요.'}
-            btnText={'확인'}
-          />
-          <ConfirmModal
-            transparent={true}
-            btnBoolean={loginSuccess}
-            onPress={() => {
-              setLoginSuccess(false);
-              navigation.navigate('Home');
-              dispatch(loginAction.makeLogin());
-            }}
-            titleText={'로그인 성공'}
-            bodyText={'구키에 오신걸 환영합니다!.'}
-            btnText={'확인'}
-          />
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 const styles = StyleSheet.create({

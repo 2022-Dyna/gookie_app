@@ -1,8 +1,9 @@
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, FlatList} from "react-native";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as Icons from 'react-native-heroicons/outline';
 import { commonStyles } from "../../common";
 import ConfirmModal from '../../Component/ConfirmModal';
+import Loader from "../../Component/Loader";
 
 export default function ScreenA({ navigation }) {
     const loginState = {
@@ -84,13 +85,16 @@ export default function ScreenA({ navigation }) {
                     group: "더불어민주당"
                 },
                 {
-                    name: "노용호",
+                    name: "노용호22",
                     group: "더불어민주당"
                 },
             ]
         }
     ];
 
+    const [loading, setLoading] = useState(true);
+    const [tabLoading, setTabLoading] = useState(false);
+    const [datas, setDatas] = useState([]);
 
     //즐겨찾기 클릭시 색변경
     const [markLike, setMarkLike] = useState(false);
@@ -104,125 +108,141 @@ export default function ScreenA({ navigation }) {
     //즐찾시 로그인 체크 모달
     const [modalLoginCheck, setModalLoginCheck] = useState(false);
 
+    useEffect(() => {
+        try {
+            setDatas(data);
+            setLoading(false);
+        } catch (e) {
+            console.log(e.message);
+        }
+    }, []);
+    
+
     return (
-        <View>
+        <View style={{height:"100%"}}>
             <ScrollView
-                contentContainerStyle={{paddingBottom:24}}
+                contentContainerStyle={{paddingBottom:143, height:"100%"}}
             >
                 <View>
                     <Text style={styles.searchTit}>
                         의원찾기
                     </Text>
                 </View>
-                <View style={commonStyles.inner}>
-                    <View style={{flexDirection:"row", marginTop:24, borderWidth:1, borderColor:"#f4933a", borderRadius:8, height:48,}}>
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            onPress = {() => {
-                                setTab(0)
-                            }}
-                            style={{flex:1}}
-                        >
-                            <View style={
-                                tab === 0 ? styles.tabView : styles.tabViewOff
-                                }>
-                                <Text style={
-                                    tab === 0 ? styles.tabText : styles.tabTextOff
-                                }>
-                                    이름순
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            onPress = {() => {
-                                setTab(1)
-                            }}
-                            style={{flex:1}}
-                        >
-                            <View style={
-                                tab === 1 ? styles.tabView : styles.tabViewOff
-                            }>
-                                <Text style={
-                                    tab === 1 ? styles.tabText : styles.tabTextOff
-                                }>
-                                    정당순
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            onPress = {() => {
-                                setTab(2)
-                            }}
-                            style={{flex:1}}
-                        >
-                            <View style={
-                                tab === 2 ? styles.tabView : styles.tabViewOff
-                                }>
-                                <Text style={
-                                    tab === 2 ? styles.tabText : styles.tabTextOff
-                                }>
-                                    지역구순
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                <FlatList 
-                    data={data}
-                    renderItem={({item}) => {
-                        return(
-                            <View style={commonStyles.mt32}>
-                                <View style={{borderBottomWidth:8, borderColor:"#f8f7f7", width:"100%"}}>
-                                    <View style={{paddingHorizontal:32, paddingBottom:8,}}>
-                                        <Text style={styles.congressAling}>{item.title}</Text>
+                <View style={commonStyles.loaderWrap}>
+                    {loading ? <Loader type={"full"} /> :
+                    <View>
+                        <View style={commonStyles.inner}>
+                            <View style={{flexDirection:"row", marginTop:24, borderWidth:1, borderColor:"#f4933a", borderRadius:8, height:48, marginBottom:32,}}>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    onPress = {() => {
+                                        setTab(0)
+                                    }}
+                                    style={{flex:1}}
+                                >
+                                    <View style={
+                                        tab === 0 ? styles.tabView : styles.tabViewOff
+                                        }>
+                                        <Text style={
+                                            tab === 0 ? styles.tabText : styles.tabTextOff
+                                        }>
+                                            이름순
+                                        </Text>
                                     </View>
-                                </View>
-                                <View style={{paddingHorizontal:24,}}>
-                                    <FlatList 
-                                        data={item.content}
-                                        renderItem={(conItem) => {
-                                            return(
-                                                <View>
-                                                    <TouchableOpacity
-                                                        activeOpacity={1}
-                                                        onPress ={() => {navigation.navigate('Detail')}}
-                                                    >
-                                                        <View style={{flexDirection:"row", justifyContent:"space-between", borderBottomWidth:1, borderColor:"#eee", paddingVertical:12, paddingHorizontal:8,}}>
-                                                            <View style={{flexDirection:"row", alignItems:"center", justifyContent:"center",}}>
-                                                                <Text style={styles.congressName}>{conItem.item.name}</Text>
-                                                                <Text style={styles.congressParty}>{conItem.item.group}</Text>
-                                                            </View>
-                                                            <View>
-                                                                <TouchableOpacity
-                                                                    activeOpacity={1}
-                                                                    onPress = {() => {
-                                                                        setMarkLike(!markLike)
-                                                                        if(!loginState.login){
-                                                                            setModalLoginCheck(true)
-                                                                        }else{
-                                                                            if(markLike){
-                                                                                setModalCancel(true)
-                                                                            }
-                                                                        }
-                                                                    }}
-                                                                    style={{flex:1}}
-                                                                >
-                                                                    <Icons.StarIcon color={markLike ? "#ffbd12" : "rgba(217,217,217,1)"} size={18} fill={markLike ? "#ffbd12" : "transparent"} />
-                                                                </TouchableOpacity>
-                                                            </View>
-                                                        </View>
-                                                    </TouchableOpacity>
-                                                </View>
-                                            )
-                                        }}
-                                    />
-                                </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    onPress = {() => {
+                                        setTab(1)
+                                    }}
+                                    style={{flex:1}}
+                                >
+                                    <View style={
+                                        tab === 1 ? styles.tabView : styles.tabViewOff
+                                    }>
+                                        <Text style={
+                                            tab === 1 ? styles.tabText : styles.tabTextOff
+                                        }>
+                                            정당순
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    onPress = {() => {
+                                        setTab(2)
+                                    }}
+                                    style={{flex:1}}
+                                >
+                                    <View style={
+                                        tab === 2 ? styles.tabView : styles.tabViewOff
+                                        }>
+                                        <Text style={
+                                            tab === 2 ? styles.tabText : styles.tabTextOff
+                                        }>
+                                            지역구순
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
                             </View>
-                        )
-                    }}
-                />
+                        </View>
+                        <FlatList 
+                            data={datas}
+                            renderItem={({item}) => {
+                                return(
+                                    <View style={commonStyles.mb32}>
+                                        <View style={{borderBottomWidth:8, borderColor:"#f8f7f7", width:"100%"}}>
+                                            <View style={{paddingHorizontal:32, paddingBottom:8,}}>
+                                                <Text style={styles.congressAling}>{item.title}</Text>
+                                            </View>
+                                        </View>
+                                        <View style={{paddingHorizontal:24,}}>
+                                            <FlatList 
+                                                data={item.content}
+                                                renderItem={(conItem) => {
+                                                    return(
+                                                        <View>
+                                                            <TouchableOpacity
+                                                                activeOpacity={1}
+                                                                onPress ={() => {navigation.navigate('Detail')}}
+                                                            >
+                                                                <View style={{flexDirection:"row", justifyContent:"space-between", borderBottomWidth:1, borderColor:"#eee", paddingVertical:12, paddingHorizontal:8,}}>
+                                                                    <View style={{flexDirection:"row", alignItems:"center", justifyContent:"center",}}>
+                                                                        <Text style={styles.congressName}>{conItem.item.name}</Text>
+                                                                        <Text style={styles.congressParty}>{conItem.item.group}</Text>
+                                                                    </View>
+                                                                    <View>
+                                                                        <TouchableOpacity
+                                                                            activeOpacity={1}
+                                                                            onPress = {() => {
+                                                                                setMarkLike(!markLike)
+                                                                                if(!loginState.login){
+                                                                                    setModalLoginCheck(true)
+                                                                                }else{
+                                                                                    if(markLike){
+                                                                                        setModalCancel(true)
+                                                                                    }
+                                                                                }
+                                                                            }}
+                                                                            style={{flex:1}}
+                                                                        >
+                                                                            <Icons.StarIcon color={markLike ? "#ffbd12" : "rgba(217,217,217,1)"} size={18} fill={markLike ? "#ffbd12" : "transparent"} />
+                                                                        </TouchableOpacity>
+                                                                    </View>
+                                                                </View>
+                                                            </TouchableOpacity>
+                                                        </View>
+                                                    )
+                                                }}
+                                            />
+                                        </View>
+                                    </View>
+                                )
+                            }}
+                        />
+                    </View>
+                    }
+                </View>
             </ScrollView>
             <ConfirmModal
                 transparent={true}
