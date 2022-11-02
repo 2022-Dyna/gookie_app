@@ -13,6 +13,7 @@ import {commonStyles} from "../../common"
 export default function MyPageComment({navigation}) {
   const [loading, setLoading] = useState(true);
   const [itemLoading, setItemLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   const data = [
     {
@@ -180,9 +181,16 @@ export default function MyPageComment({navigation}) {
   ];
 
   const [datas, setDatas] = useState([]);
-  const [pageOptions, setPageOptions] = useState({num: 20, page: 1});
+  const [pageOptions, setPageOptions] = useState({num: 5, page: 1});
   
-
+  const pageRefresh = () => {
+    if(!refreshing){
+        setRefreshing(true);
+        setPageOptions(state => ({...pageOptions, page: state.page + 1}));
+        dataLoad();
+        setRefreshing(false);
+      }
+  }
 
   const dataLoad = () => {
     setDatas(
@@ -243,6 +251,8 @@ export default function MyPageComment({navigation}) {
               empty
               data={datas}
               onEndReached={pageLoad}
+              onRefresh={pageRefresh}
+              refreshing={refreshing}
               ListFooterComponent={itemLoading && <Loader type={"small"}/>}
               renderItem={({item, index}) => {
                 return (
