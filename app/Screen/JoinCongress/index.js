@@ -11,6 +11,8 @@ import {commonStyles} from '../../common';
 import ConfirmModal from '../../Component/ConfirmModal';
 
 export default function JoinCongress({navigation}) {
+  const [joinLoading, setJoinLoading] = useState(false);
+
   const [emailValue, setEmailValue] = useState('');
   const [codeValue, setCodeValue] = useState('');
 
@@ -26,17 +28,21 @@ export default function JoinCongress({navigation}) {
     : (disabledComplete = true);
 
   const onValid = () => {
+    setJoinLoading(true);
     const regex =
       /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     if (!regex.test(emailValue) && codeValue.length !== 0) {
+      setJoinLoading(false);
       setModalCheck(true);
     } else {
+      setJoinLoading(false);
       setModalComplete(true);
     }
   };
 
   return (
-    <View>
+    <View style={commonStyles.loaderWrap}>
+      {joinLoading && <Loader type={'trans'} />}
       <View style={[commonStyles.inner, styles.basic]}>
         <View>
           <Text style={[commonStyles.maintit, commonStyles.mb24]}>
