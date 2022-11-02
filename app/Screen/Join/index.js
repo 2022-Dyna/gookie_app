@@ -115,18 +115,17 @@ export default function Join({navigation}) {
   };
 
   const onValidEmail = () => {
-    setJoinLoading(true);
     const regex =
       /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     if (!regex.test(emailValue)) {
       setEmailMsg('올바른 이메일 주소를 입력해주세요.');
     } else {
+      setJoinLoading(true);
       setEmailMsg('');
       getEmailVaild();
     }
   };
   const onValid = () => {
-    setJoinLoading(true);
     if (emailCode) {
       if (pwValue === pwConfirmValue) {
         if (pwValue.length < 6 || pwValue.length > 20) {
@@ -139,6 +138,7 @@ export default function Join({navigation}) {
         ) {
           setPwMsg('영문, 숫자를 혼합하여 입력해주세요.');
         } else {
+          setJoinLoading(true);
           userJoin();
         }
       } else {
