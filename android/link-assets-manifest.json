@@ -1,0 +1,33 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/noto100.ttf",
+      "sha1": "d36928d9f167057dd567f83e5cbf436c31f2aec6"
+    },
+    {
+      "path": "assets/fonts/noto200.ttf",
+      "sha1": "674c661e2a5799fd9e394ce676bd135d4f5a8150"
+    },
+    {
+      "path": "assets/fonts/noto300.ttf",
+      "sha1": "27fcb66ddb3686475694d713b0c6b58f862e5ca6"
+    },
+    {
+      "path": "assets/fonts/noto400.ttf",
+      "sha1": "0f59a7d22ea1e871ea192faf638db38e0dd1b8c3"
+    },
+    {
+      "path": "assets/fonts/noto500.ttf",
+      "sha1": "bef6697967893bbd6a8e47d9cb24d16b585fbb88"
+    },
+    {
+      "path": "assets/fonts/noto700.ttf",
+      "sha1": "84f53674c8294e11d352ba142bca2dd29d8b11cf"
+    },
+    {
+      "path": "assets/fonts/noto900.ttf",
+      "sha1": "444517b65e7e49dd8af34ba79dc8286b6e6c4ec3"
+    }
+  ]
+}
