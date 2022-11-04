@@ -264,23 +264,26 @@ export default function MyPage02({ navigation }) {
 const styles = StyleSheet.create({
   myPageTit:{
     fontSize:16,
-    fontWeight:"bold",
+    fontFamily:"pre700",
     letterSpacing:-0.32,
     color:"#313131",
-    textAlign:"center"
+    textAlign:"center",
+    lineHeight:20
   },
   myName:{
     fontSize:24,
-    fontWeight:"bold",
+    fontFamily:"pre700",
     letterSpacing:-0.96,
     color:"#313131",
-    paddingBottom:8
+    paddingBottom:8,
+    lineHeight:28
   },
   myMail:{
     fontSize:12,
-    fontWeight:"normal",
+    fontFamily:"pre400",
     letterSpacing:-0.24,
     color:"#b1b1b1",
+    lineHeight:16,
   },
   myEditBox:{
     width:60,
@@ -294,32 +297,35 @@ const styles = StyleSheet.create({
   },
   myEditText:{
     fontSize:14,
-    fontWeight:"normal",
+    fontFamily:"pre400",
     letterSpacing:-0.28,
-    color:"#f4933a"
+    color:"#f4933a",
+    lineHeight:18,
   },
   subTit:{
     fontSize:16,
-    fontWeight:"bold",
+    fontFamily:"pre700",
     letterSpacing:-0.32,
     color:"#313131",
+    lineHeight:20,
   },
   allView:{
     fontSize:12,
-    fontWeight:"bold",
+    fontFamily:"pre700",
     letterSpacing:-0.24,
     color:"#b1b1b1",
+    lineHeight:16,
   },
   commentName:{
     fontSize:14,
-    fontWeight:"bold",
+    fontFamily:"pre700",
     letterSpacing:-0.28,
     color:'#454545',
-    width:60
+    width:60,
   },
   commentContent:{
     fontSize:12,
-    fontWeight:"normal",
+    fontFamily:"pre400",
     letterSpacing:-0.24,
     color:"#7b7b7b",
     flex:1,
@@ -327,15 +333,17 @@ const styles = StyleSheet.create({
   },
   group:{
     fontSize:12,
-    fontWeight:"normal",
+    fontFamily:"pre400",
     letterSpacing:-0.24,
     color:"#b1b1b1",
+    lineHeight:16,
   },
   logout:{
     fontSize:12,
-    fontWeight:"bold",
+    fontFamily:"pre700",
     letterSpacing:-0.24,
     color:"#b1b1b1",
     textAlign:"center",
+    lineHeight:16,
   },
 })
