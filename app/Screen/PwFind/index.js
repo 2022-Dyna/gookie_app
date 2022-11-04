@@ -20,7 +20,6 @@ export default function PwFind({navigation}) {
   const [completePress, setCompletePress] = useState(false);
   const [modalComplete, setModalComplete] = useState(false);
 
-
   let disabledComplete = false;
   emailValue.length !== 0
     ? (disabledComplete = false)
@@ -40,7 +39,7 @@ export default function PwFind({navigation}) {
 
   return (
     <View style={commonStyles.loaderWrap}>
-      {pwFindLoading && <Loader type={"trans"} />}
+      {pwFindLoading && <Loader type={'trans'} />}
       <View style={[commonStyles.inner, styles.basic]}>
         <View>
           <Text style={[commonStyles.maintit, commonStyles.mb24]}>
@@ -120,8 +119,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   desc: {
+    fontFamily: 'pre300',
     fontSize: 12,
-    letterSpacing: -0.24,
     color: '#7b7b7b',
+    letterSpacing: -0.24,
   },
 });

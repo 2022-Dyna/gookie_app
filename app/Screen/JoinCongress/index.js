@@ -153,8 +153,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   desc: {
+    fontFamily: 'pre400',
     fontSize: 12,
-    letterSpacing: -0.24,
     color: '#7b7b7b',
+    letterSpacing: -0.24,
   },
 });

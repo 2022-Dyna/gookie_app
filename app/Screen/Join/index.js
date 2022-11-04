@@ -231,7 +231,11 @@ export default function Join({navigation}) {
                                     commonStyles.btnPressColor,
                                   ]
                             }>
-                            <Text style={[commonStyles.btnTextDefault]}>
+                            <Text
+                              style={[
+                                commonStyles.btnTextDefault,
+                                {fontFamily: 'pre400'},
+                              ]}>
                               인증번호
                             </Text>
                           </View>
@@ -246,6 +250,7 @@ export default function Join({navigation}) {
                               style={[
                                 commonStyles.btnTextDefault,
                                 commonStyles.btnTextColor2,
+                                {fontFamily: 'pre400'},
                               ]}>
                               다시받기
                             </Text>
@@ -312,6 +317,7 @@ export default function Join({navigation}) {
                               style={[
                                 commonStyles.btnTextDefault,
                                 commonStyles.btnTextColor1,
+                                {fontFamily: 'pre400'},
                               ]}>
                               인증확인
                             </Text>
@@ -329,7 +335,11 @@ export default function Join({navigation}) {
                                     commonStyles.btnPressColor,
                                   ]
                             }>
-                            <Text style={[commonStyles.btnTextDefault]}>
+                            <Text
+                              style={[
+                                commonStyles.btnTextDefault,
+                                {fontFamily: 'pre400'},
+                              ]}>
                               인증확인
                             </Text>
                           </View>

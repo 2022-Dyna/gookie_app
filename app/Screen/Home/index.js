@@ -169,7 +169,7 @@ export default function Home({navigation}) {
             <View style={{backgroundColor: '#ffffff'}}>
               <View style={styles.titBox}>
                 <Text style={[styles.title]}>이번주 소통왕 💬</Text>
-                <Text style={[commonStyles.mt8]}>
+                <Text style={[commonStyles.mt8, styles.desc]}>
                   국민과 가장 열심히 소통한 의원들이에요.
                 </Text>
                 <View style={[commonStyles.mt8, {flexDirection: 'row'}]}>
@@ -227,13 +227,22 @@ export default function Home({navigation}) {
                               style={{
                                 flexDirection: 'row',
                                 justifyContent: 'space-between',
+                                alignItems: 'center',
                               }}>
                               <Text style={styles.cardName}>{item.name}</Text>
-                              <View style={{flexDirection: 'row'}}>
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  alignItems: 'flex-end',
+                                }}>
                                 <Text
                                   style={[
                                     styles.cardPercent,
-                                    {fontSize: 24, fontWeight: 'bold'},
+                                    {
+                                      fontFamily: 'pre700',
+                                      fontSize: 24,
+                                      lineHeight: 24,
+                                    },
                                   ]}>
                                   {item.percent}
                                 </Text>
@@ -263,14 +272,18 @@ export default function Home({navigation}) {
                     }}>
                     <Text
                       style={{
+                        fontFamily: 'pre700',
                         fontSize: 12,
-                        fontWeight: 'bold',
                         color: '#b1b1b1',
-                        lineHeight: 15,
+                        letterSpacing: -0.24,
                       }}>
                       모든 의원 보기
                     </Text>
-                    <Icons.ChevronRightIcon color="#b1b1b1" size={15} />
+                    <Icons.ChevronRightIcon
+                      color="#b1b1b1"
+                      size={12}
+                      style={{marginLeft: 4}}
+                    />
                   </View>
                 </TouchableOpacity>
               </View>
@@ -318,7 +331,7 @@ export default function Home({navigation}) {
                               ? styles.tabBtnText
                               : [
                                   styles.tabBtnText,
-                                  {fontWeight: 'bold', color: '#f4993a'},
+                                  {fontFamily: 'pre700', color: '#f4993a'},
                                 ]
                           }>
                           일간
@@ -352,7 +365,7 @@ export default function Home({navigation}) {
                               ? styles.tabBtnText
                               : [
                                   styles.tabBtnText,
-                                  {fontWeight: 'bold', color: '#f4993a'},
+                                  {fontFamily: 'pre700', color: '#f4993a'},
                                 ]
                           }>
                           주간
@@ -387,7 +400,7 @@ export default function Home({navigation}) {
                               ? styles.tabBtnText
                               : [
                                   styles.tabBtnText,
-                                  {fontWeight: 'bold', color: '#f4993a'},
+                                  {fontFamily: 'pre700', color: '#f4993a'},
                                 ]
                           }>
                           월간
@@ -423,14 +436,16 @@ export default function Home({navigation}) {
                             style={{
                               flexDirection: 'row',
                               alignItems: 'center',
-                              paddingVertical: 8,
+                              paddingVertical: 12,
                             }}>
                             <View style={{width: 24}}>
                               <Text
                                 style={{
+                                  fontFamily: 'pre700',
                                   fontSize: 12,
-                                  fontWeight: 'bold',
                                   color: '#313131',
+                                  letterSpacing: -0.24,
+                                  lineHeight: 14,
                                 }}>
                                 {index + 1}
                               </Text>
@@ -438,14 +453,26 @@ export default function Home({navigation}) {
                             <View style={{width: 48, paddingRight: 8}}>
                               <Text
                                 numberOfLines={1}
-                                style={{fontSize: 12, color: '#313131'}}>
+                                style={{
+                                  fontFamily: 'pre400',
+                                  fontSize: 12,
+                                  color: '#313131',
+                                  letterSpacing: -0.24,
+                                  lineHeight: 14,
+                                }}>
                                 {item.name}
                               </Text>
                             </View>
-                            <View style={{flex: 1}}>
+                            <View style={{flex: 1, paddingRight: 8}}>
                               <Text
                                 numberOfLines={1}
-                                style={{fontSize: 12, color: '#7b7b7b'}}>
+                                style={{
+                                  fontFamily: 'pre400',
+                                  fontSize: 12,
+                                  color: '#7b7b7b',
+                                  letterSpacing: -0.24,
+                                  lineHeight: 14,
+                                }}>
                                 {item.content}
                               </Text>
                             </View>
@@ -460,7 +487,14 @@ export default function Home({navigation}) {
                                   color="#d0d0d0"
                                   style={{marginRight: 8}}
                                 />
-                                <Text style={{fontSize: 12, color: '#b1b1b1'}}>
+                                <Text
+                                  style={{
+                                    fontFamily: 'pre400',
+                                    fontSize: 12,
+                                    color: '#b1b1b1',
+                                    letterSpacing: -0.24,
+                                    lineHeight: 14,
+                                  }}>
                                   {likeNum}
                                 </Text>
                               </View>
@@ -481,7 +515,7 @@ export default function Home({navigation}) {
               ]}>
               <View style={styles.titBox}>
                 <Text style={[styles.title]}>이번주 최고 인기 ✨</Text>
-                <Text style={[commonStyles.mt8]}>
+                <Text style={[commonStyles.mt8, styles.desc]}>
                   국민들이 가장 많이 찾은 인기 의원들이에요.
                 </Text>
                 <View style={[commonStyles.mt8, {flexDirection: 'row'}]}>
@@ -578,13 +612,18 @@ const styles = StyleSheet.create({
     paddingBottom: 32,
   },
   title: {
+    fontFamily: 'pre700',
     fontSize: 20,
-    fontWeight: 'bold',
     color: '#313131',
+    letterSpacing: -0.8,
+    lineHeight: 24,
   },
   desc: {
+    fontFamily: 'pre400',
     fontSize: 12,
     color: '#b1b1b1',
+    letterSpacing: -0.24,
+    lineHeight: 18,
   },
   tag: {
     justifyContent: 'center',
@@ -596,8 +635,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   tagText: {
+    fontFamily: 'pre400',
     fontSize: 12,
     color: '#b1b1b1',
+    letterSpacing: -0.24,
+    lineHeight: 14,
   },
   tabBox: {
     flexDirection: 'row',
@@ -618,7 +660,13 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderColor: 'transparent',
   },
-  tabBtnText: {fontSize: 10, color: '#b1b1b1'},
+  tabBtnText: {
+    fontFamily: 'pre400',
+    fontSize: 10,
+    color: '#b1b1b1',
+    letterSpacing: -0.2,
+    lineHeight: 10,
+  },
   cardImg: {
     position: 'relative',
     width: 120,
@@ -638,24 +686,31 @@ const styles = StyleSheet.create({
     backgroundColor: '#b1b1b1',
   },
   cardGradeText: {
+    fontFamily: 'pre700',
     fontSize: 8,
-    fontWeight: 'bold',
     color: '#ffffff',
-    letterSpacing: 0.5,
+    letterSpacing: 0.32,
+    lineHeight: 8,
   },
   cardGroup: {
+    fontFamily: 'pre400',
     fontSize: 10,
     color: '#7b7b7b',
-    marginBottom: 4,
+    letterSpacing: -0.2,
+    lineHeight: 16,
   },
   cardName: {
+    fontFamily: 'pre700',
     fontSize: 14,
-    fontWeight: 'bold',
     color: '#313131',
+    letterSpacing: -0.28,
+    lineHeight: 18,
   },
   cardPercent: {
-    fontSize: 14,
+    fontFamily: 'pre400',
+    fontSize: 10,
     color: '#f4933a',
-    lineHeight: 24,
+    letterSpacing: -0.48,
+    lineHeight: 12,
   },
 });

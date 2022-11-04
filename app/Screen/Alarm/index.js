@@ -490,7 +490,7 @@ export default function Alarm({navigation}) {
         <View style={styles.alarmTit}>
           <Text style={styles.alarmTitText}>알림</Text>
         </View>
-        <View style={[commonStyles.loaderWrap, {paddingBottom: 60}]}>
+        <View style={[commonStyles.loaderWrap, {paddingBottom: 56}]}>
           {loading ? (
             <Loader type={'full'} />
           ) : (
@@ -507,9 +507,11 @@ export default function Alarm({navigation}) {
                     <View>
                       <Text
                         style={{
+                          fontFamily: 'pre400',
                           fontSize: 12,
                           color: '#7b7b7b',
                           letterSpacing: -0.24,
+                          lineHeight: 12,
                         }}>
                         알림이 없습니다.
                       </Text>
@@ -559,7 +561,7 @@ export default function Alarm({navigation}) {
                           {!loginState.isCon && (
                             <View
                               style={[
-                                commonStyles.mb24,
+                                commonStyles.mb16,
                                 {flexDirection: 'row', alignItems: 'center'},
                               ]}>
                               <View style={commonStyles.mr8}>
@@ -603,10 +605,11 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   alarmTitText: {
+    fontFamily: 'pre700',
     fontSize: 16,
     color: '#313131',
-    fontWeight: 'bold',
     letterSpacing: -0.32,
+    lineHeight: 16,
   },
   alarmBox: {
     flexDirection: 'row',
@@ -614,12 +617,31 @@ const styles = StyleSheet.create({
     paddingVertical: 24,
   },
   alarmName: {
+    fontFamily: 'pre700',
     fontSize: 14,
     color: '#454545',
     letterSpacing: -0.28,
-    fontWeight: 'bold',
+    lineHeight: 14,
   },
-  alarmGroup: {fontSize: 12, color: '#b1b1b1', letterSpacing: -0.24},
-  alarmDate: {fontSize: 12, color: '#b1b1b1', letterSpacing: -0.24},
-  alarmDesc: {fontSize: 12, color: '#7b7b7b', letterSpacing: -0.24},
+  alarmGroup: {
+    fontFamily: 'pre400',
+    fontSize: 12,
+    color: '#b1b1b1',
+    letterSpacing: -0.24,
+    lineHeight: 12,
+  },
+  alarmDate: {
+    fontFamily: 'pre400',
+    fontSize: 12,
+    color: '#b1b1b1',
+    letterSpacing: -0.24,
+    lineHeight: 12,
+  },
+  alarmDesc: {
+    fontFamily: 'pre400',
+    fontSize: 12,
+    color: '#7b7b7b',
+    letterSpacing: -0.24,
+    lineHeight: 12,
+  },
 });

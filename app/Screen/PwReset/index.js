@@ -86,7 +86,7 @@ export default function PwReset({navigation}) {
         <View>
           <Text style={[commonStyles.labeltext, commonStyles.mb8]}>이름</Text>
           <TextInput
-            style={commonStyles.input}
+            style={[commonStyles.input, {color: '#b1b1b1'}]}
             name="name"
             value={loginState.name}
             editable={false}
@@ -95,7 +95,7 @@ export default function PwReset({navigation}) {
         <View style={commonStyles.mt8}>
           <Text style={[commonStyles.labeltext, commonStyles.mb8]}>이메일</Text>
           <TextInput
-            style={commonStyles.input}
+            style={[commonStyles.input, {color: '#b1b1b1'}]}
             name="email"
             value={loginState.email}
             editable={false}
@@ -263,9 +263,9 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   pwResetTitText: {
+    fontFamily: 'pre700',
     fontSize: 16,
     color: '#313131',
-    fontWeight: 'bold',
     letterSpacing: -0.32,
   },
 });
