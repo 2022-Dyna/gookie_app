@@ -82,7 +82,7 @@ export const commonStyles = StyleSheet.create({
     backgroundColor: '#d87419',
   },
   btnTextDefault: {
-    fontFamily: 'pre400',
+    fontFamily: 'pre700',
     fontSize: 14,
     color: '#ffffff',
     letterSpacing: -0.28,
