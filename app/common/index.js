@@ -6,16 +6,20 @@ export const commonStyles = StyleSheet.create({
   },
   // main_title
   maintit: {
+    fontFamily: 'noto700',
     fontSize: 24,
     textAlign: 'left',
     color: '#313131',
-    fontWeight: 'bold',
+    letterSpacing: -0.96,
+    lineHeight: 28,
   },
   // input, label
   labeltext: {
+    fontFamily: 'noto300',
     fontSize: 12,
     color: '#7b7b7b',
-    fontWeight: '300',
+    letterSpacing: -0.24,
+    lineHeight: 16,
   },
   input: {
     width: '100%',
@@ -24,6 +28,9 @@ export const commonStyles = StyleSheet.create({
     borderColor: '#d0d0d0',
     borderRadius: 8,
     paddingHorizontal: 20,
+    fontSize: 14,
+    color: '#313131',
+    letterSpacing: -0.28,
   },
   inputfocus: {
     width: '100%',
@@ -35,12 +42,17 @@ export const commonStyles = StyleSheet.create({
     borderLeftColor: '#f4933a',
     borderRightColor: '#f4933a',
     paddingHorizontal: 20,
+    fontSize: 14,
+    color: '#313131',
+    letterSpacing: -0.28,
   },
   // validText
   validText: {
+    fontFamily: 'noto400',
     fontSize: 12,
-    letterSpacing: -0.24,
     color: '#ff0000',
+    letterSpacing: -0.24,
+    lineHeight: 16,
   },
   // btn
   btnDefault: {
@@ -68,10 +80,10 @@ export const commonStyles = StyleSheet.create({
     backgroundColor: '#d87419',
   },
   btnTextDefault: {
+    fontFamily: 'noto700',
     fontSize: 14,
-    fontWeight: 'bold',
-    letterSpacing: -0.28,
     color: '#ffffff',
+    letterSpacing: -0.28,
   },
   btnTextColor1: {
     color: '#b1b1b1',
@@ -99,24 +111,30 @@ export const commonStyles = StyleSheet.create({
     paddingVertical: 40,
   },
   modalTitle: {
+    fontFamily: 'noto700',
     textAlign: 'center',
     fontSize: 16,
-    fontWeight: 'bold',
     color: '#313131',
+    letterSpacing: -0.32,
+    lineHeight: 20,
   },
   modalDesc: {
+    fontFamily: 'noto400',
     textAlign: 'center',
     fontSize: 12,
-    lineHeight: 18,
     color: '#313131',
+    letterSpacing: -0.24,
+    lineHeight: 18,
   },
   modalBtn: {
+    fontFamily: 'noto700',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
     height: 50,
     backgroundColor: '#f4933a',
+    letterSpacing: -0.28,
   },
   modalBtnPressColor: {
     backgroundColor: '#d87419',
@@ -125,9 +143,10 @@ export const commonStyles = StyleSheet.create({
     backgroundColor: '#d0d0d0',
   },
   modalBtnText: {
+    fontFamily: 'noto700',
     fontSize: 14,
-    fontWeight: 'bold',
     color: '#ffffff',
+    letterSpacing: -0.28,
   },
   // loader
   loaderWrap: {
