@@ -6,7 +6,7 @@ export const commonStyles = StyleSheet.create({
   },
   // main_title
   maintit: {
-    fontFamily: 'noto700',
+    fontFamily: 'pre700',
     fontSize: 24,
     textAlign: 'left',
     color: '#313131',
@@ -15,7 +15,7 @@ export const commonStyles = StyleSheet.create({
   },
   // input, label
   labeltext: {
-    fontFamily: 'noto300',
+    fontFamily: 'pre300',
     fontSize: 12,
     color: '#7b7b7b',
     letterSpacing: -0.24,
@@ -28,6 +28,7 @@ export const commonStyles = StyleSheet.create({
     borderColor: '#d0d0d0',
     borderRadius: 8,
     paddingHorizontal: 20,
+    fontFamily: 'pre400',
     fontSize: 14,
     color: '#313131',
     letterSpacing: -0.28,
@@ -42,13 +43,14 @@ export const commonStyles = StyleSheet.create({
     borderLeftColor: '#f4933a',
     borderRightColor: '#f4933a',
     paddingHorizontal: 20,
+    fontFamily: 'pre400',
     fontSize: 14,
     color: '#313131',
     letterSpacing: -0.28,
   },
   // validText
   validText: {
-    fontFamily: 'noto400',
+    fontFamily: 'pre400',
     fontSize: 12,
     color: '#ff0000',
     letterSpacing: -0.24,
@@ -80,7 +82,7 @@ export const commonStyles = StyleSheet.create({
     backgroundColor: '#d87419',
   },
   btnTextDefault: {
-    fontFamily: 'noto700',
+    fontFamily: 'pre700',
     fontSize: 14,
     color: '#ffffff',
     letterSpacing: -0.28,
@@ -111,7 +113,7 @@ export const commonStyles = StyleSheet.create({
     paddingVertical: 40,
   },
   modalTitle: {
-    fontFamily: 'noto700',
+    fontFamily: 'pre700',
     textAlign: 'center',
     fontSize: 16,
     color: '#313131',
@@ -119,7 +121,7 @@ export const commonStyles = StyleSheet.create({
     lineHeight: 20,
   },
   modalDesc: {
-    fontFamily: 'noto400',
+    fontFamily: 'pre400',
     textAlign: 'center',
     fontSize: 12,
     color: '#313131',
@@ -127,7 +129,7 @@ export const commonStyles = StyleSheet.create({
     lineHeight: 18,
   },
   modalBtn: {
-    fontFamily: 'noto700',
+    fontFamily: 'pre700',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -143,7 +145,7 @@ export const commonStyles = StyleSheet.create({
     backgroundColor: '#d0d0d0',
   },
   modalBtnText: {
-    fontFamily: 'noto700',
+    fontFamily: 'pre700',
     fontSize: 14,
     color: '#ffffff',
     letterSpacing: -0.28,
