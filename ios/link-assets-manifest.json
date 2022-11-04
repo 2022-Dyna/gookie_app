@@ -2,32 +2,40 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "assets/fonts/noto100.ttf",
-      "sha1": "d36928d9f167057dd567f83e5cbf436c31f2aec6"
+      "path": "assets/fonts/pre100.otf",
+      "sha1": "d426753321357e1197c29a1c1da1a14de623ff04"
     },
     {
-      "path": "assets/fonts/noto200.ttf",
-      "sha1": "674c661e2a5799fd9e394ce676bd135d4f5a8150"
+      "path": "assets/fonts/pre200.otf",
+      "sha1": "64b17d254828a18ac6d97f2ffd80d0388771d31e"
     },
     {
-      "path": "assets/fonts/noto300.ttf",
-      "sha1": "27fcb66ddb3686475694d713b0c6b58f862e5ca6"
+      "path": "assets/fonts/pre300.otf",
+      "sha1": "6e537b8f43e958790c4f2bd5b314262d575e5195"
     },
     {
-      "path": "assets/fonts/noto400.ttf",
-      "sha1": "0f59a7d22ea1e871ea192faf638db38e0dd1b8c3"
+      "path": "assets/fonts/pre400.otf",
+      "sha1": "49c62f4738334d812f4407dbdc27a2108c7c2756"
     },
     {
-      "path": "assets/fonts/noto500.ttf",
-      "sha1": "bef6697967893bbd6a8e47d9cb24d16b585fbb88"
+      "path": "assets/fonts/pre500.otf",
+      "sha1": "b05adb9ac89775d7f22733216ff7fa9fe0364853"
     },
     {
-      "path": "assets/fonts/noto700.ttf",
-      "sha1": "84f53674c8294e11d352ba142bca2dd29d8b11cf"
+      "path": "assets/fonts/pre600.otf",
+      "sha1": "9bab4642eae558c9c7f308c8d1be33f9f412a2d4"
     },
     {
-      "path": "assets/fonts/noto900.ttf",
-      "sha1": "444517b65e7e49dd8af34ba79dc8286b6e6c4ec3"
+      "path": "assets/fonts/pre700.otf",
+      "sha1": "6a04b4fbeb9a1a5d96a5b25b7e7cfbdd123fbcd0"
+    },
+    {
+      "path": "assets/fonts/pre800.otf",
+      "sha1": "bf07faadf23d76cf13863e4b21d0e476531021cc"
+    },
+    {
+      "path": "assets/fonts/pre900.otf",
+      "sha1": "3ca5ded1bd48eca62ce690d577599cc53a6af880"
     }
   ]
 }

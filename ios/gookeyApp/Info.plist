@@ -53,13 +53,15 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>noto100.ttf</string>
-		<string>noto200.ttf</string>
-		<string>noto300.ttf</string>
-		<string>noto400.ttf</string>
-		<string>noto500.ttf</string>
-		<string>noto700.ttf</string>
-		<string>noto900.ttf</string>
+		<string>pre100.otf</string>
+		<string>pre200.otf</string>
+		<string>pre300.otf</string>
+		<string>pre400.otf</string>
+		<string>pre500.otf</string>
+		<string>pre600.otf</string>
+		<string>pre700.otf</string>
+		<string>pre800.otf</string>
+		<string>pre900.otf</string>
 	</array>
 </dict>
 </plist>
