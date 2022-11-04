@@ -351,13 +351,11 @@ export default function Detail({ navigation }) {
             <ScrollView>
                 <View style={{height:180}}>
                     <ImageBackground source={party[partyNum].src} resizeMode="cover">
-                        <View style={{flexDirection:"row", justifyContent:"flex-end", height:'100%', marginTop:16, marginRight:16}}>
-                            <View>
+                        <View style={{flexDirection:"row", justifyContent:"flex-end", height:'100%', marginTop:16, marginRight:16,}}>
+                            <View style={{height:25, flexDirection:"row", justifyContent:"center", alignItems:"center"}}>
                                 <Text style={styles.markText}>
                                     2039
                                 </Text>
-                            </View>
-                            <View>
                                 <TouchableOpacity
                                     activeOpacity={1}
                                     onPress ={() => {
@@ -428,7 +426,7 @@ export default function Detail({ navigation }) {
                         <View style={commonStyles.inner}>
                             <View style={{flexDirection:"row", marginTop:40}}>
                                 <View style={{flex:1, marginRight:24}}>
-                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
+                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8, alignItems:"flex-end"}}>
                                         <View>
                                             <Icons.CakeIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
                                         </View>
@@ -441,7 +439,7 @@ export default function Detail({ navigation }) {
                                     </View>
                                 </View>
                                 <View style={{flex:1}}>
-                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
+                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8, alignItems:"flex-end"}}>
                                         <View>
                                             <Icons.PhoneIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
                                         </View>
@@ -456,7 +454,7 @@ export default function Detail({ navigation }) {
                             </View>
                             <View style={{flexDirection:"row", marginTop:40}}>
                                 <View style={{flex:1, marginRight:24}}>
-                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
+                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8, alignItems:"flex-end"}}>
                                         <View>
                                             <Icons.BriefcaseIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
                                         </View>
@@ -474,7 +472,7 @@ export default function Detail({ navigation }) {
                                     </View>
                                 </View>
                                 <View style={{flex:1}}>
-                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
+                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8, alignItems:"flex-end"}}>
                                         <View>
                                             <Icons.ChatBubbleLeftEllipsisIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
                                         </View>
@@ -494,7 +492,7 @@ export default function Detail({ navigation }) {
                             </View>
                             <View style={{marginTop:40}}>
                                 <View style={{flex:1, marginRight:24}}>
-                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
+                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8, alignItems:"flex-end"}}>
                                         <View>
                                             <Icons.HandThumbUpIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
                                         </View>
@@ -505,7 +503,7 @@ export default function Detail({ navigation }) {
                                     <View style={{marginTop:8}}>
                                         <View style={{marginTop:8}}>
                                             <TouchableOpacity>
-                                                <View style={{flexDirection:"row", justifyContent:"space-between",}}>
+                                                <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
                                                     <View style={{marginRight:32, flex:30,}}>
                                                         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.historyTextSubText02}>문화예술진흥법 일부개정법률안(대안)(문화머시기머시기)</Text>
                                                     </View>
@@ -517,7 +515,7 @@ export default function Detail({ navigation }) {
                                         </View>
                                         <View style={{marginTop:8}}>
                                             <TouchableOpacity>
-                                                <View style={{flexDirection:"row", justifyContent:"space-between",}}>
+                                                <View style={{flexDirection:"row", justifyContent:"space-between",  alignItems:"center"}}>
                                                     <View style={{marginRight:32, flex:30,}}>
                                                         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.historyTextSubText02}>문화예술진흥법 일부개정법률안(대안)(문화머시기머시기)</Text>
                                                     </View>
@@ -532,7 +530,7 @@ export default function Detail({ navigation }) {
                             </View>
                             <View style={{marginTop:40}}>
                                 <View style={{flex:1, marginRight:24}}>
-                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
+                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8, alignItems:"flex-end"}}>
                                         <View>
                                             <Icons.HandThumbDownIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
                                         </View>
@@ -543,7 +541,7 @@ export default function Detail({ navigation }) {
                                     <View style={{marginTop:8}}>
                                         <View style={{marginTop:8}}>
                                             <TouchableOpacity>
-                                                <View style={{flexDirection:"row", justifyContent:"space-between",}}>
+                                                <View style={{flexDirection:"row", justifyContent:"space-between",  alignItems:"center"}}>
                                                     <View style={{marginRight:32, flex:30,}}>
                                                         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.historyTextSubText02}>문화예술진흥법 일부개정법률안(대안)(문화머시기머시기)</Text>
                                                     </View>
@@ -555,7 +553,7 @@ export default function Detail({ navigation }) {
                                         </View>
                                         <View style={{marginTop:8}}>
                                             <TouchableOpacity>
-                                                <View style={{flexDirection:"row", justifyContent:"space-between",}}>
+                                                <View style={{flexDirection:"row", justifyContent:"space-between",  alignItems:"center"}}>
                                                     <View style={{marginRight:32, flex:30,}}>
                                                         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.historyTextSubText02}>문화예술진흥법 일부개정법률안(대안)(문화머시기머시기)</Text>
                                                     </View>
@@ -570,7 +568,7 @@ export default function Detail({ navigation }) {
                             </View>
                             <View style={{marginTop:40}}>
                                 <View style={{flex:1, marginRight:24}}>
-                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8}}>
+                                    <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:"#eee", paddingBottom:8, alignItems:"flex-end"}}>
                                         <View>
                                             <Icons.IdentificationIcon color="#f4933a" size={25} style={commonStyles.mr8}/>
                                         </View>
@@ -809,7 +807,7 @@ export default function Detail({ navigation }) {
                                     }
                                     placeholderTextColor="#b1b1b1"
                                     multiline
-                                    style={{flex:9}}
+                                    style={{flex:9, fontFamily:"pre400"}}
                                     value={inputValue}
                                     onChangeText={(text) => setInputValue(text)}
                                     maxLength={200}
@@ -1060,22 +1058,25 @@ const styles = StyleSheet.create({
     markText:{
         fontSize:16,
         color:"#fff",
-        fontWeight:"500",
+        fontFamily:"pre500",
         letterSpacing:0.32,
-        marginRight:8
+        marginRight:8,
+        lineHeight:20,
     },
     profileName:{
         fontSize:28,
-        fontWeight:"bold",
+        fontFamily:"pre700",
         color:"#313131",
         letterSpacing:-1.12,
+        lineHeight:32,
     },
     profileSubName:{
         fontSize:18,
         color:"#b1b1b1",
-        fontWeight:"bold",
+        fontFamily:"pre700",
         letterSpacing:-0.72,
-        marginTop:8
+        marginTop:8,
+        lineHeight:22
     },
     tabOrange:{
         height:50,
@@ -1093,71 +1094,79 @@ const styles = StyleSheet.create({
         fontSize:14,
         color:"#fff",
         letterSpacing:-0.28,
-        fontWeight:"bold"
+        fontFamily:"pre700",
+        lineHeight:18
     },
     tabWhiteText:{
         fontSize:14,
         color:"#f4933a",
         letterSpacing:-0.28,
-        fontWeight:"bold"
+        fontFamily:"pre700",
+        lineHeight:18,
     },
     historyText:{
         fontSize:18,
-        fontWeight:"bold",
+        fontFamily:"pre700",
         color:"#7b7b7b",
         letterSpacing:-0.72,
+        lineHeight:22,
     },
     historyTextSubText:{
         marginTop:24,
         fontSize:14,
         color:"#7b7b7b",
-        fontWeight:"normal",
+        fontFamily:"pre400",
         letterSpacing:-0.28,
+        lineHeight:18,
     },
     historyBigText:{
         fontSize:36,
-        fontWeight:"bold",
+        fontFamily:"pre700",
         color:"#313131",
         letterSpacing:-1.44,
         marginRight:8,
-        lineHeight:36,
+        lineHeight:40,
     },
     historyTextSubText02:{
         fontSize:14,
         color:"#7b7b7b",
-        fontWeight:"normal",
+        fontFamily:"pre400",
         letterSpacing:-0.28,
+        lineHeight:22,
     },
     historyTextSubText03:{
         fontSize:14,
         color:"#7b7b7b",
-        fontWeight:"normal",
+        fontFamily:"pre400",
         letterSpacing:-0.28,
         lineHeight:22,
     },
     commentMainText:{
         fontSize:14,
-        fontWeight:"bold",
+        fontFamily:"pre700",
         letterSpacing:-0.28,
         color:"#313131",
         marginRight:8,
+        lineHeight:18,
     },
     commentSubText:{
         fontSize:12,
-        fontWeight:"bold",
+        fontFamily:"pre700",
         letterSpacing:-0.24,
-        color:"#7b7b7b"
+        color:"#7b7b7b",
+        lineHeight:16,
     },
     commentName:{
         fontSize:14,
-        fontWeight:"bold",
+        fontFamily:"pre700",
         letterSpacing:-0.56,
         color:"#313131",
         marginBottom:8,
+        lineHeight:18,
     },
     commentContent:{
         fontSize:14,
-        fontWeight:"normal",
+        fontFamily:"pre400",
         letterSpacing:-0.28,
         color:"#7b7b7b",
         lineHeight:20,
@@ -1165,9 +1174,10 @@ const styles = StyleSheet.create({
     commentDay:{
         paddingTop:8,
         fontSize:12,
-        fontWeight:"300",
+        fontFamily:"pre300",
         letterSpacing:-0.24,
-        color:"#b1b1b1"
+        color:"#b1b1b1",
+        lineHeight:16,
     },
     commentUp:{
         borderWidth:1,
@@ -1179,9 +1189,10 @@ const styles = StyleSheet.create({
     },
     commentUpText:{
         fontSize:12,
-        fontWeight:"500",
+        fontFamily:"pre500",
         letterSpacing:-0.24,
-        color:"#7b7b7b"
+        color:"#7b7b7b",
+        lineHeight:16,
     },
     commentBtn:{
         borderWidth:1,
@@ -1194,9 +1205,10 @@ const styles = StyleSheet.create({
     },
     commentBtnText:{
         fontSize:12,
-        fontWeight:"bold",
+        fontFamily:"pre700",
         letterSpacing:-0.48,
         color:"#d0d0d0",
+        lineHeight:16,
     },
     modalView:{
         height:60,
@@ -1205,15 +1217,17 @@ const styles = StyleSheet.create({
     },
     modalText:{
         fontSize:14,
-        fontWeight:"normal",
+        fontFamily:"pre400",
         letterSpacing:-0.56,
-        color:"#313131"
+        color:"#313131",
+        lineHeight:18,
     },
     modalTextRed:{
         fontSize:14,
-        fontWeight:"bold",
+        fontFamily:"pre700",
         letterSpacing:-0.56,
-        color:"#F36060"
+        color:"#F36060",
+        lineHeight:18,
     }
 
 });

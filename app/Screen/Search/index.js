@@ -366,10 +366,11 @@ const styles = StyleSheet.create({
     searchTit:{
         textAlign:"center",
         fontSize:16,
-        fontWeight:"bold",
+        fontFamily:"pre700",
         letterSpacing:-0.32,
         color:"#313131",
-        paddingVertical:24
+        paddingVertical:24,
+        lineHeight:20,
     },
     tabView:{
         backgroundColor:"#f4933a",
@@ -389,34 +390,39 @@ const styles = StyleSheet.create({
     },
     tabText:{
         fontSize:14,
-        fontWeight:"bold",
+        fontFamily:"pre700",
         letterSpacing:-0.56,
-        color:"#fff"
+        color:"#fff",
+        lineHeight:18,
     },
     tabTextOff:{
         fontSize:14,
-        fontWeight:"bold",
+        fontFamily:"pre700",
         letterSpacing:-0.56,
-        color:"#f4933a"
+        color:"#f4933a",
+        lineHeight:18,
     },
     congressAling:{
         fontSize:16,
-        fontWeight:"bold",
+        fontFamily:"pre700",
         letterSpacing:-0.32,
-        color:"#f4933a"
+        color:"#f4933a",
+        lineHeight:20,
     },
     congressName:{
         fontSize:14,
-        fontWeight:"bold",
+        fontFamily:"pre700",
         letterSpacing:-0.28,
         color:"#313131",
-        marginRight:24
+        marginRight:24,
+        lineHeight:18,
     },
     congressParty:{
         fontSize:12,
-        fontWeight:"normal",
+        fontFamily:"pre400",
         letterSpacing:-0.24,
-        color:"#b1b1b1"
+        color:"#b1b1b1",
+        lineHeight:16,
     },
 
 })
