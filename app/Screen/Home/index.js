@@ -153,7 +153,11 @@ export default function Home({navigation}) {
       ) : (
         <ScrollView>
           <View style={{width: '100%'}}>
-            <TouchableOpacity activeOpacity={1}>
+            <TouchableOpacity 
+              activeOpacity={1}
+              onPress={() => navigation.navigate('Guide')}
+            
+            >
               <Image
                 source={require('../../img/banner.png')}
                 style={{width: '100%', height: width * 0.5}}
