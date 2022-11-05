@@ -352,6 +352,19 @@ export default function Detail({ navigation }) {
                 <View style={{height:180}}>
                     <ImageBackground source={party[partyNum].src} resizeMode="cover">
                         <View style={{flexDirection:"row", justifyContent:"flex-end", height:'100%', marginTop:16, marginRight:16,}}>
+                            <View style={{position:"absolute", left:16, top:0, zIndex:10,}}>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    onPress={() => {
+                                    navigation.goBack()
+                                    }}
+                                >
+                                    <Icons.ChevronLeftIcon
+                                    color="#fff"
+                                    size={24}
+                                    />
+                                </TouchableOpacity>
+                            </View>
                             <View style={{height:25, flexDirection:"row", justifyContent:"center", alignItems:"center"}}>
                                 <Text style={styles.markText}>
                                     2039

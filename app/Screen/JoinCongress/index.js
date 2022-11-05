@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {commonStyles} from '../../common';
 import ConfirmModal from '../../Component/ConfirmModal';
+import * as Icons from 'react-native-heroicons/outline';
 
 export default function JoinCongress({navigation}) {
   const [joinLoading, setJoinLoading] = useState(false);
@@ -44,6 +45,19 @@ export default function JoinCongress({navigation}) {
     <View style={commonStyles.loaderWrap}>
       {joinLoading && <Loader type={'trans'} />}
       <View style={[commonStyles.inner, styles.basic]}>
+        <View style={{height:50, marginBottom:48}}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => {
+              navigation.goBack()
+            }}
+          >
+            <Icons.ChevronLeftIcon
+              color="#000"
+              size={24}
+            />
+          </TouchableOpacity>
+        </View>
         <View>
           <Text style={[commonStyles.maintit, commonStyles.mb24]}>
             국회의원 ID/PW 발급받기

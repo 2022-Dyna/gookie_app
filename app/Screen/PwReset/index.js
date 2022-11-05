@@ -75,6 +75,19 @@ export default function PwReset({navigation}) {
 
       <View style={styles.pwResetTit}>
         <Text style={styles.pwResetTitText}>내정보 수정</Text>
+        <View style={{position:"absolute", left:0, top:13,}}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => {
+              navigation.goBack()
+            }}
+          >
+            <Icons.ChevronLeftIcon
+              color="#000"
+              size={24}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <ScrollView
@@ -260,7 +273,10 @@ const styles = StyleSheet.create({
   pwResetTit: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 20,
+    marginLeft: 24,
+    marginRight:24,
+    height:50,
+    position:"relative",
   },
   pwResetTitText: {
     fontFamily: 'pre700',

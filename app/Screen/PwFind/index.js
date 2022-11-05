@@ -9,6 +9,7 @@ import {
 import {commonStyles} from '../../common';
 import ConfirmModal from '../../Component/ConfirmModal';
 import Loader from '../../Component/Loader';
+import * as Icons from 'react-native-heroicons/outline';
 
 export default function PwFind({navigation}) {
   const [pwFindLoading, setPwFindLoading] = useState(false);
@@ -41,11 +42,24 @@ export default function PwFind({navigation}) {
     <View style={commonStyles.loaderWrap}>
       {pwFindLoading && <Loader type={'trans'} />}
       <View style={[commonStyles.inner, styles.basic]}>
+        <View style={{height:50, marginBottom:48}}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => {
+              navigation.goBack()
+            }}
+          >
+            <Icons.ChevronLeftIcon
+              color="#000"
+              size={24}
+            />
+          </TouchableOpacity>
+        </View>
         <View>
           <Text style={[commonStyles.maintit, commonStyles.mb24]}>
             비밀번호 찾기
           </Text>
-          <View>
+        <View>
             <Text style={[commonStyles.labeltext, commonStyles.mb8]}>
               이메일
             </Text>

@@ -154,6 +154,23 @@ export default function Join({navigation}) {
       {joinLoading && <Loader type={'trans'} />}
       <View style={[commonStyles.inner, styles.basic]}>
         <View>
+          <View style={{height:40}}>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() => {
+                step === 0 ? navigation.goBack() : setStep(0)
+                
+                
+              }}
+            >
+              <Icons.ChevronLeftIcon
+                color="#000"
+                size={24}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View>
           <Text style={styles.percentText}>{step + 1} / 2</Text>
           <View style={styles.percentBar}>
             <View

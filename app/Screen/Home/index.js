@@ -152,10 +152,6 @@ export default function Home({navigation}) {
         <Loader type={'full'} />
       ) : (
         <ScrollView>
-          <Button
-            title="Go to MyPage"
-            onPress={() => navigation.navigate('MyPage02')}
-          />
           <View style={{width: '100%'}}>
             <TouchableOpacity activeOpacity={1}>
               <Image
