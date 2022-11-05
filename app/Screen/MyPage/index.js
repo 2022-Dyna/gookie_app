@@ -4,6 +4,7 @@ import { useState } from 'react';
 import * as loginAction from '../../Reducer/action/index';
 import ConfirmModal from '../../Component/ConfirmModal';
 import * as Icons from 'react-native-heroicons/outline';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function MyPage({ navigation }) {
     const dispatch = useDispatch();
@@ -96,6 +97,8 @@ export default function MyPage({ navigation }) {
 
         //로그아웃 확인 모달
         const [modalLogout, setModalLogout] = useState(false);
+
+
 
     return (
         <View>
@@ -246,8 +249,9 @@ export default function MyPage({ navigation }) {
           <ConfirmModal
               transparent={true}
               btnBoolean={modalLogout}
-              onPress={() => {
+              onPress={async () => {
                 dispatch(loginAction.makeLogout());
+                await AsyncStorage.clear();
                 navigation.navigate('Home');
                 setModalLogout(false);
               }}

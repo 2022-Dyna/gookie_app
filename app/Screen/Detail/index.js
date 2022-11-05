@@ -1,10 +1,11 @@
 import {useEffect, useReducer, useRef, useState} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, TextInput, ScrollView, ImageBackground, Modal, Pressable, FlatList} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, TextInput, ScrollView, ImageBackground, Modal, Pressable, FlatList, RefreshControl} from 'react-native';
 import * as Icons from 'react-native-heroicons/outline';
 import {commonStyles} from '../../common/index';
 import ConfirmModal from '../../Component/ConfirmModal';
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Loader from '../../Component/Loader';
 
 export default function Detail({ navigation }) {
     const loginState = {
@@ -13,7 +14,7 @@ export default function Detail({ navigation }) {
         email:'ezicland@naver.com',
         name:'손동윤',
         userCd:1
-    }
+    };
     const arr =[
         {
             name:'손동윤',
@@ -132,11 +133,840 @@ export default function Detail({ navigation }) {
             commentCd:21671124,
             reComment:[]
         },
-    ]
-    const [datas, setDatas] = useState(arr);
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+        {
+            name:'손동윤',
+            content:'ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎ1',
+            regiDt:'2022.10.14',
+            like:10,
+            userCd:2,
+            commentCd:21671124,
+            reComment:[]
+        },
+    ];
     const [detailProfie, setDetailProfile] = useState(null);
     const [partyNum, setPartyNum] = useState(0);
+    
+    const [loading, setLoading] = useState(true);
+    const [comItemLoading, setComItemLoading] =useState(true);
+    const [refreshing, setRefreshing] = useState(false);
+    const [datas, setDatas] = useState([]);
+    const [pageOptions, setPageOptions] = useState({num: 20, page: 1});
 
+    const commentDataLoad = () => {
+        setDatas(
+            arr.filter((item, index) => {
+                if (index < pageOptions.num * pageOptions.page) {
+                return item;
+                }
+            }),
+        );
+        setPageOptions(state => ({...pageOptions, page: state.page + 1}));
+    };
+
+    const totalPage = Math.ceil(arr.length / pageOptions.num);
+    const pageLoad = () => {
+        if (pageOptions.page <= totalPage) {
+            commentDataLoad();
+        }else{
+            setComItemLoading(false);
+        }
+    };
+
+    const pageRefresh = () => {
+        if (!refreshing) {
+            setRefreshing(true);
+            // setPageOptions({...pageOptions, page: 1});
+            // dataLoad();
+            setDatas(
+                arr.filter((item, index) => {
+                    if (index < pageOptions.num) {
+                    return item;
+                    }
+                }),
+            );
+            setPageOptions({...pageOptions, page: 2});
+            setRefreshing(false);
+        }
+    };
+
+    useEffect(() => {
+        //페이지전환 이후 약력 데이터를 받아온 후
+        commentDataLoad();
+    },[]);
 
     //텝전환
     const [tab , setTab] = useState(0);
@@ -154,8 +984,8 @@ export default function Detail({ navigation }) {
     ];
 
     //1. 국회의원 디테일 통신
-    const getDetail = () =>{
-        axios.get('http://144.24.94.124:8091/api/v1/gookie/detail',{
+    const getDetail = async () =>{
+        await axios.get('http://144.24.94.124:8091/api/v1/gookie/detail',{
             params:{
                 monaCd : '0VU8517t',
                 eMail : 'eodyd7072@naver.com'
@@ -204,14 +1034,14 @@ export default function Detail({ navigation }) {
         const load = async () =>{
             const loginUser = await AsyncStorage.getItem("loginUser");
             const loginUserObj = JSON.parse(loginUser); // async storage에 담긴 로그인유저 객체
-            getDetail();
-
+            await getDetail();
+            setLoading(false);
         };
         load();
     }, []);
 
     //인풋창 텍스트 변경관련
-    const inputRef = useRef(null)
+    const inputRef = useRef(null);
     const [inputValue, setInputValue] = useState("");
     let disabled = false;
     inputValue.length !==0 ? disabled = false : disabled = true;
@@ -344,11 +1174,33 @@ export default function Detail({ navigation }) {
         }
     };
 
-
+    const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+        const paddingToBottom = 10;
+        return layoutMeasurement.height + contentOffset.y >=
+            contentSize.height - paddingToBottom;
+    };
 
     return (
         <View style={{position:"relative", height:"100%"}}>
-            <ScrollView>
+            {loading
+            ? (<Loader type={"full"} />)
+            : (<ScrollView
+                onScroll={({nativeEvent}) => {
+                    if (isCloseToBottom(nativeEvent)&&tab==1) {
+                        pageLoad();
+                        setComItemLoading(false);
+                        if(pageOptions.page < totalPage){
+                            setComItemLoading(true);
+                        }
+                    }
+                }}
+                refreshControl={
+                    <RefreshControl
+                        onRefresh={pageRefresh}
+                        refreshing={refreshing}
+                    />
+                }
+            >
                 <View style={{height:180}}>
                     <ImageBackground source={party[partyNum].src} resizeMode="cover">
                         <View style={{flexDirection:"row", justifyContent:"flex-end", height:'100%', marginTop:16, marginRight:16,}}>
@@ -636,7 +1488,7 @@ export default function Detail({ navigation }) {
                                         <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between", paddingVertical:18, borderTopWidth:1, borderBottomWidth:1, borderColor:"#eee", marginTop:16,}}>
                                             <View style={{flexDirection:"row", alignItems:"center", paddingHorizontal:24,}}>
                                                 <Text style={styles.commentMainText}>댓글</Text>
-                                                <Text style={styles.commentSubText}>{datas.length}개</Text>
+                                                <Text style={styles.commentSubText}>{arr.length}개</Text>
                                             </View>
                                             <View>
                                                 <TouchableOpacity
@@ -661,6 +1513,7 @@ export default function Detail({ navigation }) {
                                 }
                                 data={datas}
                                 empty
+                                ListFooterComponent={comItemLoading && <Loader type={'small'} />}
                                 renderItem={({item}) => {
                                     return(
                                         <View>
@@ -801,7 +1654,7 @@ export default function Detail({ navigation }) {
 
                 </View>
 
-            </ScrollView>
+            </ScrollView>)}
             {tab === 1 &&
                 <View style={{paddingHorizontal:24, borderTopWidth:1, paddingVertical:8, borderColor:"#eee", position:"absolute", bottom:0, left:0, width:"100%", backgroundColor:"#fff"}}>
                         <TouchableOpacity
