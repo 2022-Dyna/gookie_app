@@ -154,20 +154,23 @@ export default function Join({navigation}) {
       {joinLoading && <Loader type={'trans'} />}
       <View style={[commonStyles.inner, styles.basic]}>
         <View>
-          <View style={{height:40}}>
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={() => {
-                step === 0 ? navigation.goBack() : setStep(0)
-                
-                
-              }}
-            >
-              <Icons.ChevronLeftIcon
-                color="#000"
-                size={24}
-              />
-            </TouchableOpacity>
+          <View style={{height:40, position:"relative"}}>
+            <View style={{position:"absolute", left:0, top:0,}}>
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => {
+                  step === 0 ? navigation.goBack() : setStep(0)
+                  
+                  
+                }}
+              >
+                <Icons.ChevronLeftIcon
+                  color="#000"
+                  size={24}
+                />
+              </TouchableOpacity>
+            </View>
+            <Text style={commonStyles.headerTit}>회원가입</Text>
           </View>
         </View>
         <View>

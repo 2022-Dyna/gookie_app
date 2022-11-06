@@ -262,7 +262,10 @@ export default function Home({navigation}) {
                   borderTopColor: '#f5f5f5',
                   marginTop: 32,
                 }}>
-                <TouchableOpacity activeOpacity={1}>
+                <TouchableOpacity 
+                  activeOpacity={1}
+                  onPress={() => navigation.navigate('Search')}
+                >
                   <View
                     style={{
                       justifyContent: 'center',
@@ -454,7 +457,7 @@ export default function Home({navigation}) {
                               <Text
                                 numberOfLines={1}
                                 style={{
-                                  fontFamily: 'pre400',
+                                  fontFamily: 'pre700',
                                   fontSize: 12,
                                   color: '#313131',
                                   letterSpacing: -0.24,
@@ -483,8 +486,8 @@ export default function Home({navigation}) {
                                   alignItems: 'center',
                                 }}>
                                 <Icons.HandThumbUpIcon
-                                  size={10}
-                                  color="#d0d0d0"
+                                  size={16}
+                                  color="#bbb"
                                   style={{marginRight: 8}}
                                 />
                                 <Text

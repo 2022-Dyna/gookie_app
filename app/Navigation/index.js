@@ -107,7 +107,7 @@ function BottomTabNavigator() {
         tabBarInactiveTintColor: '#bbb',
         tabBarActiveTintColor: '#f4933a',
         tabBarLabelStyle: {
-          fontFamily: 'pre500',
+          fontFamily: 'pre700',
           fontSize: 12,
           marginTop: -5,
           marginBottom: 5,
@@ -130,7 +130,7 @@ function BottomTabNavigator() {
         name="Search"
         component={Search}
         options={{
-          title: '검색',
+          title: '의원찾기',
           tabBarIcon: ({color}) => {
             return (
               <IconIonicons

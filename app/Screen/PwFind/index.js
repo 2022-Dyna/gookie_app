@@ -42,18 +42,21 @@ export default function PwFind({navigation}) {
     <View style={commonStyles.loaderWrap}>
       {pwFindLoading && <Loader type={'trans'} />}
       <View style={[commonStyles.inner, styles.basic]}>
-        <View style={{height:50, marginBottom:48}}>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => {
-              navigation.goBack()
-            }}
-          >
-            <Icons.ChevronLeftIcon
-              color="#000"
-              size={24}
-            />
-          </TouchableOpacity>
+        <View style={{height:50, position:"relative", marginBottom:48}}>
+          <View style={{position:"absolute", left:0, top:0,}}>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() => {
+                navigation.goBack()
+              }}
+            >
+              <Icons.ChevronLeftIcon
+                color="#000"
+                size={24}
+              />
+            </TouchableOpacity>
+          </View>
+          <Text style={commonStyles.headerTit}>비밀번호 찾기</Text>
         </View>
         <View>
           <Text style={[commonStyles.maintit, commonStyles.mb24]}>

@@ -150,6 +150,13 @@ export const commonStyles = StyleSheet.create({
     color: '#ffffff',
     letterSpacing: -0.28,
   },
+  headerTit: {
+    fontSize: 16,
+    fontFamily: 'pre700',
+    letterSpacing: -0.32,
+    color: '#313131',
+    textAlign: 'center',
+  },
   // loader
   loaderWrap: {
     position: 'relative',

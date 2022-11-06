@@ -1548,7 +1548,7 @@ export default function Detail({ navigation }) {
 
                                                     }}
                                                 >
-                                                    <View style={{paddingVertical:24}}>
+                                                    <View style={{paddingVertical:20}}>
                                                         <Text style={styles.commentName}>{item.name}</Text>
                                                         <TextInput multiline editable={false}  style={styles.commentContent}>
                                                             {item.content}
@@ -1583,9 +1583,9 @@ export default function Detail({ navigation }) {
                                                         <View style={
                                                             loginState.login
                                                             ? loginState.userCd !== reItem.item.con_user_cd
-                                                                ? {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee", backgroundColor:"#FdFdFd",}
+                                                                ? {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee", backgroundColor:"#fafafa",}
                                                                 : {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee",  backgroundColor:"#fff8f2"}
-                                                            : {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee", backgroundColor:"#FdFdFd",}
+                                                            : {paddingHorizontal:24, borderBottomWidth:1, borderColor:"#eee", backgroundColor:"#fafafa",}
                                                             }>
                                                             <TouchableOpacity
                                                                 activeOpacity={1}
@@ -1612,7 +1612,7 @@ export default function Detail({ navigation }) {
                                                             >
                                                                 <View style={{paddingVertical:24}}>
                                                                     <View style={{flexDirection:"row", alignItems:"center"}}>
-                                                                        <Icons.ArrowUturnDownIcon color="#f4933a" size={18} style={{transform:[{rotate:"-90deg"}], marginRight:8}}/>
+                                                                        <Icons.ArrowUturnDownIcon color="#f4933a" size={18} style={{transform:[{rotate:"-90deg"}], marginTop:-5,}}/>
                                                                         <Text style={[styles.commentName, {color:"#f4933a", marginTop:5,}]}>@{reItem.item.con_name}</Text>
                                                                     </View>
                                                                     <TextInput multiline editable={false}  style={styles.commentContent}>
@@ -1668,12 +1668,12 @@ export default function Detail({ navigation }) {
                                     placeholder={
                                         loginState.login
                                         ?
-                                        loginState.isCon && btnState === 0 ? '국회의원은 답글만 작성할 수 있습니다.' : '최대200자까지 가능합니다.'
-                                        : "로그인이 필요합니다."
+                                        loginState.isCon && btnState === 0 ? '국회의원은 댓글에 답글만 쓸 수 있어요.' : '최대 200자까지 쓸 수 있어요.'
+                                        : "댓글을 쓰려면 로그인을 해주세요."
                                     }
                                     placeholderTextColor="#b1b1b1"
                                     multiline
-                                    style={{flex:9, fontFamily:"pre400"}}
+                                    style={{flex:9, fontFamily:"pre400", marginRight:16,}}
                                     value={inputValue}
                                     onChangeText={(text) => setInputValue(text)}
                                     maxLength={200}
@@ -1832,7 +1832,7 @@ export default function Detail({ navigation }) {
                     setInputValue("");
                     setCommentCdId(null);
                     setModalCheck(false);
-                }}
+                }}  
                 onCancel={() => {
                     setModalCheck(false);
                 }}
@@ -1991,6 +1991,7 @@ const styles = StyleSheet.create({
         color:"#313131",
         letterSpacing:-1.44,
         marginRight:8,
+        marginTop:16,
         lineHeight:40,
     },
     historyTextSubText02:{
@@ -2027,7 +2028,6 @@ const styles = StyleSheet.create({
         fontFamily:"pre700",
         letterSpacing:-0.56,
         color:"#313131",
-        marginBottom:8,
         lineHeight:18,
     },
     commentContent:{
@@ -2036,6 +2036,7 @@ const styles = StyleSheet.create({
         letterSpacing:-0.28,
         color:"#7b7b7b",
         lineHeight:20,
+        marginLeft:-3,
     },
     commentDay:{
         paddingTop:8,
