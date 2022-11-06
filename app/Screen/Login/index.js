@@ -202,7 +202,7 @@ export default function Login({navigation}) {
                 setLoginFail(false);
               }}
               titleText={'로그인 실패'}
-              bodyText={'아이디 혹은 비밀번호를 확인해주세요.'}
+              bodyText={'아이디 또는 비밀번호를 확인해주세요.'}
               btnText={'확인'}
             />
             <ConfirmModal
@@ -213,8 +213,8 @@ export default function Login({navigation}) {
                 navigation.navigate('Home');
                 dispatch(loginAction.makeLogin());
               }}
-              titleText={'로그인 성공'}
-              bodyText={'구키에 오신걸 환영합니다!.'}
+              titleText={'로그인 완료'}
+              bodyText={'구키에 오신 것을 환영해요!'}
               btnText={'확인'}
             />
           </View>

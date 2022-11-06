@@ -153,11 +153,9 @@ export default function Home({navigation}) {
       ) : (
         <ScrollView>
           <View style={{width: '100%'}}>
-            <TouchableOpacity 
+            <TouchableOpacity
               activeOpacity={1}
-              onPress={() => navigation.navigate('Guide')}
-            
-            >
+              onPress={() => navigation.navigate('Guide')}>
               <Image
                 source={require('../../img/banner.png')}
                 style={{width: '100%', height: width * 0.5}}
@@ -262,10 +260,9 @@ export default function Home({navigation}) {
                   borderTopColor: '#f5f5f5',
                   marginTop: 32,
                 }}>
-                <TouchableOpacity 
+                <TouchableOpacity
                   activeOpacity={1}
-                  onPress={() => navigation.navigate('Search')}
-                >
+                  onPress={() => navigation.navigate('Search')}>
                   <View
                     style={{
                       justifyContent: 'center',
@@ -479,7 +476,7 @@ export default function Home({navigation}) {
                                 {item.content}
                               </Text>
                             </View>
-                            <View style={{minWidth: 40}}>
+                            <View style={{minWidth: 48}}>
                               <View
                                 style={{
                                   flexDirection: 'row',
@@ -642,7 +639,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#b1b1b1',
     letterSpacing: -0.24,
-    lineHeight: 14,
   },
   tabBox: {
     flexDirection: 'row',
@@ -668,7 +664,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#b1b1b1',
     letterSpacing: -0.2,
-    lineHeight: 10,
   },
   cardImg: {
     position: 'relative',

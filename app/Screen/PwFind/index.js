@@ -42,18 +42,14 @@ export default function PwFind({navigation}) {
     <View style={commonStyles.loaderWrap}>
       {pwFindLoading && <Loader type={'trans'} />}
       <View style={[commonStyles.inner, styles.basic]}>
-        <View style={{height:50, position:"relative", marginBottom:48}}>
-          <View style={{position:"absolute", left:0, top:0,}}>
+        <View style={{height: 50, position: 'relative', marginBottom: 48}}>
+          <View style={{position: 'absolute', left: 0, top: 0}}>
             <TouchableOpacity
               activeOpacity={1}
               onPress={() => {
-                navigation.goBack()
-              }}
-            >
-              <Icons.ChevronLeftIcon
-                color="#000"
-                size={24}
-              />
+                navigation.goBack();
+              }}>
+              <Icons.ChevronLeftIcon color="#000" size={24} />
             </TouchableOpacity>
           </View>
           <Text style={commonStyles.headerTit}>비밀번호 찾기</Text>
@@ -62,7 +58,7 @@ export default function PwFind({navigation}) {
           <Text style={[commonStyles.maintit, commonStyles.mb24]}>
             비밀번호 찾기
           </Text>
-        <View>
+          <View>
             <Text style={[commonStyles.labeltext, commonStyles.mb8]}>
               이메일
             </Text>
@@ -114,7 +110,11 @@ export default function PwFind({navigation}) {
             navigation.navigate('Login');
           }}
           titleText={'메일 발송 완료'}
-          bodyText={'입력한 이메일로 임시 비밀번호를 발급했어요.'}
+          bodyText={
+            '입력한 이메일로 아이디와 비밀번호를 보냈어요.\n' +
+            '로그인 페이지에서\n' +
+            '발급받은 정보로 로그인 해주세요.'
+          }
           btnText={'확인'}
         />
       </View>
