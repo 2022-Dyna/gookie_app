@@ -14,6 +14,15 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-gookeyApp-gookeyAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-gookeyApp-gookeyAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		6EFAD4DBCFDE4D6BA3F61FF1 /* pre100.otf in Resources */ = {isa = PBXBuildFile; fileRef = D57A29A0DE45476C8776FD6E /* pre100.otf */; };
+		731F9CA2054C4C8AB635D496 /* pre200.otf in Resources */ = {isa = PBXBuildFile; fileRef = C9C9881E29244F19A3C0E3F8 /* pre200.otf */; };
+		42EAEAE05C29461BAE74ECFC /* pre300.otf in Resources */ = {isa = PBXBuildFile; fileRef = C900D27849CB480CB34C04B3 /* pre300.otf */; };
+		A0A5B576F17E4C669C2F6D87 /* pre400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 81FA6C71EF614E82B8B42F40 /* pre400.otf */; };
+		EC6F6247019641258E614B6E /* pre500.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2FBEE03BC56A4F3596F6ACFC /* pre500.otf */; };
+		EFA4D6EC3ADD46DEB8AD8A24 /* pre600.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8762468D817F43CA8DFF6311 /* pre600.otf */; };
+		FB07C644A953485DA128B5C2 /* pre700.otf in Resources */ = {isa = PBXBuildFile; fileRef = F8EA41A1B4864CC3826A7EA5 /* pre700.otf */; };
+		175A8C8401D64318A324BA03 /* pre800.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6D8E1B74DE08436F93A15956 /* pre800.otf */; };
+		797B24CAFC784A44BC174EF1 /* pre900.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8688D9ECF14A4715B3F1B5D3 /* pre900.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +53,15 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = gookeyApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-gookeyApp-gookeyAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gookeyApp-gookeyAppTests.release.xcconfig"; path = "Target Support Files/Pods-gookeyApp-gookeyAppTests/Pods-gookeyApp-gookeyAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		D57A29A0DE45476C8776FD6E /* pre100.otf */ = {isa = PBXFileReference; name = "pre100.otf"; path = "../assets/fonts/pre100.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C9C9881E29244F19A3C0E3F8 /* pre200.otf */ = {isa = PBXFileReference; name = "pre200.otf"; path = "../assets/fonts/pre200.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C900D27849CB480CB34C04B3 /* pre300.otf */ = {isa = PBXFileReference; name = "pre300.otf"; path = "../assets/fonts/pre300.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		81FA6C71EF614E82B8B42F40 /* pre400.otf */ = {isa = PBXFileReference; name = "pre400.otf"; path = "../assets/fonts/pre400.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2FBEE03BC56A4F3596F6ACFC /* pre500.otf */ = {isa = PBXFileReference; name = "pre500.otf"; path = "../assets/fonts/pre500.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8762468D817F43CA8DFF6311 /* pre600.otf */ = {isa = PBXFileReference; name = "pre600.otf"; path = "../assets/fonts/pre600.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F8EA41A1B4864CC3826A7EA5 /* pre700.otf */ = {isa = PBXFileReference; name = "pre700.otf"; path = "../assets/fonts/pre700.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6D8E1B74DE08436F93A15956 /* pre800.otf */ = {isa = PBXFileReference; name = "pre800.otf"; path = "../assets/fonts/pre800.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8688D9ECF14A4715B3F1B5D3 /* pre900.otf */ = {isa = PBXFileReference; name = "pre900.otf"; path = "../assets/fonts/pre900.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +140,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				DA59D54636DB4F9FABCCC380 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -147,6 +166,23 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		DA59D54636DB4F9FABCCC380 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				D57A29A0DE45476C8776FD6E /* pre100.otf */,
+				C9C9881E29244F19A3C0E3F8 /* pre200.otf */,
+				C900D27849CB480CB34C04B3 /* pre300.otf */,
+				81FA6C71EF614E82B8B42F40 /* pre400.otf */,
+				2FBEE03BC56A4F3596F6ACFC /* pre500.otf */,
+				8762468D817F43CA8DFF6311 /* pre600.otf */,
+				F8EA41A1B4864CC3826A7EA5 /* pre700.otf */,
+				6D8E1B74DE08436F93A15956 /* pre800.otf */,
+				8688D9ECF14A4715B3F1B5D3 /* pre900.otf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -244,6 +280,15 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				6EFAD4DBCFDE4D6BA3F61FF1 /* pre100.otf in Resources */,
+				731F9CA2054C4C8AB635D496 /* pre200.otf in Resources */,
+				42EAEAE05C29461BAE74ECFC /* pre300.otf in Resources */,
+				A0A5B576F17E4C669C2F6D87 /* pre400.otf in Resources */,
+				EC6F6247019641258E614B6E /* pre500.otf in Resources */,
+				EFA4D6EC3ADD46DEB8AD8A24 /* pre600.otf in Resources */,
+				FB07C644A953485DA128B5C2 /* pre700.otf in Resources */,
+				175A8C8401D64318A324BA03 /* pre800.otf in Resources */,
+				797B24CAFC784A44BC174EF1 /* pre900.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

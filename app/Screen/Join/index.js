@@ -154,6 +154,20 @@ export default function Join({navigation}) {
       {joinLoading && <Loader type={'trans'} />}
       <View style={[commonStyles.inner, styles.basic]}>
         <View>
+          <View style={{height: 40, position: 'relative'}}>
+            <View style={{position: 'absolute', left: 0, top: 0}}>
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => {
+                  step === 0 ? navigation.goBack() : setStep(0);
+                }}>
+                <Icons.ChevronLeftIcon color="#000" size={24} />
+              </TouchableOpacity>
+            </View>
+            <Text style={commonStyles.headerTit}>회원가입</Text>
+          </View>
+        </View>
+        <View>
           <Text style={styles.percentText}>{step + 1} / 2</Text>
           <View style={styles.percentBar}>
             <View
@@ -231,7 +245,11 @@ export default function Join({navigation}) {
                                     commonStyles.btnPressColor,
                                   ]
                             }>
-                            <Text style={[commonStyles.btnTextDefault]}>
+                            <Text
+                              style={[
+                                commonStyles.btnTextDefault,
+                                {fontFamily: 'pre400'},
+                              ]}>
                               인증번호
                             </Text>
                           </View>
@@ -246,6 +264,7 @@ export default function Join({navigation}) {
                               style={[
                                 commonStyles.btnTextDefault,
                                 commonStyles.btnTextColor2,
+                                {fontFamily: 'pre400'},
                               ]}>
                               다시받기
                             </Text>
@@ -312,6 +331,7 @@ export default function Join({navigation}) {
                               style={[
                                 commonStyles.btnTextDefault,
                                 commonStyles.btnTextColor1,
+                                {fontFamily: 'pre400'},
                               ]}>
                               인증확인
                             </Text>
@@ -329,7 +349,11 @@ export default function Join({navigation}) {
                                     commonStyles.btnPressColor,
                                   ]
                             }>
-                            <Text style={[commonStyles.btnTextDefault]}>
+                            <Text
+                              style={[
+                                commonStyles.btnTextDefault,
+                                {fontFamily: 'pre400'},
+                              ]}>
                               인증확인
                             </Text>
                           </View>
@@ -488,10 +512,10 @@ export default function Join({navigation}) {
             setModalVertify(false);
             setEmailSend(true);
           }}
-          titleText={'인증번호 발송 완료'}
+          titleText={'인증번호를 보냈어요'}
           bodyText={
-            '입력한 이메일로 인증번호를 발송했어요.\n' +
-            '인증번호 입력창에 인증번호를 입력하고\n' +
+            '입력한 이메일로 인증번호를 보냈어요.\n' +
+            '인증번호 입력창에 인증번호를 쓴 뒤\n' +
             '인증확인 버튼을 눌려주세요.'
           }
           btnText={'확인'}
@@ -519,7 +543,7 @@ export default function Join({navigation}) {
           }}
           titleText={'이메일 오류'}
           bodyText={
-            '이메일이 중복이거나 잘못되엇습니다.\n' + '다시 시도해주세요'
+            '이메일이 중복이거나 잘못되었습니다.\n' + '다시 시도해주세요'
           }
           btnText={'확인'}
         />

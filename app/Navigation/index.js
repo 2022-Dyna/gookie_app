@@ -15,13 +15,14 @@ import PwReset from '../Screen/PwReset';
 import Detail from '../Screen/Detail';
 import MyPageComment from '../Screen/MyPageComment';
 import MyPage02 from '../Screen/MyPage02';
+import Guide from '../Screen/Guide';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useDispatch, useSelector} from 'react-redux';
-import {useEffect} from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as loginAction from "../Reducer/action";
+import {useEffect} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as loginAction from '../Reducer/action';
 
 export default function Navigation() {
   const loginState = useSelector(state => state.login);
@@ -34,16 +35,16 @@ export default function Navigation() {
       background: 'white',
     },
   };
-  useEffect(()=>{
-      const load = async ()=>{
-          const LoginUser = await AsyncStorage.getItem("loginUser");
-          if(LoginUser!=null){
-              console.log(LoginUser);
-              dispatch(loginAction.makeLogin());
-          }
-      };
-      load();
-  },[])
+  useEffect(() => {
+    const load = async () => {
+      const LoginUser = await AsyncStorage.getItem('loginUser');
+      if (LoginUser != null) {
+        console.log(LoginUser);
+        dispatch(loginAction.makeLogin());
+      }
+    };
+    load();
+  }, []);
 
   return (
     <NavigationContainer theme={MyTheme}>
@@ -72,6 +73,7 @@ function MainStackNavigator() {
       <MainStack.Screen name="Detail" component={Detail} />
       <MainStack.Screen name="MyPageComment" component={MyPageComment} />
       <MainStack.Screen name="MyPage02" component={MyPage02} />
+      <MainStack.Screen name="Guide" component={Guide} />
     </MainStack.Navigator>
   );
 }
@@ -104,6 +106,12 @@ function BottomTabNavigator() {
         headerShown: false,
         tabBarInactiveTintColor: '#bbb',
         tabBarActiveTintColor: '#f4933a',
+        tabBarLabelStyle: {
+          fontFamily: 'pre700',
+          fontSize: 12,
+          marginTop: -5,
+          marginBottom: 5,
+        },
       }}
       tabBarOptions={{keyboardHidesTabBar: true}}>
       <BottomTab.Screen
@@ -113,7 +121,7 @@ function BottomTabNavigator() {
           title: '홈',
           tabBarIcon: ({color}) => {
             return (
-              <IconIonicons color={color} name="home-outline" size={25} solid />
+              <IconIonicons color={color} name="home-outline" size={20} solid />
             );
           },
         }}
@@ -122,13 +130,13 @@ function BottomTabNavigator() {
         name="Search"
         component={Search}
         options={{
-          title: '검색',
+          title: '의원찾기',
           tabBarIcon: ({color}) => {
             return (
               <IconIonicons
                 color={color}
                 name="search-outline"
-                size={25}
+                size={20}
                 solid
               />
             );
@@ -145,7 +153,7 @@ function BottomTabNavigator() {
               <IconIonicons
                 color={color}
                 name="person-outline"
-                size={25}
+                size={20}
                 solid
               />
             );
@@ -162,7 +170,7 @@ function BottomTabNavigator() {
               <IconIonicons
                 color={color}
                 name="notifications-outline"
-                size={25}
+                size={20}
                 solid
               />
             );

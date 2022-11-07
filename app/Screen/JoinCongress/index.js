@@ -11,6 +11,7 @@ import {commonStyles} from '../../common';
 import ConfirmModal from '../../Component/ConfirmModal';
 import axios from "axios";
 import Loader from "../../Component/Loader";
+import * as Icons from 'react-native-heroicons/outline';
 
 export default function JoinCongress({navigation}) {
   const [joinLoading, setJoinLoading] = useState(false);
@@ -61,6 +62,18 @@ export default function JoinCongress({navigation}) {
     <View style={commonStyles.loaderWrap}>
       {joinLoading && <Loader type={'trans'} />}
       <View style={[commonStyles.inner, styles.basic]}>
+        <View style={{height: 50, position: 'relative', marginBottom: 48}}>
+          <View style={{position: 'absolute', left: 0, top: 0}}>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() => {
+                navigation.goBack();
+              }}>
+              <Icons.ChevronLeftIcon color="#000" size={24} />
+            </TouchableOpacity>
+          </View>
+          <Text style={commonStyles.headerTit}>국회의원 ID/PW 발급받기</Text>
+        </View>
         <View>
           <Text style={[commonStyles.maintit, commonStyles.mb24]}>
             국회의원 ID/PW 발급받기
@@ -131,7 +144,7 @@ export default function JoinCongress({navigation}) {
             setModalCheck(false);
           }}
           titleText={'메일 발송 실패'}
-          bodyText={'이메일 혹은 국회코드를 다시 확인해주세요.'}
+          bodyText={'이메일 또는 국회코드를 다시 확인해주세요.'}
           btnText={'확인'}
         />
 
@@ -145,9 +158,9 @@ export default function JoinCongress({navigation}) {
           }}
           titleText={'메일 발송 완료'}
           bodyText={
-            '입력한 이메일로 아이디와 비밀번호를 발송했어요.\n' +
+            '입력한 이메일로 아이디와 비밀번호를 보냈어요.\n' +
             '로그인 페이지에서\n' +
-            '발급받은 정보로 로그인해주세요.'
+            '발급받은 정보로 로그인 해주세요.'
           }
           btnText={'확인'}
         />
@@ -170,8 +183,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   desc: {
+    fontFamily: 'pre400',
     fontSize: 12,
-    letterSpacing: -0.24,
     color: '#7b7b7b',
+    letterSpacing: -0.24,
   },
 });

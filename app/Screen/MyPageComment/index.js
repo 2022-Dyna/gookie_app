@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Loader from "../../Component/Loader" 
 import {commonStyles} from "../../common"
+import * as Icons from 'react-native-heroicons/outline';
 
 export default function MyPageComment({navigation}) {
   const [loading, setLoading] = useState(true);
@@ -181,7 +182,7 @@ export default function MyPageComment({navigation}) {
   ];
 
   const [datas, setDatas] = useState([]);
-  const [pageOptions, setPageOptions] = useState({num: 10, page: 1});
+  const [pageOptions, setPageOptions] = useState({num: 20, page: 1});
   
   const dataLoad = () => {
     setItemLoading(true);
@@ -237,8 +238,21 @@ export default function MyPageComment({navigation}) {
   return (
     <View style={{height:"100%"}}>
       <View style={{height:"100%"}}>
-        <View style={{paddingVertical: 16}}>
+        <View style={{height:50, position:"relative"}}>
           <Text style={styles.myCommentTit}>내가 쓴 댓글</Text>
+          <View style={{position:"absolute", left:16, top:15, zIndex:10,}}>
+            <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => {
+                navigation.goBack()
+                }}
+            >
+                <Icons.ChevronLeftIcon
+                color="#000"
+                size={24}
+                />
+            </TouchableOpacity>
+        </View>
         </View>
         <View style={[commonStyles.loaderWrap, {paddingBottom:60}]}>
           {loading ? (
@@ -333,36 +347,41 @@ export default function MyPageComment({navigation}) {
 const styles = StyleSheet.create({
   myCommentTit: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'pre700',
     letterSpacing: -0.32,
     color: '#313131',
     textAlign: 'center',
+    lineHeight:50,
   },
   myCommentName: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontFamily: 'pre700',
     letterSpacing: -0.28,
     color: '#454545',
     marginRight: 16,
+    lineHeight:18,
   },
   myCommentParty: {
     fontSize: 12,
-    fontWeight: 'normal',
+    fontFamily: 'pre400',
     letterSpacing: -0.24,
     color: '#b1b1b1',
+    lineHeight:16,
   },
   myCommentDay: {
     fontSize: 12,
-    fontWeight: 'normal',
+    fontFamily: 'pre400',
     letterSpacing: -0.24,
     color: '#b1b1b1',
+    lineHeight:16,
   },
   myCommentContent: {
     fontSize: 12,
-    fontWeight: 'normal',
+    fontFamily: 'pre400',
     letterSpacing: -0.24,
     color: '#7b7b7b',
     paddingTop: 24,
     width: '95%',
+    lineHeight:16,
   },
 });

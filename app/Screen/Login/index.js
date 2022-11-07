@@ -16,7 +16,7 @@ import ConfirmModal from '../../Component/ConfirmModal';
 import axios from 'axios';
 import {LOGIN} from '../../Reducer/action/ActionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {as} from "react-native/sdks/hermes/test/Parser/flow/export";
+import {as} from 'react-native/sdks/hermes/test/Parser/flow/export';
 import Loader from '../../Component/Loader';
 
 
@@ -46,7 +46,7 @@ export default function Login({navigation}) {
       .then(async res => {
         console.log(res.data.data);
         if (res.data.data.result == 0) {
-          if(autoLogin){
+          if (autoLogin) {
             await AsyncStorage.setItem(
               'loginUser',
               JSON.stringify(res.data.data.loginObj),
@@ -54,30 +54,36 @@ export default function Login({navigation}) {
           }
           setLoginLoading(false);
           setLoginSuccess(true);
-        }else {
+        } else {
           setLoginLoading(false);
           setLoginFail(true);
         }
-      }).catch(err => {
+      })
+      .catch(err => {
         console.log(err);
       });
   };
 
   return (
     <View style={commonStyles.loaderWrap}>
-      {loginLoading && <Loader type={"trans"} />}
-      <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
+      {loginLoading && <Loader type={'trans'} />}
+      <ScrollView
+        contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
         <View style={styles.container}>
           <View style={styles.inner}>
             <View>
-              <Text style={[commonStyles.maintit, commonStyles.mb8]}>로그인</Text>
+              <Text style={[commonStyles.maintit, commonStyles.mb8]}>
+                로그인
+              </Text>
             </View>
-            <View style={styles.mt16}>
+            <View style={commonStyles.mt16}>
               <Text style={[commonStyles.labeltext, commonStyles.mb8]}>
                 이메일
               </Text>
               <TextInput
-                style={!emailfocus ? commonStyles.input : commonStyles.inputfocus}
+                style={
+                  !emailfocus ? commonStyles.input : commonStyles.inputfocus
+                }
                 onFocus={() => {
                   setEmailFocus(true);
                 }}
@@ -119,9 +125,17 @@ export default function Login({navigation}) {
                     <FWIcon
                       color={autoLogin ? '#f4933a' : '#d0d0d0'}
                       name="check-square"
-                      size={25}
+                      size={16}
                     />
-                    <Text style={{marginLeft: 8}}>자동 로그인</Text>
+                    <Text
+                      style={{
+                        fontFamily: 'pre300',
+                        fontSize: 12,
+                        letterSpacing: -0.24,
+                        marginLeft: 8,
+                      }}>
+                      자동 로그인
+                    </Text>
                   </View>
                 </TouchableOpacity>
               </View>
@@ -141,9 +155,9 @@ export default function Login({navigation}) {
               </TouchableOpacity>
               <Text
                 style={{
+                  fontFamily: 'pre300',
                   paddingHorizontal: 16,
                   fontSize: 12,
-                  fontWeight: '300',
                   color: '#7b7b7b',
                 }}>
                 |
@@ -166,13 +180,12 @@ export default function Login({navigation}) {
                 }}
                 onPress={() => userLogin()}>
                 <View
-                  style={[
-                    pressLogin ? styles.btnStyleChange : styles.btnStyle,
-                    styles.btnLineColor,
-                  ]}>
-                  <Text style={[styles.btnTextStyle, styles.btnTextColor2]}>
-                    로그인
-                  </Text>
+                  style={
+                    !pressLogin
+                      ? [commonStyles.btnDefault, commonStyles.btnBgColor]
+                      : [commonStyles.btnDefault, commonStyles.btnPressColor]
+                  }>
+                  <Text style={[commonStyles.btnTextDefault]}>로그인</Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -190,19 +203,19 @@ export default function Login({navigation}) {
                 setLoginFail(false);
               }}
               titleText={'로그인 실패'}
-              bodyText={'아이디 혹은 비밀번호를 확인해주세요.'}
+              bodyText={'아이디 또는 비밀번호를 확인해주세요.'}
               btnText={'확인'}
             />
             <ConfirmModal
               transparent={true}
               btnBoolean={loginSuccess}
-              onPress={ () => {
+              onPress={() => {
                 setLoginSuccess(false);
                 navigation.navigate('Home');
                 dispatch(loginAction.makeLogin());
               }}
-              titleText={'로그인 성공'}
-              bodyText={'구키에 오신걸 환영합니다!.'}
+              titleText={'로그인 완료'}
+              bodyText={'구키에 오신 것을 환영해요!'}
               btnText={'확인'}
             />
           </View>
@@ -212,12 +225,6 @@ export default function Login({navigation}) {
   );
 }
 const styles = StyleSheet.create({
-  mb8: {
-    marginBottom: 8,
-  },
-  mt16: {
-    marginTop: 16,
-  },
   container: {
     height: '100%',
   },
@@ -227,74 +234,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 24,
   },
-  maintit: {
-    fontSize: 24,
-    textAlign: 'left',
-    color: '#313131',
-    fontWeight: 'bold',
-  },
-  labeltext: {
-    fontSize: 12,
-    color: '#7b7b7b',
-    fontWeight: '300',
-  },
-  input: {
-    width: '100%',
-    height: 50,
-    borderWidth: 1,
-    borderColor: '#d0d0d0',
-    borderRadius: 8,
-    paddingHorizontal: 20,
-  },
-  inputfocus: {
-    width: '100%',
-    height: 50,
-    borderWidth: 1,
-    borderRadius: 8,
-    borderBottomColor: '#f4933a',
-    borderTopColor: '#f4933a',
-    borderLeftColor: '#f4933a',
-    borderRightColor: '#f4933a',
-    paddingHorizontal: 20,
-  },
   jointext: {
+    fontFamily: 'pre300',
     fontSize: 12,
-    fontWeight: '300',
     color: '#7b7b7b',
+    letterSpacing: -0.24,
   },
   jointext02: {
+    fontFamily: 'pre300',
     fontSize: 12,
-    fontWeight: '300',
     color: '#7b7b7b',
     textAlign: 'center',
-  },
-  btnStyle: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    height: 50,
-    borderRadius: 8,
-    backgroundColor: '#f4933a',
-    textAlign: 'center',
-  },
-  btnStyleChange: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    height: 50,
-    borderRadius: 8,
-    backgroundColor: '#d87419',
-    textAlign: 'center',
-  },
-  btnLine: {
-    backgroundColor: 'transparent',
-  },
-  btnTextStyle: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    letterSpacing: -0.28,
-    color: '#ffffff',
+    letterSpacing: -0.24,
   },
 });
