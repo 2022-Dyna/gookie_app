@@ -4,6 +4,7 @@ import { useState } from 'react';
 import * as loginAction from '../../Reducer/action/index';
 import ConfirmModal from '../../Component/ConfirmModal';
 import * as Icons from 'react-native-heroicons/outline';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function MyPage({ navigation }) {
     const dispatch = useDispatch();
@@ -36,7 +37,7 @@ export default function MyPage({ navigation }) {
           content : "안녕하세요 저는 오늘 처음 가입한 강기윤입니당구리당당숭당당"
         },
       ]
-    
+
         const markData = [
           {
             name : "강기윤",
@@ -87,10 +88,10 @@ export default function MyPage({ navigation }) {
             group : "더불어민주당"
           },
         ]
-    
+
         //즐겨찾기 클릭시 색변경
         const [markLike, setMarkLike] = useState(false);
-    
+
         //즐격찾기 취소 모달
         const [modalCancel, setModalCancel] = useState(false);
 
@@ -127,7 +128,7 @@ export default function MyPage({ navigation }) {
                   <Text style={styles.subTit}>내가 쓴 댓글</Text>
                 </View>
                 {
-                  commentData.length !==0 && 
+                  commentData.length !==0 &&
                   <View>
                     <TouchableOpacity
                       activeOpacity={1}
@@ -246,8 +247,9 @@ export default function MyPage({ navigation }) {
           <ConfirmModal
               transparent={true}
               btnBoolean={modalLogout}
-              onPress={() => {
+              onPress={async () => {
                 dispatch(loginAction.makeLogout());
+                await AsyncStorage.clear();
                 navigation.navigate('Home');
                 setModalLogout(false);
               }}

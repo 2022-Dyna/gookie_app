@@ -1,12 +1,12 @@
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, FlatList} from "react-native";
-import { useEffect, useState } from 'react';
+import React,{useEffect, useMemo, useRef, useState} from 'react';
 import * as Icons from 'react-native-heroicons/outline';
 import { commonStyles } from "../../common";
 import ConfirmModal from '../../Component/ConfirmModal';
 import Loader from "../../Component/Loader";
 import axios from "axios";
 
-export default function ScreenA({ navigation }) {
+export default React.memo( function ScreenA({ navigation }) {
     const loginState = {
         login:true,
         isCon:true,
@@ -16,169 +16,51 @@ export default function ScreenA({ navigation }) {
     }
 
 
-
-            //의원 데이터
-    const data =[
-        {
-            title: 'ㄱ [강 - 김]',
-            content: [
-            {
-                name: "강기윤",
-                group: "국민의 힘"
-            },
-            {
-                name: "강대식",
-                group: "국민의 힘"
-            },
-            {
-                name: "강득구",
-                group: "더불어민주당"
-            },
-            {
-                name: "강민국",
-                group: "국민의 힘"
-            },
-            {
-                name: "강민정",
-                group: "더불어민주당"
-            },
-            {
-                name: "강병원",
-                group: "더불어민주당"
-            },
-            ]
-        },
-        {
-            title: 'ㄴ [남 - 노]',
-            content: [
-                {
-                    name: "남인순",
-                    group: "더불어민주당"
-                },
-                {
-                    name: "노용호",
-                    group: "더불어민주당"
-                },
-                {
-                    name: "남인순",
-                    group: "더불어민주당"
-                },
-                {
-                    name: "노용호",
-                    group: "더불어민주당"
-                },
-                {
-                    name: "남인순",
-                    group: "더불어민주당"
-                },
-                {
-                    name: "노용호",
-                    group: "더불어민주당"
-                },
-                {
-                    name: "남인순",
-                    group: "더불어민주당"
-                },
-                {
-                    name: "노용호",
-                    group: "더불어민주당"
-                },
-                {
-                    name: "남인순",
-                    group: "더불어민주당"
-                },
-                {
-                    name: "노용호22",
-                    group: "더불어민주당"
-                },
-            ]
-        }
-    ];
-
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [tabLoading, setTabLoading] = useState(false);
     const [datas, setDatas] = useState([]);
 
-    const [ga, setGa] = useState(null);
-    const [na, setNa] = useState(null);
-    const [da, setDa] = useState(null);
-    const [ra, setRa] = useState(null);
-    const [ma, setMa] = useState(null);
-    const [ba, setBa] = useState(null);
-    const [sa, setSa] = useState(null);
-    const [aa, setAa] = useState(null);
-    const [ja, setJa] = useState(null);
-    const [ca, setCa] = useState(null);
-    const [ka, setKa] = useState(null);
-    const [ta, setTa] = useState(null);
-    const [fa, setFa] = useState(null);
-    const [ha, setHa] = useState(null);
-
-    const getList = () =>{
-        axios.get('http://144.24.94.124:8091/api/v1/gookie/list',{})
-            .then(res=> {
-                console.log(res.data.data);
-                res.data.data.forEach((item)=>{
-                    // const ga = /[ㄱ-ㄱ|ㅏ-ㅣ|가-깋]/;
-                    // if(ga.test(item.hg_nm.charAt(0))){
-                    //     setGa(item);
-                    // }
-                    // const na = /[ㄴ-ㄴ|ㅏ-ㅣ|나-닣]/;
-                    // if(na.test(item.hg_nm.charAt(0))){
-                    //     setNa(item);
-                    // }
-                    // const da = /[ㄷ-ㄷ|ㅏ-ㅣ|다-딯]/;
-                    // if(da.test(item.hg_nm.charAt(0))){
-                    //     setDa(item);
-                    // }
-                    // const ra = /[ㄹ-ㄹ|ㅏ-ㅣ|라-맇]/;
-                    // if(ra.test(item.hg_nm.charAt(0))){
-                    //     setRa(item);
-                    // }
-                    // const ma = /[ㅁ-ㅁ|ㅏ-ㅣ|마-밓]/;
-                    // if(ma.test(item.hg_nm.charAt(0))){
-                    //     setMa(item);
-                    // }
-                    // const ba = /[ㅂ-ㅂ|ㅏ-ㅣ|바-빟]/;
-                    // if(ba.test(item.hg_nm.charAt(0))){
-                    //     setBa(item);
-                    // }
-                    // const sa = /[ㅅ-ㅅ|ㅏ-ㅣ|사-싷]/;
-                    // if(sa.test(item.hg_nm.charAt(0))){
-                    //     setSa(item);
-                    // }
-                    // const aa = /[ㅇ-ㅇ|ㅏ-ㅣ|아-잏]/;
-                    // if(aa.test(item.hg_nm.charAt(0))){
-                    //     setAa(item);
-                    // }
-                    // const ja = /[ㅈ-ㅈ|ㅏ-ㅣ|자-짛]/;
-                    // if(ja.test(item.hg_nm.charAt(0))){
-                    //     setJa(item);
-                    // }
-                    // const ca = /[ㅊ-ㅊ|ㅏ-ㅣ|차-칳]/;
-                    // if(ca.test(item.hg_nm.charAt(0))){
-                    //     setCa(item);
-                    // }
-                    // const ka = /[ㅋ-ㅋ|ㅏ-ㅣ|카-킿]/;
-                    // if(ka.test(item.hg_nm.charAt(0))){
-                    //     setKa(item);
-                    // }
-                    // const ta = /[ㅌ-ㅌ|ㅏ-ㅣ|타-팋]/;
-                    // if(ta.test(item.hg_nm.charAt(0))){
-                    //     setTa(item);
-                    // }
-                    // const fa = /[ㅍ-ㅍ|ㅏ-ㅣ|파-핗]/;
-                    // if(fa.test(item.hg_nm.charAt(0))){
-                    //     setFa(item);
-                    // }
-                    // const ha = /[ㅎ-ㅎ|ㅏ-ㅣ|하-힣]/;
-                    // if(ha.test(item.hg_nm.charAt(0))){
-                    //     setHa(item);
-                    // }
+    const [nameList, setNameList] = useState([]);
+    const [partyList, setPartyList] = useState([]);
+    const [loList, setLolist] = useState([]);
 
 
+    const getListName = () =>{
+        axios.get('http://144.24.94.124:8091/api/v1/gookie/list',{
+            params:{
+                state:'1'
+            }
+        }).then(res=> {
+
+                let dataList = [];
+                console.log(res.data,'TEST');
+                res.data.data.list.forEach((item,index)=>{
+                    const data = {
+                        title : `${res.data.data.chs[index]} [${res.data.data.chList[index].firstCh} - ${res.data.data.chList[index].lastCh}]`,
+                        content : item
+                    }
+                    dataList.push(data);
                 })
+                setDatas(dataList);
             });
+    }
+    const getListParty = () =>{
+        axios.get('http://144.24.94.124:8091/api/v1/gookie/list',{
+            params:{
+                state:'2'
+            }
+        }).then(res=> {
+
+        });
+    }
+    const getListLocation = () =>{
+        axios.get('http://144.24.94.124:8091/api/v1/gookie/list',{
+            params:{
+                state:'3'
+            }
+        }).then(res=> {
+
+        });
     }
 
     //즐겨찾기 클릭시 색변경
@@ -192,20 +74,40 @@ export default function ScreenA({ navigation }) {
     //즐찾시 로그인 체크 모달
     const [modalLoginCheck, setModalLoginCheck] = useState(false);
 
+    console.log('TETSTSSS!!!');
+
     useEffect(() => {
-        try {
-            setDatas(data);
-            setLoading(false);
-        } catch (e) {
-            console.log(e.message);
+        const load = async () =>{
+            await getListName();
+            await getListParty();
+            await getListLocation();
+            // setTimeout(()=>setLoading(false),5000);
         }
-        getList();
+        setLoading(true);
+        load();
     }, []);
+
+    useEffect(() => {
+        if(datas.length>0){
+            setLoading(false);
+        }
+    }, [datas]);
+
+    const flatState = () =>{
+        if(tab==1){
+            return
+        }
+    }
+
+    const datasTest = useMemo(() => datas, [datas]);
+
+
 
     return (
         <View style={{height:"100%"}}>
-            <ScrollView
+            <View
                 contentContainerStyle={{paddingBottom:143, height:"100%"}}
+
             >
                 <View>
                     <Text style={styles.searchTit}>
@@ -220,7 +122,7 @@ export default function ScreenA({ navigation }) {
                                 <TouchableOpacity
                                     activeOpacity={1}
                                     onPress = {() => {
-                                        setTab(0)
+                                        setTab(()=>(0))
                                     }}
                                     style={{flex:1}}
                                 >
@@ -237,7 +139,7 @@ export default function ScreenA({ navigation }) {
                                 <TouchableOpacity
                                     activeOpacity={1}
                                     onPress = {() => {
-                                        setTab(1)
+                                        setTab(()=>(1))
                                     }}
                                     style={{flex:1}}
                                 >
@@ -254,7 +156,7 @@ export default function ScreenA({ navigation }) {
                                 <TouchableOpacity
                                     activeOpacity={1}
                                     onPress = {() => {
-                                        setTab(2)
+                                        setTab(()=>(2))
                                     }}
                                     style={{flex:1}}
                                 >
@@ -271,8 +173,10 @@ export default function ScreenA({ navigation }) {
                             </View>
                         </View>
                         <FlatList
-                            data={datas}
-                            renderItem={({item}) => {
+                            keyExtractor={item => item.title}
+                            data={datasTest}
+                            windowSize={2}
+                            renderItem={({item})=>{
                                 return(
                                     <View style={commonStyles.mb32}>
                                         <View style={{borderBottomWidth:8, borderColor:"#f8f7f7", width:"100%"}}>
@@ -281,53 +185,56 @@ export default function ScreenA({ navigation }) {
                                             </View>
                                         </View>
                                         <View style={{paddingHorizontal:24,}}>
-                                            <FlatList
-                                                data={item.content}
-                                                renderItem={(conItem) => {
-                                                    return(
-                                                        <View>
-                                                            <TouchableOpacity
-                                                                activeOpacity={1}
-                                                                onPress ={() => {navigation.navigate('Detail')}}
-                                                            >
-                                                                <View style={{flexDirection:"row", justifyContent:"space-between", borderBottomWidth:1, borderColor:"#eee", paddingVertical:12, paddingHorizontal:8,}}>
-                                                                    <View style={{flexDirection:"row", alignItems:"center", justifyContent:"center",}}>
-                                                                        <Text style={styles.congressName}>{conItem.item.name}</Text>
-                                                                        <Text style={styles.congressParty}>{conItem.item.group}</Text>
-                                                                    </View>
-                                                                    <View>
-                                                                        <TouchableOpacity
-                                                                            activeOpacity={1}
-                                                                            onPress = {() => {
-                                                                                setMarkLike(!markLike)
-                                                                                if(!loginState.login){
-                                                                                    setModalLoginCheck(true)
-                                                                                }else{
-                                                                                    if(markLike){
-                                                                                        setModalCancel(true)
-                                                                                    }
-                                                                                }
-                                                                            }}
-                                                                            style={{flex:1}}
-                                                                        >
-                                                                            <Icons.StarIcon color={markLike ? "#ffbd12" : "rgba(217,217,217,1)"} size={18} fill={markLike ? "#ffbd12" : "transparent"} />
-                                                                        </TouchableOpacity>
-                                                                    </View>
+
+                                            {item.content.map((conitem,index)=>{
+                                                return(
+                                                    <View>
+                                                        <TouchableOpacity
+                                                            activeOpacity={1}
+                                                            onPress ={() => {navigation.navigate('Detail',{email:conitem.e_mail,monaCd:conitem.mona_cd})}}
+                                                        >
+                                                            <View style={{flexDirection:"row", justifyContent:"space-between", borderBottomWidth:1, borderColor:"#eee", paddingVertical:12, paddingHorizontal:8,}}>
+                                                                <View style={{flexDirection:"row", alignItems:"center", justifyContent:"center",}}>
+                                                                    <Text style={styles.congressName}>{conitem.hg_nm}</Text>
+                                                                    <Text style={styles.congressParty}>{conitem.poly_nm}</Text>
                                                                 </View>
-                                                            </TouchableOpacity>
-                                                        </View>
-                                                    )
-                                                }}
-                                            />
+                                                                <View>
+                                                                    <TouchableOpacity
+                                                                        activeOpacity={1}
+                                                                        onPress = {() => {
+                                                                            setMarkLike(!markLike)
+                                                                            if(!loginState.login){
+                                                                                setModalLoginCheck(true)
+                                                                            }else{
+                                                                                if(markLike){
+                                                                                    setModalCancel(true)
+                                                                                }
+                                                                            }
+                                                                        }}
+                                                                        style={{flex:1}}
+                                                                    >
+                                                                        <Icons.StarIcon color={markLike ? "#ffbd12" : "rgba(217,217,217,1)"} size={18} fill={markLike ? "#ffbd12" : "transparent"} />
+                                                                    </TouchableOpacity>
+                                                                </View>
+                                                            </View>
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                )
+                                            })}
+
                                         </View>
                                     </View>
                                 )
                             }}
                         />
+
+
+
+
                     </View>
                     }
                 </View>
-            </ScrollView>
+            </View>
             <ConfirmModal
                 transparent={true}
                 btnBoolean={modalCancel}
@@ -360,7 +267,7 @@ export default function ScreenA({ navigation }) {
             />
         </View>
     );
-}
+});
 
 const styles = StyleSheet.create({
     searchTit:{

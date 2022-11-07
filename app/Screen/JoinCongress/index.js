@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import {commonStyles} from '../../common';
 import ConfirmModal from '../../Component/ConfirmModal';
+import axios from "axios";
+import Loader from "../../Component/Loader";
 
 export default function JoinCongress({navigation}) {
   const [joinLoading, setJoinLoading] = useState(false);
@@ -27,6 +29,21 @@ export default function JoinCongress({navigation}) {
     ? (disabledComplete = false)
     : (disabledComplete = true);
 
+  const getListName = () =>{
+    axios.post('http://144.24.94.124:8091/api/v1/join',{
+      "memberLoginId":emailValue,
+      "monaCd":codeValue
+    }).then(res=> {
+        if(res.data.data.error==0){
+          setJoinLoading(false);
+          setModalComplete(true);
+        }else {
+          setJoinLoading(false);
+          setModalCheck(true);
+        }
+    });
+  }
+
   const onValid = () => {
     setJoinLoading(true);
     const regex =
@@ -35,10 +52,10 @@ export default function JoinCongress({navigation}) {
       setJoinLoading(false);
       setModalCheck(true);
     } else {
-      setJoinLoading(false);
-      setModalComplete(true);
+      getListName();
     }
   };
+
 
   return (
     <View style={commonStyles.loaderWrap}>
