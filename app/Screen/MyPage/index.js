@@ -7,21 +7,18 @@ import {
   FlatList,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import * as loginAction from '../../Reducer/action/index';
 import ConfirmModal from '../../Component/ConfirmModal';
 import * as Icons from 'react-native-heroicons/outline';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import {useIsFocused} from "@react-navigation/native";
 
 export default function MyPage({navigation}) {
   const dispatch = useDispatch();
-  const loginState = {
-    login: true,
-    isCon: true,
-    email: 'ezicland@naver.com',
-    name: '손동윤',
-    userCd: 1,
-  };
+  const isFocused = useIsFocused();
+
   const commentData = [
     {
       name: '강기윤',
@@ -96,6 +93,13 @@ export default function MyPage({navigation}) {
     },
   ];
 
+  const loginState = {
+    login: true,
+    isCon: true,
+    email: 'ezicland@naver.com',
+    name: '손동윤',
+    userCd: 1,
+  };
   //즐겨찾기 클릭시 색변경
   const [markLike, setMarkLike] = useState(false);
 
@@ -104,6 +108,68 @@ export default function MyPage({navigation}) {
 
   //로그아웃 확인 모달
   const [modalLogout, setModalLogout] = useState(false);
+
+  const [loginUser, setLoginUser] = useState(null);
+  const [myReplyList, setReplyList] = useState([]);
+  const [myFvList, setMyFvList] = useState([]);
+
+  const getMyReplyList = async () =>{
+    let loginUser = await AsyncStorage.getItem("loginUser");
+    const loginUserObj = JSON.parse(loginUser);
+
+    axios.get('http://144.24.94.124:8091/api/v1/mypage/reply',{
+      params:{
+        memberId:loginUserObj.memberId,
+        memberRole:loginUserObj.memberRole,
+        pageNum:1,
+        limit:5
+      }
+    }).then(res=> {
+
+      if(loginUserObj.memberRole=='MEMBER'){
+        setReplyList(res.data.data.replyList);
+
+
+      }else {
+        console.log(res.data.data.congressReplyList,'???');
+        setReplyList(res.data.data.congressReplyList);
+      }
+
+
+    });
+  }
+
+  const getMyFVList = async () =>{
+    let loginUser = await AsyncStorage.getItem("loginUser");
+    const loginUserObj = JSON.parse(loginUser);
+
+    axios.get('http://144.24.94.124:8091/api/v1/mypage/favorites',{
+      params:{
+        memberId:loginUserObj.memberId,
+      }
+    }).then(res=> {
+      setMyFvList(res.data.data);
+    });
+  }
+
+
+  useEffect(()=>{
+    setMyFvList([]);
+    setReplyList([]);
+    const load = async () =>{
+      let loginUser = await AsyncStorage.getItem("loginUser");
+      const loginUserObj = JSON.parse(loginUser);
+      setLoginUser(loginUserObj);
+      getMyReplyList();
+      getMyFVList();
+
+    }
+    if(isFocused){
+      console.log("TEST!!!!!!");
+      load()
+    }
+    load();
+  },[isFocused])
 
   return (
     <View>
@@ -121,8 +187,8 @@ export default function MyPage({navigation}) {
               alignItems: 'center',
             }}>
             <View>
-              <Text style={styles.myName}>{loginState.name}</Text>
-              <Text style={styles.myMail}>{loginState.email}</Text>
+              <Text style={styles.myName}>{loginUser!=null&&loginUser.memberName}</Text>
+              <Text style={styles.myMail}>{loginUser!=null&&loginUser.memberLoginId}</Text>
             </View>
             <View>
               <TouchableOpacity
@@ -152,7 +218,7 @@ export default function MyPage({navigation}) {
             <View>
               <Text style={styles.subTit}>내가 쓴 댓글</Text>
             </View>
-            {commentData.length !== 0 && (
+            {myReplyList!=null&&myReplyList.length !== 0 && (
               <View>
                 <TouchableOpacity
                   activeOpacity={1}
@@ -176,13 +242,13 @@ export default function MyPage({navigation}) {
               </View>
             )}
             empty
-            data={commentData}
+            data={myReplyList}
             renderItem={({item, index}) => {
               return (
                 <View>
                   <TouchableOpacity
                     activeOpacity={1}
-                    onPress={() => navigation.navigate('Detail')}>
+                    onPress={() => navigation.navigate('Detail',{monaCd:loginUser&&loginUser.memberRole!='MEMBER'?loginUser.memberRole:item.monaCd})}>
                     <View
                       style={
                         index === 0
@@ -201,12 +267,12 @@ export default function MyPage({navigation}) {
                               paddingHorizontal: 8,
                             }
                       }>
-                      <Text style={styles.commentName}>{item.name}</Text>
+                      <Text style={styles.commentName}>{item.memberName}</Text>
                       <Text
                         numberOfLines={1}
                         ellipsizeMode="tail"
                         style={styles.commentContent}>
-                        {item.content}
+                        {loginUser&&loginUser.memberRole!='MEMBER'?item.congressReplyContent:item.replyContent}
                       </Text>
                     </View>
                   </TouchableOpacity>
@@ -214,6 +280,8 @@ export default function MyPage({navigation}) {
               );
             }}
           />
+
+
         </View>
         <View
           style={{
@@ -242,13 +310,13 @@ export default function MyPage({navigation}) {
                 </View>
               )}
               empty
-              data={markData}
+              data={myFvList}
               renderItem={({item, index}) => {
                 return (
                   <View>
                     <TouchableOpacity
                       activeOpacity={1}
-                      onPress={() => navigation.navigate('Detail')}>
+                      onPress={() => navigation.navigate('Detail',{monaCd:item.monaCd})}>
                       <View
                         style={
                           index === 0
@@ -271,12 +339,12 @@ export default function MyPage({navigation}) {
                         }>
                         <View
                           style={{flexDirection: 'row', alignItems: 'center'}}>
-                          <Text style={styles.commentName}>{item.name}</Text>
+                          <Text style={styles.commentName}>{item.hgNm}</Text>
                           <Text
                             numberOfLines={1}
                             ellipsizeMode="tail"
                             style={styles.group}>
-                            {item.group}
+                            {item.polyNm}
                           </Text>
                         </View>
                         <View>

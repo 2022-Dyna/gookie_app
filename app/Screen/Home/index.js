@@ -13,6 +13,8 @@ import {
 import * as Icons from 'react-native-heroicons/outline';
 import {commonStyles} from '../../common/index';
 import Loader from '../../Component/Loader';
+import axios from "axios";
+import {useIsFocused} from "@react-navigation/native";
 
 export default function Home({navigation}) {
   const width = Dimensions.get('window').width;
@@ -117,32 +119,87 @@ export default function Home({navigation}) {
   const [datas1, setDatas1] = useState([]);
   const [datas2, setDatas2] = useState([]);
   const [datas3, setDatas3] = useState([]);
+  const [datas4, setDatas4] = useState([]);
+  const [datas5, setDatas5] = useState([]);
   const [dataList, setDataList] = useState({
     d1: false,
     d2: false,
     d3: false,
   });
 
+  const getListParty = () =>{
+    axios.get('http://144.24.94.124:8091/api/v1/gookie/bestComunication',{
+
+    }).then(res=> {
+      setDatas1(res.data.data);
+      console.log(res.data.data);
+    });
+  }
+
+  const getMostFv = () =>{
+    axios.get('http://144.24.94.124:8091/api/v1/gookie/getMostFa',{
+
+    }).then(res=> {
+      setDatas2(res.data.data);
+      console.log(res.data.data);
+    });
+  }
+
+  const getDaily = () =>{
+    axios.get('http://144.24.94.124:8091/api/v1/reply/best',{
+      params:{
+        sort:1
+      }
+    }).then(res=> {
+      setDatas3(res.data.list);
+    });
+  }
+
+  const getWeekly = () =>{
+    axios.get('http://144.24.94.124:8091/api/v1/reply/best',{
+      params:{
+        sort:2
+      }
+    }).then(res=> {
+      setDatas4(res.data.list);
+    });
+  }
+
+  const getMonthly = () =>{
+    axios.get('http://144.24.94.124:8091/api/v1/reply/best',{
+      params:{
+        sort:3
+      }
+    }).then(res=> {
+      setDatas5(res.data.list);
+      console.log(res.data,'TEST22');
+    });
+  }
+  const isFocus = useIsFocused();
   useEffect(() => {
     try {
-      setDatas1(data1);
-      // setDataList({...dataList, d1: true});
-      setDatas2(data2);
-      // setDataList({...dataList, d2: true});
-      setDatas3(data3);
-      // setDataList({...dataList, d3: true});
-      setDataList({...dataList, d1: true, d2: true, d3: true});
+      setDatas3([]);
+      getListParty();
+      getMostFv();
+      getDaily();
+      getWeekly();
+      getMonthly();
+
+      if(isFocus){
+        getDaily();
+      }
+      setLoading(false);
     } catch (e) {
       console.log(e.message);
     }
-  }, []);
-  useEffect(() => {
-    let num = 0;
-    Object.keys(dataList)
-      .map(key => dataList[key])
-      .filter(val => val && num++);
-    num === 3 && setLoading(false);
-  }, [dataList]);
+  }, [isFocus]);
+  // useEffect(() => {
+  //   let num = 0;
+  //   Object.keys(dataList)
+  //     .map(key => dataList[key])
+  //     .filter(val => val && num++);
+  //   num === 3 && setLoading(false);
+  // }, [dataList]);
 
   const [bestTab, setBestTab] = useState(0);
 
@@ -200,10 +257,10 @@ export default function Home({navigation}) {
                       <View style={{marginRight: 10}}>
                         <TouchableOpacity
                           activeOpacity={1}
-                          onPress={() => navigation.navigate('Detail')}>
+                          onPress={() => navigation.navigate('Detail',{monaCd:item.mona_cd})}>
                           <View style={styles.cardImg}>
                             <Image
-                              source={item.imgSrc}
+                              source={{uri:`https://www.assembly.go.kr/static/portal/img/openassm/${item.mona_cd}.jpg`}}
                               resizeMode="cover"
                               style={{width: '100%', height: '100%'}}
                             />
@@ -220,14 +277,14 @@ export default function Home({navigation}) {
                             </View>
                           </View>
                           <View style={commonStyles.mt8}>
-                            <Text style={styles.cardGroup}>{item.group}</Text>
+                            <Text style={styles.cardGroup}>{item.poly_nm}</Text>
                             <View
                               style={{
                                 flexDirection: 'row',
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
                               }}>
-                              <Text style={styles.cardName}>{item.name}</Text>
+                              <Text style={styles.cardName}>{item.hg_nm}</Text>
                               <View
                                 style={{
                                   flexDirection: 'row',
@@ -242,7 +299,7 @@ export default function Home({navigation}) {
                                       lineHeight: 24,
                                     },
                                   ]}>
-                                  {item.percent}
+                                  {item.rate}
                                 </Text>
                                 <Text style={styles.cardPercent}>%</Text>
                               </View>
@@ -411,100 +468,322 @@ export default function Home({navigation}) {
                 </View>
               </View>
               <View style={{paddingHorizontal: 24}}>
+                {bestTab==0&&
                 <FlatList
-                  data={datas3}
-                  renderItem={({item, index}) => {
-                    let likeNum;
-                    if (item.like < 1000) {
-                      likeNum = item.like;
-                    } else {
-                      likeNum = `${(item.like * 0.001).toFixed(1)}k`;
-                    }
-
-                    return (
-                      <View
-                        style={
-                          index !== 0 && {
-                            borderTopWidth: 1,
-                            borderTopColor: '#eee',
-                          }
-                        }>
-                        <TouchableOpacity
-                          activeOpacity={1}
-                          onPress={() => navigation.navigate('Detail')}>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              alignItems: 'center',
-                              paddingVertical: 12,
-                            }}>
-                            <View style={{width: 24}}>
-                              <Text
-                                style={{
-                                  fontFamily: 'pre700',
-                                  fontSize: 12,
-                                  color: '#313131',
-                                  letterSpacing: -0.24,
-                                  lineHeight: 14,
-                                }}>
-                                {index + 1}
-                              </Text>
-                            </View>
-                            <View style={{width: 48, paddingRight: 8}}>
-                              <Text
-                                numberOfLines={1}
-                                style={{
-                                  fontFamily: 'pre700',
-                                  fontSize: 12,
-                                  color: '#313131',
-                                  letterSpacing: -0.24,
-                                  lineHeight: 14,
-                                }}>
-                                {item.name}
-                              </Text>
-                            </View>
-                            <View style={{flex: 1, paddingRight: 8}}>
-                              <Text
-                                numberOfLines={1}
-                                style={{
-                                  fontFamily: 'pre400',
-                                  fontSize: 12,
-                                  color: '#7b7b7b',
-                                  letterSpacing: -0.24,
-                                  lineHeight: 14,
-                                }}>
-                                {item.content}
-                              </Text>
-                            </View>
-                            <View style={{minWidth: 48}}>
-                              <View
-                                style={{
-                                  flexDirection: 'row',
-                                  alignItems: 'center',
-                                }}>
-                                <Icons.HandThumbUpIcon
-                                  size={16}
-                                  color="#bbb"
-                                  style={{marginRight: 8}}
-                                />
-                                <Text
-                                  style={{
-                                    fontFamily: 'pre400',
-                                    fontSize: 12,
-                                    color: '#b1b1b1',
-                                    letterSpacing: -0.24,
-                                    lineHeight: 14,
-                                  }}>
-                                  {likeNum}
-                                </Text>
-                              </View>
-                            </View>
+                    data={datas3}
+                    ListEmptyComponent={()=>{
+                      return(
+                          <View>
+                            <Text>
+                              아직 댓글이 없습니다.
+                            </Text>
                           </View>
-                        </TouchableOpacity>
-                      </View>
-                    );
-                  }}
+                      )
+                    }}
+                    renderItem={({item, index}) => {
+                      let likeNum;
+                      if (item.like < 1000) {
+                        likeNum = item.liesCount;
+                      } else {
+                        likeNum = `${(item.liesCount * 0.001).toFixed(1)}k`;
+                      }
+
+                      return (
+                          <View
+                              style={
+                                index !== 0 && {
+                                  borderTopWidth: 1,
+                                  borderTopColor: '#eee',
+                                }
+                              }>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                onPress={() => navigation.navigate('Detail',{monaCd:item.monaCd})}>
+                              <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    paddingVertical: 12,
+                                  }}>
+                                <View style={{width: 24}}>
+                                  <Text
+                                      style={{
+                                        fontFamily: 'pre700',
+                                        fontSize: 12,
+                                        color: '#313131',
+                                        letterSpacing: -0.24,
+                                        lineHeight: 14,
+                                      }}>
+                                    {index + 1}
+                                  </Text>
+                                </View>
+                                <View style={{width: 48, paddingRight: 8}}>
+                                  <Text
+                                      numberOfLines={1}
+                                      style={{
+                                        fontFamily: 'pre700',
+                                        fontSize: 12,
+                                        color: '#313131',
+                                        letterSpacing: -0.24,
+                                        lineHeight: 14,
+                                      }}>
+                                    {item.memberName}
+                                  </Text>
+                                </View>
+                                <View style={{flex: 1, paddingRight: 8}}>
+                                  <Text
+                                      numberOfLines={1}
+                                      style={{
+                                        fontFamily: 'pre400',
+                                        fontSize: 12,
+                                        color: '#7b7b7b',
+                                        letterSpacing: -0.24,
+                                        lineHeight: 14,
+                                      }}>
+                                    {item.replyContent}
+                                  </Text>
+                                </View>
+                                <View style={{minWidth: 48}}>
+                                  <View
+                                      style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                      }}>
+                                    <Icons.HandThumbUpIcon
+                                        size={16}
+                                        color="#bbb"
+                                        style={{marginRight: 8}}
+                                    />
+                                    <Text
+                                        style={{
+                                          fontFamily: 'pre400',
+                                          fontSize: 12,
+                                          color: '#b1b1b1',
+                                          letterSpacing: -0.24,
+                                          lineHeight: 14,
+                                        }}>
+                                      {item.likesCount}
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                            </TouchableOpacity>
+                          </View>
+                      );
+                    }}
                 />
+                }
+                {bestTab==1&&
+                <FlatList
+                    data={datas4}
+                    ListEmptyComponent={()=>{
+                      return(
+                          <View>
+                            <Text>
+                              아직 댓글이 없습니다.
+                            </Text>
+                          </View>
+                      )
+                    }}
+                    renderItem={({item, index}) => {
+                      let likeNum;
+                      if (item.like < 1000) {
+                        likeNum = item.liesCount;
+                      } else {
+                        likeNum = `${(item.liesCount * 0.001).toFixed(1)}k`;
+                      }
+
+                      return (
+                          <View
+                              style={
+                                index !== 0 && {
+                                  borderTopWidth: 1,
+                                  borderTopColor: '#eee',
+                                }
+                              }>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                onPress={() => navigation.navigate('Detail',{monaCd:item.monaCd})}>
+                              <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    paddingVertical: 12,
+                                  }}>
+                                <View style={{width: 24}}>
+                                  <Text
+                                      style={{
+                                        fontFamily: 'pre700',
+                                        fontSize: 12,
+                                        color: '#313131',
+                                        letterSpacing: -0.24,
+                                        lineHeight: 14,
+                                      }}>
+                                    {index + 1}
+                                  </Text>
+                                </View>
+                                <View style={{width: 48, paddingRight: 8}}>
+                                  <Text
+                                      numberOfLines={1}
+                                      style={{
+                                        fontFamily: 'pre700',
+                                        fontSize: 12,
+                                        color: '#313131',
+                                        letterSpacing: -0.24,
+                                        lineHeight: 14,
+                                      }}>
+                                    {item.memberName}
+                                  </Text>
+                                </View>
+                                <View style={{flex: 1, paddingRight: 8}}>
+                                  <Text
+                                      numberOfLines={1}
+                                      style={{
+                                        fontFamily: 'pre400',
+                                        fontSize: 12,
+                                        color: '#7b7b7b',
+                                        letterSpacing: -0.24,
+                                        lineHeight: 14,
+                                      }}>
+                                    {item.replyContent}
+                                  </Text>
+                                </View>
+                                <View style={{minWidth: 48}}>
+                                  <View
+                                      style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                      }}>
+                                    <Icons.HandThumbUpIcon
+                                        size={16}
+                                        color="#bbb"
+                                        style={{marginRight: 8}}
+                                    />
+                                    <Text
+                                        style={{
+                                          fontFamily: 'pre400',
+                                          fontSize: 12,
+                                          color: '#b1b1b1',
+                                          letterSpacing: -0.24,
+                                          lineHeight: 14,
+                                        }}>
+                                      {item.likesCount}
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                            </TouchableOpacity>
+                          </View>
+                      );
+                    }}
+                />
+                }
+                {bestTab==2&&
+                <FlatList
+                    data={datas5}
+                    ListEmptyComponent={()=>{
+                      return(
+                          <View>
+                            <Text>
+                              아직 댓글이 없습니다.
+                            </Text>
+                          </View>
+                      )
+                    }}
+                    renderItem={({item, index}) => {
+                      let likeNum;
+                      if (item.like < 1000) {
+                        likeNum = item.liesCount;
+                      } else {
+                        likeNum = `${(item.liesCount * 0.001).toFixed(1)}k`;
+                      }
+
+                      return (
+                          <View
+                              style={
+                                index !== 0 && {
+                                  borderTopWidth: 1,
+                                  borderTopColor: '#eee',
+                                }
+                              }>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                onPress={() => navigation.navigate('Detail',{monaCd:item.monaCd})}>
+                              <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    paddingVertical: 12,
+                                  }}>
+                                <View style={{width: 24}}>
+                                  <Text
+                                      style={{
+                                        fontFamily: 'pre700',
+                                        fontSize: 12,
+                                        color: '#313131',
+                                        letterSpacing: -0.24,
+                                        lineHeight: 14,
+                                      }}>
+                                    {index + 1}
+                                  </Text>
+                                </View>
+                                <View style={{width: 48, paddingRight: 8}}>
+                                  <Text
+                                      numberOfLines={1}
+                                      style={{
+                                        fontFamily: 'pre700',
+                                        fontSize: 12,
+                                        color: '#313131',
+                                        letterSpacing: -0.24,
+                                        lineHeight: 14,
+                                      }}>
+                                    {item.memberName}
+                                  </Text>
+                                </View>
+                                <View style={{flex: 1, paddingRight: 8}}>
+                                  <Text
+                                      numberOfLines={1}
+                                      style={{
+                                        fontFamily: 'pre400',
+                                        fontSize: 12,
+                                        color: '#7b7b7b',
+                                        letterSpacing: -0.24,
+                                        lineHeight: 14,
+                                      }}>
+                                    {item.replyContent}
+                                  </Text>
+                                </View>
+                                <View style={{minWidth: 48}}>
+                                  <View
+                                      style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                      }}>
+                                    <Icons.HandThumbUpIcon
+                                        size={16}
+                                        color="#bbb"
+                                        style={{marginRight: 8}}
+                                    />
+                                    <Text
+                                        style={{
+                                          fontFamily: 'pre400',
+                                          fontSize: 12,
+                                          color: '#b1b1b1',
+                                          letterSpacing: -0.24,
+                                          lineHeight: 14,
+                                        }}>
+                                      {item.likesCount}
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                            </TouchableOpacity>
+                          </View>
+                      );
+                    }}
+                />
+                }
+
               </View>
             </View>
             {/* 이번주 최고 인기 */}
@@ -514,7 +793,7 @@ export default function Home({navigation}) {
                 {backgroundColor: '#ffffff', paddingBottom: 40},
               ]}>
               <View style={styles.titBox}>
-                <Text style={[styles.title]}>이번주 최고 인기 ✨</Text>
+                <Text style={[styles.title]}>최고 인기 국회의원✨</Text>
                 <Text style={[commonStyles.mt8, styles.desc]}>
                   국민들이 가장 많이 찾은 인기 의원들이에요.
                 </Text>
@@ -548,10 +827,10 @@ export default function Home({navigation}) {
                       <View style={{marginRight: 10}}>
                         <TouchableOpacity
                           activeOpacity={1}
-                          onPress={() => navigation.navigate('Detail')}>
+                          onPress={() => navigation.navigate('Detail',{monaCd:item.mona_cd})}>
                           <View style={styles.cardImg}>
                             <Image
-                              source={item.imgSrc}
+                              source={{uri:`https://www.assembly.go.kr/static/portal/img/openassm/${item.mona_cd}.jpg`}}
                               resizeMode="cover"
                               style={{width: '100%', height: '100%'}}
                             />
@@ -568,8 +847,8 @@ export default function Home({navigation}) {
                             </View>
                           </View>
                           <View style={commonStyles.mt8}>
-                            <Text style={styles.cardGroup}>{item.group}</Text>
-                            <Text style={styles.cardName}>{item.name}</Text>
+                            <Text style={styles.cardGroup}>{item.poly_nm}</Text>
+                            <Text style={styles.cardName}>{item.hg_nm}</Text>
                           </View>
                         </TouchableOpacity>
                       </View>

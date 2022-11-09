@@ -16,6 +16,7 @@ import Detail from '../Screen/Detail';
 import MyPageComment from '../Screen/MyPageComment';
 import MyPage02 from '../Screen/MyPage02';
 import Guide from '../Screen/Guide';
+import WebViewPage from '../Screen/WebViewPage';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -74,6 +75,7 @@ function MainStackNavigator() {
       <MainStack.Screen name="MyPageComment" component={MyPageComment} />
       <MainStack.Screen name="MyPage02" component={MyPage02} />
       <MainStack.Screen name="Guide" component={Guide} />
+      <MainStack.Screen name="WebViewPage" component={WebViewPage} />
     </MainStack.Navigator>
   );
 }
@@ -144,7 +146,7 @@ function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="MyPage"
+        name={!loginState ? "Login" : "MyPage"}
         component={!loginState ? Login : MyPage}
         options={{
           title: !loginState ? '로그인' : '마이페이지',
@@ -164,7 +166,7 @@ function BottomTabNavigator() {
         name="Alarm"
         component={Alarm}
         options={{
-          title: '알람',
+          title: '알림',
           tabBarIcon: ({color}) => {
             return (
               <IconIonicons

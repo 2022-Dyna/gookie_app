@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -10,6 +10,8 @@ import {
 import * as Icons from 'react-native-heroicons/outline';
 import {commonStyles} from '../../common';
 import ConfirmModal from '../../Component/ConfirmModal';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 export default function PwReset({navigation}) {
   const loginState = {
@@ -36,6 +38,17 @@ export default function PwReset({navigation}) {
   const [newPwConfirmSecret, setNewPwConfirmSecret] = useState(true);
   const [completePress, setCompletePress] = useState(false);
   const [modalComplete, setModalComplete] = useState(false);
+  const [errModal, setErrModal] = useState(false);
+  const [loginUser, setLoginUser] = useState(null);
+
+  useEffect(()=>{
+    const load =async () =>{
+      const loginUser = await AsyncStorage.getItem("loginUser");
+      const loginUserObj = JSON.parse(loginUser);
+      setLoginUser(loginUserObj);
+    }
+    load();
+  },[])
 
   let disabledComplete = false;
   pwValue.length !== 0 &&
@@ -45,7 +58,7 @@ export default function PwReset({navigation}) {
     : (disabledComplete = true);
 
   const onValid = () => {
-    if (pwValue === loginState.pw) {
+      console.log('TEST')
       if (newPwValue === newPwConfirmValue) {
         if (newPwValue.length < 6 || newPwValue.length > 20) {
           setPwMsg('비밀번호가 너무 짧습니다.');
@@ -57,18 +70,35 @@ export default function PwReset({navigation}) {
         ) {
           setPwMsg('영문, 숫자를 혼합하여 입력해주세요.');
         } else {
+          console.log('TEST11')
           setPwResetLoading(true);
           setPwResetLoading(false);
-          setModalComplete(true);
+          changePw();
         }
       } else {
         setPwMsg('변경할 비밀번호가 일치하지 않습니다.');
       }
-    } else {
-      setPwMsg('현재 비밀번호를 다시 확인해주세요.');
-    }
-  };
 
+  };
+  const changePw = async () =>{
+    let loginUser = await AsyncStorage.getItem("loginUser");
+    const loginUserObj = JSON.parse(loginUser);
+
+    axios.post('http://144.24.94.124:8091/api/v1/mypage/update',{
+
+        memberId:loginUserObj.memberId,
+        changePw:newPwValue,
+        memberLoginPw:pwValue,
+
+    }).then(res=> {
+        if(res.data.error==0){
+          setModalComplete(true);
+        }else {
+          setErrModal(true);
+        }
+    });
+  }
+console.log(loginUser);
   return (
     <View style={commonStyles.loaderWrap}>
       {pwResetLoading && <Loader type={'trans'} />}
@@ -101,7 +131,7 @@ export default function PwReset({navigation}) {
           <TextInput
             style={[commonStyles.input, {color: '#b1b1b1'}]}
             name="name"
-            value={loginState.name}
+            value={loginUser!=null&&loginUser.memberName}
             editable={false}
           />
         </View>
@@ -110,7 +140,7 @@ export default function PwReset({navigation}) {
           <TextInput
             style={[commonStyles.input, {color: '#b1b1b1'}]}
             name="email"
-            value={loginState.email}
+            value={loginUser!=null&&loginUser.memberLoginId}
             editable={false}
           />
         </View>
@@ -264,6 +294,16 @@ export default function PwReset({navigation}) {
         titleText={'수정 완료'}
         bodyText={'내 정보가 수정되었어요.'}
         btnText={'확인'}
+      />
+      <ConfirmModal
+          transparent={true}
+          btnBoolean={errModal}
+          onPress={() => {
+            setErrModal(false);
+          }}
+          titleText={'수정 완료'}
+          bodyText={'현재 비밀번호가 틀렸어요.'}
+          btnText={'확인'}
       />
     </View>
   );

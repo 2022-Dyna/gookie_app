@@ -10,8 +10,15 @@ import {
 } from 'react-native';
 import {commonStyles} from '../../common';
 import Loader from '../../Component/Loader';
+import ConfirmModal from "../../Component/ConfirmModal";
+import {useSelector} from "react-redux";
+import {useIsFocused} from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 export default function Alarm({navigation}) {
+  const loginStates = useSelector(state => state.login);
+
   const loginState = {
     login: true,
     isCon: false,
@@ -434,6 +441,9 @@ export default function Alarm({navigation}) {
   const [refreshing, setRefreshing] = useState(false);
   const [datas, setDatas] = useState([]);
   const [pageOptions, setPageOptions] = useState({num: 10, page: 1});
+  const [isLogin, setIsLogin] = useState(false);
+  const [alarmList, setAlarmList] = useState(null);
+  const [loginUser, setLoginUser] = useState(null);
 
   const dataLoad = () => {
     setItemLoading(true);
@@ -473,19 +483,76 @@ export default function Alarm({navigation}) {
     }
   };
 
+  const getAlarm = async () =>{
+    let loginUser = await AsyncStorage.getItem("loginUser");
+    const loginUserObj = JSON.parse(loginUser);
+    let param ;
+    if(loginUserObj.memberRole=='MEMBER'){
+      param = { memberId : loginUserObj.memberId}
+    }else {
+      param = {monaCd:loginUserObj.memberRole,memberId : loginUserObj.memberId}
+    }
+
+    axios.get('http://144.24.94.124:8091/api/v1/gookie/getAlarm',{
+
+      params:param
+
+    }).then(res=> {
+      setAlarmList(res.data.data);
+    });
+  }
+
+  const insAlarm = async (reply_id) =>{
+    let loginUser = await AsyncStorage.getItem("loginUser");
+    const loginUserObj = JSON.parse(loginUser);
+
+    axios.get('http://144.24.94.124:8091/api/v1/gookie/insAlarm',{
+
+      params: {
+        member_id:loginUserObj.memberId,
+        reply_id:reply_id
+      }
+
+    }).then(res=> {
+
+    });
+  }
+
+  const isFocus = useIsFocused();
   useEffect(() => {
-    setDatas(
-      data.filter((item, index) => {
-        if (index < pageOptions.num) {
-          return item;
-        }
-      }),
-    );
+    setAlarmList([]);
+    const load = async () =>{
+      let loginUser = await AsyncStorage.getItem("loginUser");
+      const loginUserObj = JSON.parse(loginUser);
+      setLoginUser(loginUserObj);
+    }
     setLoading(false);
-  }, []);
+    if(isFocus&&!loginStates){
+      setIsLogin(true);
+    }
+    if(isFocus){
+      getAlarm();
+    }
+    if(loginStates){
+      load();
+    }
+  }, [isFocus]);
 
   return (
     <View style={{height: '100%'}}>
+      <ConfirmModal
+          transparent={true}
+          btnBoolean={isLogin}
+          onPress={() => {
+            setIsLogin(false);
+            navigation.navigate("Login");
+          }}
+          titleText={'로그인 필요'}
+          bodyText={
+            '로그인이 필요한 서비스입니다.'
+          }
+          btnText={'확인'}
+      />
       <View style={{height: '100%'}}>
         <View style={styles.alarmTit}>
           <Text style={styles.alarmTitText}>알림</Text>
@@ -520,31 +587,23 @@ export default function Alarm({navigation}) {
                 );
               }}
               empty
-              data={datas}
+              data={alarmList}
               onEndReached={pageLoad}
               onEndReachedThreshold={0.3}
-              ListFooterComponent={itemLoading && <Loader type={'small'} />}
-              onRefresh={pageRefresh}
               refreshing={refreshing}
               renderItem={({item, index}) => {
                 return (
                   <TouchableOpacity
                     activeOpacity={1}
                     onPress={() => {
-                      setDatas(state => {
-                        navigation.navigate('Detail');
-                        const arr = state.filter(el => {
-                          if (el.alarmId == item.alarmId) {
-                            if (!el.isRead) el.isRead = true;
-                          }
-                          return el;
-                        });
-                        return arr;
-                      });
+                      if(item.alarm==0){
+                        insAlarm(item.reply_id);
+                      }
+                      navigation.navigate('Detail',{monaCd:item.mona_cd});
                     }}>
                     <View
                       style={
-                        item.isRead
+                        item.alarm > 0
                           ? {paddingHorizontal: 24}
                           : {paddingHorizontal: 24, backgroundColor: '#fff8f2'}
                       }>
@@ -558,7 +617,7 @@ export default function Alarm({navigation}) {
                               ]
                         }>
                         <View>
-                          {!loginState.isCon && (
+                          {loginUser!=null&&loginUser.memberRole=='MEMBER' && (
                             <View
                               style={[
                                 commonStyles.mb16,
@@ -566,24 +625,24 @@ export default function Alarm({navigation}) {
                               ]}>
                               <View style={commonStyles.mr8}>
                                 <Text style={styles.alarmName}>
-                                  {item.name}
+                                  {item.hg_nm}
                                 </Text>
                               </View>
                               <View>
                                 <Text style={styles.alarmGroup}>
-                                  {item.group}
+                                  {item.poly_nm}
                                 </Text>
                               </View>
                             </View>
                           )}
                           <Text style={styles.alarmDesc}>
-                            {loginState.isCon
-                              ? `${item.name} 님이 댓글을 남겼습니다.`
-                              : `${item.name} 의원이 답글을 남겼습니다.`}
+                            {loginUser!=null&&loginUser.memberRole!='MEMBER'
+                              ? `${item.member_name} 님이 댓글을 남겼습니다.`
+                              : `${item.hg_nm} 의원이 답글을 남겼습니다.`}
                           </Text>
                         </View>
                         <View>
-                          <Text style={styles.alarmDate}>{item.date}</Text>
+                          <Text style={styles.alarmDate}>{item.reply_create_date}</Text>
                         </View>
                       </View>
                     </View>

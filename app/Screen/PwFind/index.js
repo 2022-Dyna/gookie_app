@@ -10,6 +10,8 @@ import {commonStyles} from '../../common';
 import ConfirmModal from '../../Component/ConfirmModal';
 import Loader from '../../Component/Loader';
 import * as Icons from 'react-native-heroicons/outline';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 export default function PwFind({navigation}) {
   const [pwFindLoading, setPwFindLoading] = useState(false);
@@ -20,6 +22,7 @@ export default function PwFind({navigation}) {
   const [emailFocus, setEmailFocus] = useState(false);
   const [completePress, setCompletePress] = useState(false);
   const [modalComplete, setModalComplete] = useState(false);
+  const [errModal, setErrModal] = useState(false);
 
   let disabledComplete = false;
   emailValue.length !== 0
@@ -33,10 +36,25 @@ export default function PwFind({navigation}) {
       setEmailMsg('올바른 이메일 주소를 입력해주세요.');
     } else {
       setPwFindLoading(true);
-      setPwFindLoading(false);
-      setModalComplete(true);
+      changePw()
     }
   };
+  const changePw = async () =>{
+
+    axios.post('http://144.24.94.124:8091/api/v1/mypage/changePw',{
+
+      email:emailValue
+
+    }).then(res=> {
+      if(res.data.error==0){
+        setModalComplete(true);
+      }else {
+        setErrModal(true);
+      }
+      setPwFindLoading(false);
+
+    });
+  }
 
   return (
     <View style={commonStyles.loaderWrap}>
@@ -116,6 +134,18 @@ export default function PwFind({navigation}) {
             '발급받은 정보로 로그인 해주세요.'
           }
           btnText={'확인'}
+        />
+        <ConfirmModal
+            transparent={true}
+            btnBoolean={errModal}
+            onPress={() => {
+              setErrModal(false);
+            }}
+            titleText={'이메일 오류'}
+            bodyText={
+              '입력한 이메일로 가입된 사람이 없습니다.'
+            }
+            btnText={'확인'}
         />
       </View>
     </View>

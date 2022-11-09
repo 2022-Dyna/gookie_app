@@ -249,6 +249,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-webview')
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.25'
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'com.facebook.fresco:animated-gif:2.5.0'

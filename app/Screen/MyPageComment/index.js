@@ -7,9 +7,11 @@ import {
   StyleSheet,
   FlatList,
 } from 'react-native';
-import Loader from "../../Component/Loader" 
+import Loader from "../../Component/Loader"
 import {commonStyles} from "../../common"
 import * as Icons from 'react-native-heroicons/outline';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 export default function MyPageComment({navigation}) {
   const [loading, setLoading] = useState(true);
@@ -183,7 +185,44 @@ export default function MyPageComment({navigation}) {
 
   const [datas, setDatas] = useState([]);
   const [pageOptions, setPageOptions] = useState({num: 20, page: 1});
-  
+  //페이징
+  const [pageNum ,setPageNum] = useState(1);
+  const [pageData ,setPageData] = useState(null);
+  const [loginUser ,setLoginUser] = useState(null);
+
+  const getMyReplyList = async (num) =>{
+    let loginUser = await AsyncStorage.getItem("loginUser");
+    const loginUserObj = JSON.parse(loginUser);
+    setLoginUser(loginUserObj);
+    axios.get('http://144.24.94.124:8091/api/v1/mypage/reply',{
+      params:{
+        memberId:loginUserObj.memberId,
+        memberRole:loginUserObj.memberRole,
+        pageNum:num,
+        limit:10
+      }
+    }).then(res=> {
+
+      if(loginUserObj.memberRole=='MEMBER'){
+        setDatas(state=>{
+          const arr = state.concat(res.data.data.replyList);
+          return arr;
+        })
+        console.log(res.data.data.replyList);
+
+
+      }else {
+        setDatas(state=>{
+          const arr = state.concat(res.data.data.congressReplyList);
+          return arr;
+        })
+        console.log(res.data.data.congressReplyList);
+      }
+      setPageData(res.data.data.pagination)
+
+    });
+  }
+
   const dataLoad = () => {
     setItemLoading(true);
     setDatas(
@@ -197,9 +236,10 @@ export default function MyPageComment({navigation}) {
   };
 
   const pageLoad = () => {
-    const totalPage = Math.ceil(data.length / pageOptions.num);
-    if (pageOptions.page <= totalPage) {
-      dataLoad();
+
+    if(pageData.count>pageNum+1){
+      getMyReplyList(pageNum+1);
+      setPageNum(pageNum+1);
     }else{
       setItemLoading(false);
     }
@@ -207,31 +247,19 @@ export default function MyPageComment({navigation}) {
 
   const pageRefresh = () => {
     if(!refreshing){
+        setDatas([]);
         setRefreshing(true);
-        // setPageOptions(state => ({...pageOptions, page: 1}));
-        // dataLoad();
-        setDatas(
-          data.filter((item, index) => {
-            if (index < pageOptions.num) {
-              return item;
-            }
-          }),
-        );
-        setPageOptions(state => ({...pageOptions, page: 2}));
+        getMyReplyList(1);
+        setPageNum(1);
         setRefreshing(false);
       }
   }
 
 
   useEffect(() => {
-    setDatas(
-      data.filter((item, index) => {
-        if (index < pageOptions.num) {
-          return item;
-        }
-      }),
-    );
+
     setLoading(false);
+    getMyReplyList(1);
   }, []);
 
 
@@ -282,7 +310,7 @@ export default function MyPageComment({navigation}) {
               empty
               data={datas}
               onEndReached={pageLoad}
-              onRefresh={pageRefresh} 
+              onRefresh={pageRefresh}
               refreshing={refreshing}
               onEndReachedThreshold={0.3}
               ListFooterComponent={itemLoading && <Loader type={"small"}/>}
@@ -291,7 +319,7 @@ export default function MyPageComment({navigation}) {
                   <View style={{paddingHorizontal: 24}}>
                     <TouchableOpacity
                       activeOpacity={1}
-                      onPress={() => navigation.navigate('Detail')}>
+                      onPress={() => navigation.navigate('Detail',{monaCd:item.monaCd})}>
                       <View
                         style={
                           index === 0
@@ -314,13 +342,13 @@ export default function MyPageComment({navigation}) {
                               justifyContent: 'center',
                               alignItems: 'center',
                             }}>
-                            <Text style={styles.myCommentName}>{item.name}</Text>
+                            <Text style={styles.myCommentName}>{loginUser!=null&&loginUser.memberRole=='MEMBER'?item.hgNm:item.memberName}</Text>
                             <Text style={styles.myCommentParty}>
-                              {item.group}
+                              {loginUser.memberRole=='MEMBER'?item.polyNm:''}
                             </Text>
                           </View>
                           <View>
-                            <Text style={styles.myCommentDay}>{item.date}</Text>
+                            <Text style={styles.myCommentDay}>{loginUser.memberRole=='MEMBER'?item.replyCreateDate:item.congressReplyCreateDate}</Text>
                           </View>
                         </View>
                         <View>
@@ -328,7 +356,7 @@ export default function MyPageComment({navigation}) {
                             style={styles.myCommentContent}
                             numberOfLines={1}
                             ellipsizeMode="tail">
-                            {item.content}
+                            {loginUser.memberRole=='MEMBER'?item.replyContent:item.congressReplyContent}
                           </Text>
                         </View>
                       </View>
