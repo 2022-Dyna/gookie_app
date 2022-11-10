@@ -24,7 +24,9 @@ export default function Guide({navigation}) {
   return (
     <View style={commonStyles.loaderWrap}>
       {loading && <Loader type={"full"} />}
-        <ScrollView>
+        <ScrollView
+          contentContainerStyle={loading && {height:0}}
+        >
           <View style={{height:50, paddingTop:13}}>
             <Text style={styles.myCommentTit}>사용 가이드</Text>
             <View style={{position:"absolute", left:16, top:13, zIndex:10,}}>

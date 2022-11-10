@@ -563,7 +563,7 @@ export default function Detail({navigation, route}) {
                                                 insFavorites();
                                                 setDetailProfie({
                                                     ...detailProfie,
-                                                    count:detailProfie.count+1
+                                                    count:Number(detailProfie.count)+1
                                                 })
                                                 setMarkLike(!markLike);
                                             }
@@ -825,6 +825,7 @@ export default function Detail({navigation, route}) {
                                                                 // navigation.navigate('WebViewPage',{link:item.DETAIL_LINK})
                                                                 Linking.openURL(item.DETAIL_LINK);
                                                             }}
+                                                            activeOpacity={1}
                                                         >
                                                             <View
                                                                 style={{
@@ -1074,14 +1075,16 @@ export default function Detail({navigation, route}) {
                                                                         loginUser.memberRole!='MEMBER' ||
                                                                         loginUser.memberId === item.item.memberId
                                                                     ) {
-                                                                        if (inputValue.length !== 0) {
-                                                                            setModalCheck(true);
-                                                                        } else {
-                                                                            if (commentCdId === null) {
-                                                                                setCommentCdId(item.item.replyId);
-                                                                                setModalUp(true);
-                                                                            } else {
+                                                                        if (loginUser.memberRole == route.params.monaCd){
+                                                                            if (inputValue.length !== 0) {
                                                                                 setModalCheck(true);
+                                                                            } else {
+                                                                                if (commentCdId === null) {
+                                                                                    setCommentCdId(item.item.replyId);
+                                                                                    setModalUp(true);
+                                                                                } else {
+                                                                                    setModalCheck(true);
+                                                                                }
                                                                             }
                                                                         }
                                                                     }
@@ -1349,9 +1352,12 @@ export default function Detail({navigation, route}) {
                             <TextInput
                                 placeholder={
                                     loginUser!=null
-                                        ? loginUser.memberRole!='MEMBER' && btnState === 0
-                                            ? '국회의원은 댓글에 답글만 쓸 수 있어요.'
-                                            : '최대 200자까지 쓸 수 있어요.'
+                                        ? loginUser.memberRole!='MEMBER' && 
+                                            loginUser.memberRole == route.params.monaCd
+                                            ?   btnState === 0
+                                                ? '국회의원은 댓글에 답글만 쓸 수 있어요.'
+                                                : '최대 200자까지 쓸 수 있어요.'
+                                            : '댓글을 달 수 없어요.'
                                         : '댓글을 쓰려면 로그인을 해주세요.'
                                 }
                                 placeholderTextColor="#b1b1b1"
@@ -1555,7 +1561,7 @@ export default function Detail({navigation, route}) {
                     insFavorites();
                     setDetailProfie({
                         ...detailProfie,
-                        count:detailProfie.count-1
+                        count:Number(detailProfie.count)-1
                     })
                     setMarkLike(false);
                     setModalCancel(false);
