@@ -112,6 +112,7 @@ export default function MyPage({navigation}) {
   const [loginUser, setLoginUser] = useState(null);
   const [myReplyList, setReplyList] = useState([]);
   const [myFvList, setMyFvList] = useState([]);
+  const [cancelFv, setCancelFv] = useState(null);
 
   const getMyReplyList = async () =>{
     let loginUser = await AsyncStorage.getItem("loginUser");
@@ -150,6 +151,23 @@ export default function MyPage({navigation}) {
     }).then(res=> {
       setMyFvList(res.data.data);
     });
+  }
+
+  const insFavorites = async () =>{
+    let loginUser = await AsyncStorage.getItem("loginUser");
+    const loginUserObj = JSON.parse(loginUser);
+
+    console.log(loginUserObj.memberId);
+    console.log(cancelFv);
+    axios.get('http://144.24.94.124:8091/api/v1/mypage/insfavorites',{
+      params:{
+        memberId:loginUserObj.memberId,
+        monaCd:cancelFv,
+      }
+
+    }).then(res=>{
+       getMyFVList();
+    })
   }
 
 
@@ -351,6 +369,7 @@ export default function MyPage({navigation}) {
                           <TouchableOpacity
                             activeOpacity={1}
                             onPress={() => {
+                              setCancelFv(item.monaCd);
                               setModalCancel(true);
                             }}
                             style={{flex: 1}}>
@@ -391,6 +410,8 @@ export default function MyPage({navigation}) {
         transparent={true}
         btnBoolean={modalCancel}
         onPress={() => {
+          setMyFvList([]);
+          insFavorites();
           setModalCancel(false);
         }}
         onCancel={() => {
