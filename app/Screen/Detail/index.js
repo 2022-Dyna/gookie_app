@@ -1114,8 +1114,13 @@ export default function Detail({navigation, route}) {
                                                                     <TouchableOpacity
                                                                         activeOpacity={1}
                                                                         onPress={() => {
-                                                                            setDatas([]);
-                                                                            likeRequest(item.item.replyId,0);
+                                                                            if(loginUser!=null){
+                                                                                setDatas([]);
+                                                                                likeRequest(item.item.replyId,0);
+                                                                            }else {
+                                                                                setModalLoginCheck(true);
+                                                                            }
+
                                                                         }}>
                                                                         <View
                                                                             style={
