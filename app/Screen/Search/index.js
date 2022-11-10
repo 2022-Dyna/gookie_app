@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     searchTit:{
         textAlign:"center",
         fontSize:16,
-        fontWeight:"bold",
+        fontFamily:"pre700",
         letterSpacing:-0.32,
         color:"#313131",
         paddingVertical:24
@@ -225,32 +225,32 @@ const styles = StyleSheet.create({
     },
     tabText:{
         fontSize:14,
-        fontWeight:"bold",
+        fontFamily:"pre700",
         letterSpacing:-0.56,
         color:"#fff"
     },
     tabTextOff:{
         fontSize:14,
-        fontWeight:"bold",
+        fontFamily:"pre700",
         letterSpacing:-0.56,
         color:"#f4933a"
     },
     congressAling:{
         fontSize:16,
-        fontWeight:"bold",
+        fontFamily:"pre700",
         letterSpacing:-0.32,
         color:"#f4933a"
     },
     congressName:{
         fontSize:14,
-        fontWeight:"bold",
+        fontFamily:"pre700",
         letterSpacing:-0.28,
         color:"#313131",
         marginRight:24
     },
     congressParty:{
         fontSize:12,
-        fontWeight:"normal",
+        fontFamily:"pre400",
         letterSpacing:-0.24,
         color:"#b1b1b1"
     },
