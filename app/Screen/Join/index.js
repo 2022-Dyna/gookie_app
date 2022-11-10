@@ -47,6 +47,8 @@ export default function Join({navigation}) {
   //이메일 인증 state
   const [emailCode, setEmailCode] = useState(null);
 
+  const [vertifyCheck, setVertifyCheck] = useState(false);
+
   let disabledNext = false;
   let disabledComplete = false;
   let disabledEmail = false;
@@ -76,7 +78,7 @@ export default function Join({navigation}) {
         },
       })
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data.data.check === 0) {
           setEmailCode(res.data.data.code);
           setJoinLoading(false);
@@ -100,7 +102,7 @@ export default function Join({navigation}) {
         memberName: nameValue,
       })
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data.data.error == 0) {
           setJoinLoading(false);
           setModalComplete(true);
@@ -127,26 +129,39 @@ export default function Join({navigation}) {
   };
   const onValid = () => {
     if (emailCode) {
-      if (pwValue === pwConfirmValue) {
-        if (pwValue.length < 6 || pwValue.length > 20) {
-          setPwMsg('비밀번호가 너무 짧습니다.');
-        } else if (pwValue.search(/\s/) !== -1) {
-          setPwMsg('공백없이 입력해주세요.');
-        } else if (
-          pwValue.search(/[0-9]/g) < 0 ||
-          pwValue.search(/[a-z]/g) < 0
-        ) {
-          setPwMsg('영문, 숫자를 혼합하여 입력해주세요.');
+      if (vertifyCheck) {
+        if (pwValue === pwConfirmValue) {
+          if (pwValue.length < 6 || pwValue.length > 20) {
+            setPwMsg('비밀번호가 너무 짧습니다.');
+          } else if (pwValue.search(/\s/) !== -1) {
+            setPwMsg('공백없이 입력해주세요.');
+          } else if (
+            pwValue.search(/[0-9]/g) < 0 ||
+            pwValue.search(/[a-z]/g) < 0
+          ) {
+            setPwMsg('영문, 숫자를 혼합하여 입력해주세요.');
+          } else {
+            setJoinLoading(true);
+            userJoin();
+          }
         } else {
-          setJoinLoading(true);
-          userJoin();
+          setPwMsg('비밀번호가 일치하지 않습니다.');
         }
       } else {
-        setPwMsg('비밀번호가 일치하지 않습니다.');
+        setPwMsg('인증번호를 확인해주세요.');
       }
     } else {
       setPwMsg('이메일 인증 해주세요.');
     }
+  };
+
+  const joinReset = () => {
+    setStep(0);
+    setNameValue('');
+    setEmailValue('');
+    setNumberValue('');
+    setPwValue('');
+    setPwConfirmValue('');
   };
 
   return (
@@ -155,7 +170,7 @@ export default function Join({navigation}) {
       <View style={[commonStyles.inner, styles.basic]}>
         <View>
           <View style={{height: 40, position: 'relative'}}>
-            <View style={{position: 'absolute', left: 0, top: 0}}>
+            <View style={{position: 'absolute', left: 0, top: 0, zIndex: 10}}>
               <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
@@ -223,13 +238,24 @@ export default function Join({navigation}) {
                       value={emailValue}
                       onFocus={() => setEmailFocus(true)}
                       onBlur={() => setEmailFocus(false)}
-                      onChange={e => setEmailValue(e.nativeEvent.text)}
+                      onChange={e => {
+                        setEmailValue(e.nativeEvent.text);
+                        setEmailMsg('');
+                        setPwMsg('');
+                      }}
                     />
                     <View style={{flex: 1}}>
                       <TouchableOpacity
                         activeOpacity={1}
                         disabled={disabledEmail}
-                        onPress={onValidEmail}
+                        onPress={() => {
+                          if (!emailSend) {
+                            onValidEmail();
+                          } else {
+                            onValidEmail();
+                            setVertifyCheck(false);
+                          }
+                        }}
                         onPressIn={() => setEmailPress(true)}
                         onPressOut={() => setEmailPress(false)}>
                         {!emailSend ? (
@@ -299,7 +325,10 @@ export default function Join({navigation}) {
                       value={numberValue}
                       onFocus={() => setNumberFocus(true)}
                       onBlur={() => setNumberFocus(false)}
-                      onChange={e => setNumberValue(e.nativeEvent.text)}
+                      onChange={e => {
+                        setNumberValue(e.nativeEvent.text);
+                        setPwMsg('');
+                      }}
                     />
                     <View style={{flex: 1}}>
                       <TouchableOpacity
@@ -309,8 +338,9 @@ export default function Join({navigation}) {
                         onPressOut={() => setNumberPress(false)}
                         onPress={() => {
                           setJoinLoading(true);
-                          console.log(numberValue, 'nv');
-                          console.log(emailCode, 'em');
+                          setVertifyCheck(true);
+                          // console.log(numberValue, 'nv');
+                          // console.log(emailCode, 'em');
 
                           if (numberValue == emailCode) {
                             setJoinLoading(false);
@@ -378,7 +408,10 @@ export default function Join({navigation}) {
                       value={pwValue}
                       onFocus={() => setPwFocus(true)}
                       onBlur={() => setPwFocus(false)}
-                      onChange={e => setPwValue(e.nativeEvent.text)}
+                      onChange={e => {
+                        setPwValue(e.nativeEvent.text);
+                        setPwMsg('');
+                      }}
                       secureTextEntry={pwSecret}
                     />
                     <View
@@ -423,7 +456,10 @@ export default function Join({navigation}) {
                       value={pwConfirmValue}
                       onFocus={() => setPwConfirmFocus(true)}
                       onBlur={() => setPwConfirmFocus(false)}
-                      onChange={e => setPwConfirmValue(e.nativeEvent.text)}
+                      onChange={e => {
+                        setPwConfirmValue(e.nativeEvent.text);
+                        setPwMsg('');
+                      }}
                       secureTextEntry={pwConfirmSecret}
                     />
                     <View
@@ -527,6 +563,7 @@ export default function Join({navigation}) {
           btnBoolean={modalComplete}
           onPress={() => {
             setModalComplete(false);
+            joinReset();
             navigation.navigate('Login');
           }}
           titleText={'회원가입 완료'}

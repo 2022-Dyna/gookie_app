@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import {commonStyles} from '../../common';
 import ConfirmModal from '../../Component/ConfirmModal';
-import axios from "axios";
-import Loader from "../../Component/Loader";
+import axios from 'axios';
+import Loader from '../../Component/Loader';
 import * as Icons from 'react-native-heroicons/outline';
 
 export default function JoinCongress({navigation}) {
@@ -30,20 +30,26 @@ export default function JoinCongress({navigation}) {
     ? (disabledComplete = false)
     : (disabledComplete = true);
 
-  const getListName = () =>{
-    axios.post('http://144.24.94.124:8091/api/v1/join',{
-      "memberLoginId":emailValue,
-      "monaCd":codeValue
-    }).then(res=> {
-        if(res.data.data.error==0){
+  const getListName = () => {
+    axios
+      .post('http://144.24.94.124:8091/api/v1/join', {
+        memberLoginId: emailValue,
+        monaCd: codeValue,
+      })
+      .then(res => {
+        if (res.data.data.error == 0) {
           setJoinLoading(false);
           setModalComplete(true);
-        }else {
+        } else {
           setJoinLoading(false);
           setModalCheck(true);
         }
-    });
-  }
+      })
+      .catch(err => {
+        setModalCheck(true);
+        console.log(err);
+      });
+  };
 
   const onValid = () => {
     setJoinLoading(true);
@@ -57,13 +63,12 @@ export default function JoinCongress({navigation}) {
     }
   };
 
-
   return (
     <View style={commonStyles.loaderWrap}>
       {joinLoading && <Loader type={'trans'} />}
       <View style={[commonStyles.inner, styles.basic]}>
-        <View style={{height: 50, position: 'relative', marginBottom: 48}}>
-          <View style={{position: 'absolute', left: 0, top: 0}}>
+        <View style={{height: 40, position: 'relative', marginBottom: 48}}>
+          <View style={{position: 'absolute', left: 0, top: 0, zIndex: 10}}>
             <TouchableOpacity
               activeOpacity={1}
               onPress={() => {
@@ -154,6 +159,8 @@ export default function JoinCongress({navigation}) {
           btnBoolean={modalComplete}
           onPress={() => {
             setModalComplete(false);
+            setEmailValue('');
+            setCodeValue('');
             navigation.navigate('Login');
           }}
           titleText={'메일 발송 완료'}
@@ -173,7 +180,7 @@ const styles = StyleSheet.create({
   basic: {
     position: 'relative',
     height: '100%',
-    paddingVertical: 48,
+    paddingVertical: 24,
     paddingBottom: 74,
   },
   btnPos: {

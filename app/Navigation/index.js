@@ -14,7 +14,6 @@ import PwFind from '../Screen/PwFind';
 import PwReset from '../Screen/PwReset';
 import Detail from '../Screen/Detail';
 import MyPageComment from '../Screen/MyPageComment';
-import MyPage02 from '../Screen/MyPage02';
 import Guide from '../Screen/Guide';
 import WebViewPage from '../Screen/WebViewPage';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -73,7 +72,6 @@ function MainStackNavigator() {
       <MainStack.Screen name="PwReset" component={PwReset} />
       <MainStack.Screen name="Detail" component={Detail} />
       <MainStack.Screen name="MyPageComment" component={MyPageComment} />
-      <MainStack.Screen name="MyPage02" component={MyPage02} />
       <MainStack.Screen name="Guide" component={Guide} />
       <MainStack.Screen name="WebViewPage" component={WebViewPage} />
     </MainStack.Navigator>
@@ -146,7 +144,7 @@ function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name={!loginState ? "Login" : "MyPage"}
+        name={!loginState ? 'Login' : 'MyPage'}
         component={!loginState ? Login : MyPage}
         options={{
           title: !loginState ? '로그인' : '마이페이지',

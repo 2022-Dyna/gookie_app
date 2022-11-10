@@ -10,8 +10,8 @@ import {commonStyles} from '../../common';
 import ConfirmModal from '../../Component/ConfirmModal';
 import Loader from '../../Component/Loader';
 import * as Icons from 'react-native-heroicons/outline';
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 export default function PwFind({navigation}) {
   const [pwFindLoading, setPwFindLoading] = useState(false);
@@ -36,32 +36,30 @@ export default function PwFind({navigation}) {
       setEmailMsg('올바른 이메일 주소를 입력해주세요.');
     } else {
       setPwFindLoading(true);
-      changePw()
+      changePw();
     }
   };
-  const changePw = async () =>{
-
-    axios.post('http://144.24.94.124:8091/api/v1/mypage/changePw',{
-
-      email:emailValue
-
-    }).then(res=> {
-      if(res.data.error==0){
-        setModalComplete(true);
-      }else {
-        setErrModal(true);
-      }
-      setPwFindLoading(false);
-
-    });
-  }
+  const changePw = async () => {
+    axios
+      .post('http://144.24.94.124:8091/api/v1/mypage/changePw', {
+        email: emailValue,
+      })
+      .then(res => {
+        if (res.data.error == 0) {
+          setModalComplete(true);
+        } else {
+          setErrModal(true);
+        }
+        setPwFindLoading(false);
+      });
+  };
 
   return (
     <View style={commonStyles.loaderWrap}>
       {pwFindLoading && <Loader type={'trans'} />}
       <View style={[commonStyles.inner, styles.basic]}>
-        <View style={{height: 50, position: 'relative', marginBottom: 48}}>
-          <View style={{position: 'absolute', left: 0, top: 0}}>
+        <View style={{height: 40, position: 'relative', marginBottom: 48}}>
+          <View style={{position: 'absolute', left: 0, top: 0, zIndex: 10}}>
             <TouchableOpacity
               activeOpacity={1}
               onPress={() => {
@@ -125,6 +123,7 @@ export default function PwFind({navigation}) {
           btnBoolean={modalComplete}
           onPress={() => {
             setModalComplete(false);
+            setEmailValue('');
             navigation.navigate('Login');
           }}
           titleText={'메일 발송 완료'}
@@ -136,16 +135,14 @@ export default function PwFind({navigation}) {
           btnText={'확인'}
         />
         <ConfirmModal
-            transparent={true}
-            btnBoolean={errModal}
-            onPress={() => {
-              setErrModal(false);
-            }}
-            titleText={'이메일 오류'}
-            bodyText={
-              '입력한 이메일로 가입된 사람이 없습니다.'
-            }
-            btnText={'확인'}
+          transparent={true}
+          btnBoolean={errModal}
+          onPress={() => {
+            setErrModal(false);
+          }}
+          titleText={'이메일 오류'}
+          bodyText={'입력한 이메일로 가입된 사람이 없습니다.'}
+          btnText={'확인'}
         />
       </View>
     </View>
@@ -156,7 +153,7 @@ const styles = StyleSheet.create({
   basic: {
     position: 'relative',
     minHeight: '100%',
-    paddingVertical: 48,
+    paddingVertical: 24,
     paddingBottom: 74,
   },
   btnPos: {

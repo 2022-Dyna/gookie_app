@@ -10,8 +10,8 @@ import {
 import * as Icons from 'react-native-heroicons/outline';
 import {commonStyles} from '../../common';
 import ConfirmModal from '../../Component/ConfirmModal';
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 export default function PwReset({navigation}) {
   const loginState = {
@@ -41,14 +41,14 @@ export default function PwReset({navigation}) {
   const [errModal, setErrModal] = useState(false);
   const [loginUser, setLoginUser] = useState(null);
 
-  useEffect(()=>{
-    const load =async () =>{
-      const loginUser = await AsyncStorage.getItem("loginUser");
+  useEffect(() => {
+    const load = async () => {
+      const loginUser = await AsyncStorage.getItem('loginUser');
       const loginUserObj = JSON.parse(loginUser);
       setLoginUser(loginUserObj);
-    }
+    };
     load();
-  },[])
+  }, []);
 
   let disabledComplete = false;
   pwValue.length !== 0 &&
@@ -58,64 +58,59 @@ export default function PwReset({navigation}) {
     : (disabledComplete = true);
 
   const onValid = () => {
-      console.log('TEST')
-      if (newPwValue === newPwConfirmValue) {
-        if (newPwValue.length < 6 || newPwValue.length > 20) {
-          setPwMsg('비밀번호가 너무 짧습니다.');
-        } else if (newPwValue.search(/\s/) !== -1) {
-          setPwMsg('공백없이 입력해주세요.');
-        } else if (
-          newPwValue.search(/[0-9]/g) < 0 ||
-          newPwValue.search(/[a-z]/g) < 0
-        ) {
-          setPwMsg('영문, 숫자를 혼합하여 입력해주세요.');
-        } else {
-          console.log('TEST11')
-          setPwResetLoading(true);
-          setPwResetLoading(false);
-          changePw();
-        }
+    // console.log('TEST');
+    if (newPwValue === newPwConfirmValue) {
+      if (newPwValue.length < 6 || newPwValue.length > 20) {
+        setPwMsg('비밀번호가 너무 짧습니다.');
+      } else if (newPwValue.search(/\s/) !== -1) {
+        setPwMsg('공백없이 입력해주세요.');
+      } else if (
+        newPwValue.search(/[0-9]/g) < 0 ||
+        newPwValue.search(/[a-z]/g) < 0
+      ) {
+        setPwMsg('영문, 숫자를 혼합하여 입력해주세요.');
       } else {
-        setPwMsg('변경할 비밀번호가 일치하지 않습니다.');
+        // console.log('TEST11');
+        setPwResetLoading(true);
+        changePw();
+        setPwResetLoading(false);
       }
-
+    } else {
+      setPwMsg('변경할 비밀번호가 일치하지 않습니다.');
+    }
   };
-  const changePw = async () =>{
-    let loginUser = await AsyncStorage.getItem("loginUser");
+  const changePw = async () => {
+    let loginUser = await AsyncStorage.getItem('loginUser');
     const loginUserObj = JSON.parse(loginUser);
 
-    axios.post('http://144.24.94.124:8091/api/v1/mypage/update',{
-
-        memberId:loginUserObj.memberId,
-        changePw:newPwValue,
-        memberLoginPw:pwValue,
-
-    }).then(res=> {
-        if(res.data.error==0){
+    axios
+      .post('http://144.24.94.124:8091/api/v1/mypage/update', {
+        memberId: loginUserObj.memberId,
+        changePw: newPwValue,
+        memberLoginPw: pwValue,
+      })
+      .then(res => {
+        if (res.data.error == 0) {
           setModalComplete(true);
-        }else {
+        } else {
           setErrModal(true);
         }
-    });
-  }
-console.log(loginUser);
+      });
+  };
+  // console.log(loginUser);
   return (
     <View style={commonStyles.loaderWrap}>
       {pwResetLoading && <Loader type={'trans'} />}
 
       <View style={styles.pwResetTit}>
         <Text style={styles.pwResetTitText}>내정보 수정</Text>
-        <View style={{position:"absolute", left:0, top:13,}}>
+        <View style={{position: 'absolute', left: 0, top: 13, zIndex: 10}}>
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => {
-              navigation.goBack()
-            }}
-          >
-            <Icons.ChevronLeftIcon
-              color="#000"
-              size={24}
-            />
+              navigation.goBack();
+            }}>
+            <Icons.ChevronLeftIcon color="#000" size={24} />
           </TouchableOpacity>
         </View>
       </View>
@@ -131,7 +126,7 @@ console.log(loginUser);
           <TextInput
             style={[commonStyles.input, {color: '#b1b1b1'}]}
             name="name"
-            value={loginUser!=null&&loginUser.memberName}
+            value={loginUser != null && loginUser.memberName}
             editable={false}
           />
         </View>
@@ -140,7 +135,7 @@ console.log(loginUser);
           <TextInput
             style={[commonStyles.input, {color: '#b1b1b1'}]}
             name="email"
-            value={loginUser!=null&&loginUser.memberLoginId}
+            value={loginUser != null && loginUser.memberLoginId}
             editable={false}
           />
         </View>
@@ -296,14 +291,14 @@ console.log(loginUser);
         btnText={'확인'}
       />
       <ConfirmModal
-          transparent={true}
-          btnBoolean={errModal}
-          onPress={() => {
-            setErrModal(false);
-          }}
-          titleText={'수정 완료'}
-          bodyText={'현재 비밀번호가 틀렸어요.'}
-          btnText={'확인'}
+        transparent={true}
+        btnBoolean={errModal}
+        onPress={() => {
+          setErrModal(false);
+        }}
+        titleText={'수정 완료'}
+        bodyText={'현재 비밀번호가 틀렸어요.'}
+        btnText={'확인'}
       />
     </View>
   );
@@ -314,9 +309,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 24,
-    marginRight:24,
-    height:50,
-    position:"relative",
+    marginRight: 24,
+    height: 50,
+    position: 'relative',
   },
   pwResetTitText: {
     fontFamily: 'pre700',
