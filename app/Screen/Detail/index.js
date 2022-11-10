@@ -1268,12 +1268,16 @@ export default function Detail({navigation, route}) {
                                                                                 <TouchableOpacity
                                                                                     activeOpacity={1}
                                                                                     onPress={() => {
-                                                                                        setDatas([]);
-                                                                                        likeRequest(reItem.item.congressReplyId,1);
+                                                                                        if(loginUser!=null){
+                                                                                            setDatas([]);
+                                                                                            likeRequest(reItem.item.congressReplyId,1);
+                                                                                        }else {
+                                                                                            setModalLoginCheck(true);
+                                                                                        }
                                                                                     }}>
                                                                                     <View
                                                                                         style={
-                                                                                            reItem.item.myLike==null
+                                                                                            reItem.item.myLike==null||reItem.item.myLike==0 
                                                                                                 ? [
                                                                                                     styles.commentUp,
                                                                                                     {
@@ -1292,7 +1296,7 @@ export default function Detail({navigation, route}) {
                                                                                         }>
                                                                                         <Icons.HandThumbUpIcon
                                                                                             color={
-                                                                                                reItem.item.myLike==null
+                                                                                                reItem.item.myLike==null||reItem.item.myLike==0 
                                                                                                     ? 'rgb(217,217,217)'
                                                                                                     : '#f4933a'
                                                                                             }
@@ -1301,7 +1305,7 @@ export default function Detail({navigation, route}) {
                                                                                         />
                                                                                         <Text
                                                                                             style={
-                                                                                                reItem.item.myLike==null
+                                                                                                reItem.item.myLike==null||reItem.item.myLike==0 
                                                                                                     ? styles.commentUpText
                                                                                                     : [
                                                                                                         styles.commentBtnText,
