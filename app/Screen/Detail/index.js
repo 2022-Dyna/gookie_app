@@ -936,7 +936,7 @@ export default function Detail({navigation, route}) {
                                 {/*        </View>*/}
                                 {/*    </View>*/}
                                 {/*</View>*/}
-                                <View style={{marginTop: 40}}>
+                                <View style={{marginTop: 40, paddingBottom:24,}}>
                                     <View style={{flex: 1, marginRight: 24}}>
                                         <View
                                             style={{
@@ -1338,7 +1338,7 @@ export default function Detail({navigation, route}) {
                     <TouchableOpacity
                         activeOpacity={1}
                         onPress={() => {
-                            !loginUser!=null && setModalLoginCheck(true);
+                            loginUser===null && setModalLoginCheck(true);
                         }}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <TextInput
@@ -1357,8 +1357,13 @@ export default function Detail({navigation, route}) {
                                 maxLength={200}
                                 ref={inputRef}
                                 editable={
-                                    loginUser!=null&&loginUser.memberRole!='MEMBER' && btnState === 0 ? false : true
-                                }></TextInput>
+                                    loginUser != null
+                                        ? loginUser.memberRole != 'MEMBER' && btnState === 0
+                                            ? false
+                                            : true
+                                        : false
+                                }>
+                            </TextInput>
                             <View style={{flex: 1}}>
                                 <TouchableOpacity disabled={disabled} onPress={onConfirm}>
                                     <View
