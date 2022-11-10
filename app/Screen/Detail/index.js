@@ -1072,10 +1072,22 @@ export default function Detail({navigation, route}) {
                                                             onPress={() => {
                                                                 if (loginUser!=null) {
                                                                     if (
-                                                                        loginUser.memberRole!='MEMBER' ||
-                                                                        loginUser.memberId === item.item.memberId
+                                                                        loginUser.memberRole!='MEMBER'
                                                                     ) {
                                                                         if (loginUser.memberRole == route.params.monaCd){
+                                                                            if (inputValue.length !== 0) {
+                                                                                setModalCheck(true);
+                                                                            } else {
+                                                                                if (commentCdId === null) {
+                                                                                    setCommentCdId(item.item.replyId);
+                                                                                    setModalUp(true);
+                                                                                } else {
+                                                                                    setModalCheck(true);
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }else{
+                                                                        if(loginUser.memberId === item.item.memberId){
                                                                             if (inputValue.length !== 0) {
                                                                                 setModalCheck(true);
                                                                             } else {
